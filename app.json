@@ -4,9 +4,9 @@
     "slug": "passvault",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/passvault.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/passvault.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,10 +23,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.dev.passvault"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/passvault.png"
     }
   }
 }
