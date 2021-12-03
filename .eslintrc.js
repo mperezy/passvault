@@ -32,4 +32,19 @@ module.exports = {
     'react/no-unescaped-entities': 0,
     'no-nested-ternary': 0,
   },
+  root: true,
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['assets', './assets'],
+          ['components', './src/components'],
+          ['reduxStore', './src/redux'],
+          ['services', './src/services'],
+          ['utils', './src/utils'],
+        ],
+        extensions: ['.ts', '.js', '.jsx', '.json'],
+      },
+    },
+  },
 };
