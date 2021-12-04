@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { auth } from 'src/services/firebase';
 import styles from 'components/Login/styles';
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
+import { shadow } from 'components/PasswordGenerator/styles';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -59,13 +60,13 @@ const SignUp = () => {
         <TextInput
           placeholder='Email'
           value={email}
-          style={styles.input}
+          style={[styles.input, shadow.container]}
           onChangeText={(text) => setEmail(text)}
         />
         <TextInput
           placeholder='Password'
           value={password}
-          style={styles.input}
+          style={[styles.input, shadow.container]}
           onChangeText={(text) => setPassword(text)}
           secureTextEntry
         />

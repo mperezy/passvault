@@ -13,6 +13,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { auth } from 'src/services/firebase';
 
+import { shadow } from 'components/PasswordGenerator/styles';
 import styles from './styles';
 import { Popable } from 'react-native-popable';
 import { useDispatch } from 'react-redux';
@@ -63,13 +64,13 @@ const Login = () => {
         <TextInput
           placeholder='Email'
           value={email}
-          style={styles.input}
+          style={[styles.input, shadow.container]}
           onChangeText={(text: string) => setEmail(text)}
         />
         <TextInput
           placeholder='Password'
           value={password}
-          style={styles.input}
+          style={[styles.input, shadow.container]}
           onChangeText={(text: string) => setPassword(text)}
           secureTextEntry
         />
