@@ -64,13 +64,13 @@ const Login = () => {
           placeholder='Email'
           value={email}
           style={styles.input}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text: string) => setEmail(text)}
         />
         <TextInput
           placeholder='Password'
           value={password}
           style={styles.input}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(text: string) => setPassword(text)}
           secureTextEntry
         />
       </View>
