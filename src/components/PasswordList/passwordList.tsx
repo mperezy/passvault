@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { clearUserDataFromLS } from 'utils/localStorageFuncs';
-import { auth } from 'services/firebase';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
-import styles from './styles';
+import { clearUserDataFromLS } from 'utils/localStorageFuncs';
+
+import { View, Text, TouchableOpacity } from 'react-native';
 // @ts-ignore
 import { StackNavigationProp } from '@react-navigation/native-stack';
+
+import { auth } from 'services/firebase';
+import styles from './styles';
 
 const PasswordList = () => {
   const dispatch = useDispatch();

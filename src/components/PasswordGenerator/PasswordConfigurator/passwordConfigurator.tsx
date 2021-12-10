@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+
 import { Text, View } from 'react-native';
+import Checkbox from 'expo-checkbox';
 
 import { checkBox } from 'components/PasswordGenerator/styles';
-import Checkbox from 'expo-checkbox';
 
 /* Reference for checkbox usage: [
   https://docs.expo.dev/versions/latest/sdk/checkbox/,

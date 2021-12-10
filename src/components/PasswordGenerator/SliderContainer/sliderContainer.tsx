@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { setLength } from 'reduxStore/slices/passwordSlice';
+
 import { View, Text } from 'react-native';
 import Slider from '@react-native-community/slider';
-
 import { trackMarkStyles, styles } from './styles';
-import { useDispatch } from 'react-redux';
-import { setLength } from 'reduxStore/slices/passwordSlice';
 
 // Reference: https://youtu.be/MwSudWtT7ps?t=271
 

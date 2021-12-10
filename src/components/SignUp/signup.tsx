@@ -1,4 +1,10 @@
 import React, { useEffect, useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+
+import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
+
 import {
   View,
   Text,
@@ -8,14 +14,13 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
-import { auth } from 'src/services/firebase';
-import styles from 'components/Login/styles';
-import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
-import { shadow } from 'components/PasswordGenerator/styles';
+
 // @ts-ignore
 import { StackNavigationProp } from '@react-navigation/native-stack';
+
+import { auth } from 'src/services/firebase';
+import { shadow } from 'components/PasswordGenerator/styles';
+import styles from 'components/Login/styles';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');

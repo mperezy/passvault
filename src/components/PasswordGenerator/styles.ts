@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export const shadow = StyleSheet.create({
   container: {
@@ -29,25 +29,28 @@ export const passwordStyle = StyleSheet.create({
     padding: 10,
     backgroundColor: '#FFF',
     borderRadius: 5,
-    flexDirection: 'row',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   inputContainer: {
     margin: 10,
     flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   input: {
-    width: '75%',
+    width: Platform.OS === 'web' ? '85%' : '75%',
     borderWidth: 1,
     borderColor: '#000',
     backgroundColor: 'white',
-    paddingHorizontal: 100,
+    paddingHorizontal: 15,
     paddingVertical: 7,
     borderRadius: 10,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   icons: {
     margin: 10,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
   },
@@ -76,19 +79,19 @@ export const configuration = StyleSheet.create({
     alignItems: 'flex-start',
   },
   inputLength: {
+    width: Platform.OS === 'web' ? '20%' : '15%',
     borderWidth: 1,
     borderColor: '#000',
     backgroundColor: 'white',
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
-    marginRight: 10,
     textAlign: 'center',
   },
   lengthSliderContainer: {
-    marginTop: 10,
+    margin: 10,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
 });

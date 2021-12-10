@@ -1,21 +1,60 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { useSelector } from 'react-redux';
+
+import { selectPasswordLength } from 'reduxStore/slices/passwordSlice';
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import Checkbox from 'expo-checkbox';
+import { View, Text, TextInput, TouchableOpacity, Platform } from 'react-native';
 
+import { Snackbar } from 'react-native-paper';
+
+import Checkbox from 'expo-checkbox';
 import SliderContainer from 'components/PasswordGenerator/SliderContainer/sliderContainer';
 import { PasswordConfigurator } from 'components/PasswordGenerator/PasswordConfigurator/passwordConfigurator';
-
 import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
-import { useSelector } from 'react-redux';
-import { selectPasswordLength } from 'reduxStore/slices/passwordSlice';
 
 // Reference for Icons usage: https://icons.expo.fyi/
 
+const MySnackBar = (props: {
+  message: string;
+  isSnackbarVisible: boolean;
+  setSnackbarVisible: any;
+}) => {
+  const { message, isSnackbarVisible, setSnackbarVisible } = props;
+  return (
+    <Snackbar
+      visible={isSnackbarVisible}
+      onDismiss={() => setSnackbarVisible(!isSnackbarVisible)}
+      duration={1500}
+    >
+      {message}
+    </Snackbar>
+  );
+};
+
 const PasswordGenerator = () => {
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
   const [password, setPassword] = useState('');
   const passwordLength = useSelector(selectPasswordLength);
+
+  const handleCopyButton = () => {
+    if (Platform.OS === 'web') {
+      alert('The password was copied to clipboard');
+    } else {
+      setSnackbarMessage('The password was copied to clipboard');
+      setSnackbarVisible(true);
+    }
+  };
+
+  const handleRefreshButton = () => {
+    if (Platform.OS === 'web') {
+      alert('Regenerating new password...');
+    } else {
+      setSnackbarMessage('Regenerating new password...');
+      setSnackbarVisible(true);
+    }
+  };
 
   return (
     <View style={screen.container}>
@@ -23,13 +62,17 @@ const PasswordGenerator = () => {
         <View style={passwordStyle.inputContainer}>
           <TextInput style={passwordStyle.input} value={password} editable={false} />
           <View style={passwordStyle.icons}>
-            <MaterialCommunityIcons
-              style={{ marginRight: 5 }}
-              name='content-copy'
-              size={24}
-              color='grey'
-            />
-            <Ionicons name='reload' size={24} color='grey' />
+            <TouchableOpacity onPress={handleCopyButton}>
+              <MaterialCommunityIcons
+                style={{ marginRight: 10 }}
+                name='content-copy'
+                size={24}
+                color='grey'
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleRefreshButton}>
+              <Ionicons name='reload' size={24} color='grey' />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -49,6 +92,12 @@ const PasswordGenerator = () => {
 
         <PasswordConfigurator />
       </View>
+
+      <MySnackBar
+        message={snackbarMessage}
+        isSnackbarVisible={isSnackbarVisible}
+        setSnackbarVisible={setSnackbarVisible}
+      />
     </View>
   );
 };

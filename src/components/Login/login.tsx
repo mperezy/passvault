@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+
+import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
+import { setUserData2LS } from 'utils/localStorageFuncs';
 
 import {
   Image,
@@ -9,18 +14,15 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import { Popable } from 'react-native-popable';
 
 // @ts-ignore
 import { StackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
+
 import { auth } from 'src/services/firebase';
 
 import { shadow } from 'components/PasswordGenerator/styles';
 import styles from './styles';
-import { Popable } from 'react-native-popable';
-import { useDispatch } from 'react-redux';
-import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
-import { setUserData2LS } from 'utils/localStorageFuncs';
 
 // Reference for popover: https://github.com/eveningkid/react-native-popable
 
