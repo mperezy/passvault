@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+// @ts-ignore
+import { StackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { auth } from 'src/services/firebase';
 

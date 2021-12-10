@@ -6,10 +6,12 @@ import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles';
+// @ts-ignore
+import { StackNavigationProp } from '@react-navigation/native-stack';
 
 const PasswordList = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
 
   const handleSignOut = () => {
     auth

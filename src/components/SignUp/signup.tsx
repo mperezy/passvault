@@ -14,19 +14,21 @@ import { auth } from 'src/services/firebase';
 import styles from 'components/Login/styles';
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 import { shadow } from 'components/PasswordGenerator/styles';
+// @ts-ignore
+import { StackNavigationProp } from '@react-navigation/native-stack';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
 
   useEffect(
     () =>
       auth.onAuthStateChanged((user) => {
         if (user) {
-          dispatch(setUserData({ id: user.uid, email: user.email }, {}));
+          dispatch(setUserData({ id: user.uid, email: user.email }));
           navigation.replace('PasswordList');
         } else {
           dispatch(unsetUserData());
