@@ -12,5 +12,8 @@
       "utils/*": ["./src/utils/*"]
     },
     "strict": true
-  }
+  },
+  "exclude": [
+    "node_modules",
+  ]
 }

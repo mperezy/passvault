@@ -20,12 +20,14 @@ import { useDispatch } from 'react-redux';
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 import { setUserData2LS } from 'utils/localStorageFuncs';
 
+// Reference for popover: https://github.com/eveningkid/react-native-popable
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
 
   useEffect(
     () =>
