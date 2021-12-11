@@ -7,10 +7,27 @@ import {
 import { lower, upper, number, symbols } from 'utils/constants';
 import { setPasswordGenerated } from 'utils/localStorageFuncs';
 
+import {
+  selectIsLowerCase,
+  selectIsNumbers,
+  selectIsSymbols,
+  selectIsUpperCase,
+} from 'reduxStore/slices/configuratorSlice';
+
 export function* getPasswordGeneratorFlow(): Generator {
   try {
     const length = yield select(selectPasswordLength);
-    const all = lower + upper + number + symbols;
+    const isUpperCase = yield select(selectIsUpperCase);
+    const isLowerCase = yield select(selectIsLowerCase);
+    const isNumbers = yield select(selectIsNumbers);
+    const isSymbols = yield select(selectIsSymbols);
+
+    const isUpper: string = isUpperCase ? upper : '';
+    const isLower: string = isLowerCase ? lower : '';
+    const isNumber: string = isNumbers ? number : '';
+    const isSymbol: string = isSymbols ? symbols : '';
+
+    const all = isUpper + isLower + isNumber + isSymbol;
     let password = '';
 
     // @ts-ignore
@@ -18,7 +35,6 @@ export function* getPasswordGeneratorFlow(): Generator {
       password += all.charAt(Math.floor(Math.random() * all.length));
     }
 
-    // console.log({ length, password });
     setPasswordGenerated(password);
 
     return yield put(setPassword({ password }));

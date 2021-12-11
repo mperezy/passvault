@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const initialState = {
+export const initialState: {
+  password: string;
+  length: number;
+  passwords: any;
+} = {
   password: '',
   length: 6,
   passwords: [],
