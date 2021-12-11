@@ -24,5 +24,5 @@ export const userSlice = createSlice({
 
 export const { setUserData, unsetUserData } = userSlice.actions;
 
-export const selectUserId = (state) => state.user.id;
-export const selectUserEmail = (state) => state.user.email;
+export const selectUserId = (state: { user: { id: any } }) => state.user.id;
+export const selectUserEmail = (state: { user: { email: any } }) => state.user.email;

@@ -9,13 +9,14 @@ import { trackMarkStyles, styles } from './styles';
 
 // Reference: https://youtu.be/MwSudWtT7ps?t=271
 
-const SliderContainer = (props: { defaultValue: number }) => {
-  const { defaultValue } = props;
+const SliderContainer = (props: { defaultValue: number; handleGeneratePassword: any }) => {
+  const { defaultValue, handleGeneratePassword } = props;
   const [value, setValue] = useState(defaultValue);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setLength({ length: value }));
+    handleGeneratePassword();
   }, [value]);
   return (
     <View style={styles.sliderContainer}>
