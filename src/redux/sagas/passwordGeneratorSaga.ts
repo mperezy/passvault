@@ -5,6 +5,7 @@ import {
   setPassword,
 } from 'reduxStore/slices/passwordSlice';
 import { lower, upper, number, symbols } from 'utils/constants';
+import { setPasswordGenerated } from 'utils/localStorageFuncs';
 
 export function* getPasswordGeneratorFlow(): Generator {
   try {
@@ -17,7 +18,8 @@ export function* getPasswordGeneratorFlow(): Generator {
       password += all.charAt(Math.floor(Math.random() * all.length));
     }
 
-    console.log({ length, password });
+    // console.log({ length, password });
+    setPasswordGenerated(password);
 
     return yield put(setPassword({ password }));
   } catch (exception) {

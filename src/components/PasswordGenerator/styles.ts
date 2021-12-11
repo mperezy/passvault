@@ -46,6 +46,9 @@ export const passwordStyle = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 10,
     textAlign: 'left',
+    fontFamily: 'monospace',
+    fontWeight: 'bold',
+    fontSize: Platform.OS === 'web' ? 16 : 20,
   },
   icons: {
     margin: 10,
@@ -87,6 +90,7 @@ export const configuration = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   lengthSliderContainer: {
     margin: 10,

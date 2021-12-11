@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getUserDataFromLS } from 'utils/localStorageFuncs';
 
 export const initialState = {
-  id: getUserDataFromLS().userId || '',
-  email: getUserDataFromLS().email || '',
+  id: '',
+  email: '',
 };
 
 export const userSlice = createSlice({

@@ -8,8 +8,7 @@ import {
 } from 'reduxStore/slices/passwordSlice';
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import Clipboard from '@react-native-clipboard/clipboard';
+import { View, Text, TextInput, TouchableOpacity, Clipboard } from 'react-native';
 
 import { Snackbar } from 'react-native-paper';
 
@@ -17,6 +16,7 @@ import Checkbox from 'expo-checkbox';
 import SliderContainer from 'components/PasswordGenerator/SliderContainer/sliderContainer';
 import { PasswordConfigurator } from 'components/PasswordGenerator/PasswordConfigurator/passwordConfigurator';
 import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
+import { getPasswordGenerated } from 'utils/localStorageFuncs';
 
 // Reference for Icons usage: https://icons.expo.fyi/
 
@@ -60,10 +60,17 @@ const PasswordGenerator = () => {
   }, [passwordFromState]);
 
   const handleCopyButton = () => {
-    setSnackbarMessage('The password was copied to clipboard');
-    setSnackbarVisible(true);
+    getPasswordGenerated()
+      .then((password: any | string) => {
+        setSnackbarMessage('The password was copied to clipboard');
+        setSnackbarVisible(true);
 
-    Clipboard.setString(passwordFromState);
+        Clipboard.setString(password.password);
+      })
+      .catch((err: any) => {
+        console.log({ err });
+        Clipboard.setString('');
+      });
   };
   const handleRefreshButton = () => {
     setSnackbarMessage('New password generated');
