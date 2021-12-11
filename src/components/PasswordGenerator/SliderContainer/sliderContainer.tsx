@@ -15,9 +15,12 @@ const SliderContainer = (props: { defaultValue: number; handleGeneratePassword: 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setLength({ length: value }));
-    handleGeneratePassword();
+    if (!isNaN(value)) {
+      dispatch(setLength({ length: value }));
+      handleGeneratePassword();
+    }
   }, [value]);
+
   return (
     <View style={styles.sliderContainer}>
       <Slider
