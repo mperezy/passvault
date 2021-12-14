@@ -12,7 +12,6 @@ const handleLeftCheckboxes = (
 
 const handleRightCheckboxes = (
   value: boolean,
-  setCheckbox: any,
   checkbox1: boolean,
   checkbox2: boolean,
   checkbox3: boolean,
@@ -21,10 +20,7 @@ const handleRightCheckboxes = (
   payload: object
 ) => {
   if (checkbox1 || checkbox2 || checkbox3) {
-    setCheckbox(value);
     dispatch(configuratorAction(payload));
-  } else {
-    setCheckbox(true);
   }
 };
 

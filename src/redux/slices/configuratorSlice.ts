@@ -32,11 +32,27 @@ export const configuratorSlice = createSlice({
       ...state,
       isSymbols: payload.isSymbols,
     }),
+    setIsUpperCaseAndIsLowerCase: (state, { payload }) => ({
+      ...state,
+      isUpperCase: payload.isUpperCase,
+      isLowerCase: payload.isLowerCase,
+    }),
+    setIsNumbersAndIsSymbols: (state, { payload }) => ({
+      ...state,
+      isNumbers: payload.isNumbers,
+      isSymbols: payload.isSymbols,
+    }),
   },
 });
 
-export const { setIsUpperCase, setIsLowerCase, setIsNumbers, setIsSymbols } =
-  configuratorSlice.actions;
+export const {
+  setIsUpperCase,
+  setIsLowerCase,
+  setIsNumbers,
+  setIsSymbols,
+  setIsUpperCaseAndIsLowerCase,
+  setIsNumbersAndIsSymbols,
+} = configuratorSlice.actions;
 
 export const selectIsUpperCase = (state: { configurator: { isUpperCase: boolean } }) =>
   state.configurator.isUpperCase;
