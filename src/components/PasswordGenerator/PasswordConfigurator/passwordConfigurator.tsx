@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Text, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
@@ -43,22 +43,26 @@ export const PasswordConfigurator = () => {
     setUppercaseChecked(true);
     setLowercaseChecked(true);
 
+    dispatch(setIsUpperCase({ isUpperCase: true }));
+    dispatch(setIsLowerCase({ isLowerCase: true }));
+
     if (!isEasy2ReadChecked || isAllCharChecked) {
       setNumbersChecked(false);
       setSymbolsChecked(false);
       setNumbersCheckeDisabled(true);
       setSymbolsCheckeDisabled(true);
+
+      dispatch(setIsNumbers({ isNumbers: false }));
+      dispatch(setIsSymbols({ isSymbols: false }));
     } else {
       setNumbersChecked(true);
       setSymbolsChecked(true);
       setNumbersCheckeDisabled(false);
       setSymbolsCheckeDisabled(false);
-    }
 
-    dispatch(setIsUpperCase({ isUpperCase: isUppercaseChecked }));
-    dispatch(setIsLowerCase({ isLowerCase: isLowercaseChecked }));
-    dispatch(setIsNumbers({ isNumbers: !isNumbersChecked }));
-    dispatch(setIsSymbols({ isSymbols: !isSymbolsChecked }));
+      dispatch(setIsNumbers({ isNumbers: true }));
+      dispatch(setIsSymbols({ isSymbols: true }));
+    }
     dispatch(generatePassword());
   };
 
@@ -70,14 +74,14 @@ export const PasswordConfigurator = () => {
           <Checkbox
             style={checkBox.checkbox}
             value={isEasy2ReadChecked}
-            onValueChange={(value: boolean) =>
+            onValueChange={(value: boolean) => {
               handleLeftCheckboxes(
                 value,
                 setEasy2ReadChecked,
                 setAllCharChecked,
                 handleRightCheckboxesGivenLeftCheckboxes
-              )
-            }
+              );
+            }}
             color={isEasy2ReadChecked ? '#3091e0' : undefined}
           />
           <Text style={checkBox.paragraph}>Easy to read</Text>
@@ -112,15 +116,13 @@ export const PasswordConfigurator = () => {
                 setUppercaseChecked,
                 isLowercaseChecked,
                 isNumbersChecked,
-                isSymbolsChecked
-              );
-
-              updateConfiguratorStateAndGeneratePassword(
+                isSymbolsChecked,
                 dispatch,
                 setIsUpperCase,
-                generatePassword,
-                { isUpperCase: !isUppercaseChecked }
+                { isUpperCase: value }
               );
+
+              updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
             }}
             color={isUppercaseChecked ? '#3091e0' : undefined}
           />
@@ -136,15 +138,13 @@ export const PasswordConfigurator = () => {
                 setLowercaseChecked,
                 isUppercaseChecked,
                 isNumbersChecked,
-                isSymbolsChecked
-              );
-
-              updateConfiguratorStateAndGeneratePassword(
+                isSymbolsChecked,
                 dispatch,
                 setIsLowerCase,
-                generatePassword,
-                { isLowerCase: !isLowercaseChecked }
+                { isLowerCase: value }
               );
+
+              updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
             }}
             color={isLowercaseChecked ? '#3091e0' : undefined}
           />
@@ -160,12 +160,15 @@ export const PasswordConfigurator = () => {
                 setNumbersChecked,
                 isUppercaseChecked,
                 isLowercaseChecked,
-                isSymbolsChecked
+                isSymbolsChecked,
+                dispatch,
+                setIsNumbers,
+                {
+                  isNumbers: value,
+                }
               );
 
-              updateConfiguratorStateAndGeneratePassword(dispatch, setIsNumbers, generatePassword, {
-                isNumbers: !isNumbersChecked,
-              });
+              updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
             }}
             color={isNumbersChecked ? '#3091e0' : undefined}
             disabled={isNumbersCheckDisabled}
@@ -182,12 +185,15 @@ export const PasswordConfigurator = () => {
                 setSymbolsChecked,
                 isUppercaseChecked,
                 isLowercaseChecked,
-                isNumbersChecked
+                isNumbersChecked,
+                dispatch,
+                setIsSymbols,
+                {
+                  isSymbols: value,
+                }
               );
 
-              updateConfiguratorStateAndGeneratePassword(dispatch, setIsSymbols, generatePassword, {
-                isSymbols: !isSymbolsChecked,
-              });
+              updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
             }}
             color={isSymbolsChecked ? '#3091e0' : undefined}
             disabled={isSymbolsCheckeDisabled}

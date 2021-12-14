@@ -15,23 +15,21 @@ const handleRightCheckboxes = (
   setCheckbox: any,
   checkbox1: boolean,
   checkbox2: boolean,
-  checkbox3: boolean
+  checkbox3: boolean,
+  dispatch: any,
+  configuratorAction: any,
+  payload: object
 ) => {
   if (checkbox1 || checkbox2 || checkbox3) {
     setCheckbox(value);
+    dispatch(configuratorAction(payload));
   } else {
     setCheckbox(true);
   }
 };
 
-const updateConfiguratorStateAndGeneratePassword = (
-  dispatch: any,
-  configuratorAction: any,
-  passwordAction: any,
-  payload: object
-) => {
-  dispatch(configuratorAction(payload));
-  dispatch(passwordAction());
+const updateConfiguratorStateAndGeneratePassword = (dispatch: any, generatePassword: any) => {
+  dispatch(generatePassword());
 };
 
 export { handleLeftCheckboxes, handleRightCheckboxes, updateConfiguratorStateAndGeneratePassword };
