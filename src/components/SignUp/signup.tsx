@@ -23,7 +23,7 @@ import { shadow } from 'components/PasswordGenerator/styles';
 import styles from 'components/Login/styles';
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
@@ -44,11 +44,11 @@ const SignUp = () => {
 
   const handleSignUp = () => {
     auth
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(`${username}@example.com`, password)
       .then((userCredentials) => {
         const { user } = userCredentials;
         console.log({ user });
-        setEmail('');
+        setUsername('');
         setPassword('');
       })
       .catch((error) => {
@@ -65,10 +65,10 @@ const SignUp = () => {
       <Image style={styles.loginImage} source={require('assets/main/passvault-512px.png')} />
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder='Email'
-          value={email}
+          placeholder='Username'
+          value={username}
           style={[styles.input, shadow.container]}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setUsername(text)}
         />
         <TextInput
           placeholder='Password'

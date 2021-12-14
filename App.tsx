@@ -10,12 +10,11 @@ import SignUp from 'components/SignUp/signup';
 import PasswordGenerator from 'components/PasswordGenerator/passwordGenerator';
 
 import PasswordList from 'components/PasswordList/passwordList';
-import store from './src/redux/store/index';
+import store from 'reduxStore/store/index';
+import { devWarnings } from 'utils/constants';
 
 if (process.env.ENV === 'dev') {
-  LogBox.ignoreLogs([
-    'AsyncStorage has been extracted from react-native core and will be removed in a future release.',
-  ]);
+  LogBox.ignoreLogs(devWarnings);
 }
 
 declare global {

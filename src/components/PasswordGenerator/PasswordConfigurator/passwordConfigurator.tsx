@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Text, View } from 'react-native';
+import { Text, View, ToastAndroid, Platform } from 'react-native';
 import Checkbox from 'expo-checkbox';
 
 import { checkBox } from 'components/PasswordGenerator/styles';

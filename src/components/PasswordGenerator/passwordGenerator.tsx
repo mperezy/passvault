@@ -14,8 +14,9 @@ import {
   TextInput,
   TouchableOpacity,
   Clipboard,
-  Platform,
   KeyboardAvoidingView,
+  ToastAndroid,
+  Platform,
 } from 'react-native';
 
 import { Snackbar } from 'react-native-paper';
@@ -45,6 +46,10 @@ const MySnackBar = (props: {
   );
 };
 
+const showToastMessage = (message: string) => {
+  ToastAndroid.show(message, ToastAndroid.SHORT);
+};
+
 const PasswordGenerator = () => {
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -70,8 +75,12 @@ const PasswordGenerator = () => {
   const handleCopyButton = () => {
     getPasswordGenerated()
       .then((password: any | string) => {
-        setSnackbarMessage('The password was copied to clipboard');
-        setSnackbarVisible(true);
+        if (Platform.OS === 'android') {
+          showToastMessage('The password was copied to clipboard');
+        } else {
+          setSnackbarMessage('The password was copied to clipboard');
+          setSnackbarVisible(true);
+        }
 
         Clipboard.setString(password.password);
       })
@@ -81,8 +90,12 @@ const PasswordGenerator = () => {
       });
   };
   const handleRefreshButton = () => {
-    setSnackbarMessage('New password generated');
-    setSnackbarVisible(true);
+    if (Platform.OS === 'android') {
+      showToastMessage('New password generated');
+    } else {
+      setSnackbarMessage('New password generated');
+      setSnackbarVisible(true);
+    }
 
     handleGeneratePassword();
   };

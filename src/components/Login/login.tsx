@@ -27,7 +27,7 @@ import styles from './styles';
 // Reference for popover: https://github.com/eveningkid/react-native-popable
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
@@ -48,9 +48,9 @@ const Login = () => {
 
   const handleLogin = () => {
     auth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCreds) => {
-        const { user } = userCreds;
+      .signInWithEmailAndPassword(`${username}@example.com`, password)
+      .then((userCredentials) => {
+        const { user } = userCredentials;
 
         setUserData2LS(user?.uid, user?.email);
       })
@@ -68,10 +68,10 @@ const Login = () => {
       <Image style={styles.loginImage} source={require('assets/main/passvault-512px.png')} />
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder='Email'
-          value={email}
+          placeholder='Username'
+          value={username}
           style={[styles.input, shadow.container]}
-          onChangeText={(text: string) => setEmail(text)}
+          onChangeText={(text: string) => setUsername(text)}
         />
         <TextInput
           placeholder='Password'
