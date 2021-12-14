@@ -1,11 +1,19 @@
 const handleLeftCheckboxes = (
-  value: boolean,
+  dispatch: any,
   setCheck1: any,
   setCheck2: any,
+  selector1: string,
+  selector2: string,
+  value: boolean,
   handleOtherCheckboxes: any
 ) => {
-  setCheck1(value);
-  setCheck2(!value);
+  const payloadString1 = `{ "${selector1}": ${value} }`;
+  const payloadString2 = `{ "${selector2}": ${!value} }`;
+  const payload1 = JSON.parse(payloadString1);
+  const payload2 = JSON.parse(payloadString2);
+
+  dispatch(setCheck1(payload1));
+  dispatch(setCheck2(payload2));
 
   handleOtherCheckboxes();
 };

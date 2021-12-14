@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Text, View } from 'react-native';
@@ -6,12 +6,16 @@ import Checkbox from 'expo-checkbox';
 
 import { checkBox } from 'components/PasswordGenerator/styles';
 import {
+  setIsEasy2Read,
+  setIsAllChar,
   setIsUpperCase,
   setIsLowerCase,
   setIsNumbers,
   setIsSymbols,
   setIsUpperCaseAndIsLowerCase,
   setIsNumbersAndIsSymbols,
+  selectIsEasy2Read,
+  selectIsAllChar,
   selectIsUpperCase,
   selectIsLowerCase,
   selectIsNumbers,
@@ -34,28 +38,22 @@ import {
 export const PasswordConfigurator = () => {
   const dispatch = useDispatch();
 
+  const isEasy2Read = useSelector(selectIsEasy2Read);
+  const isAllChar = useSelector(selectIsAllChar);
+
   const isUpperCase = useSelector(selectIsUpperCase);
   const isLowerCase = useSelector(selectIsLowerCase);
   const isNumbers = useSelector(selectIsNumbers);
   const isSymbols = useSelector(selectIsSymbols);
 
-  const [isEasy2ReadChecked, setEasy2ReadChecked] = useState(true);
-  const [isAllCharChecked, setAllCharChecked] = useState(false);
-
-  const [isNumbersCheckDisabled, setNumbersCheckDisabled] = useState(true);
-  const [isSymbolsCheckDisabled, setSymbolsCheckDisabled] = useState(true);
-
   const handleRightCheckboxesGivenLeftCheckboxes = () => {
     dispatch(setIsUpperCaseAndIsLowerCase({ isUpperCase: true, isLowerCase: true }));
 
-    if (!isEasy2ReadChecked || isAllCharChecked) {
+    if (!isEasy2Read || isAllChar) {
       dispatch(setIsNumbersAndIsSymbols({ isNumbers: false, isSymbols: false }));
     } else {
       dispatch(setIsNumbersAndIsSymbols({ isNumbers: true, isSymbols: true }));
     }
-
-    setNumbersCheckDisabled(isNumbers);
-    setSymbolsCheckDisabled(isSymbols);
 
     dispatch(generatePassword());
   };
@@ -67,32 +65,38 @@ export const PasswordConfigurator = () => {
         <View style={checkBox.section}>
           <Checkbox
             style={checkBox.checkbox}
-            value={isEasy2ReadChecked}
+            value={isEasy2Read}
             onValueChange={(value: boolean) => {
               handleLeftCheckboxes(
+                dispatch,
+                setIsEasy2Read,
+                setIsAllChar,
+                'isEasy2Read',
+                'isAllChar',
                 value,
-                setEasy2ReadChecked,
-                setAllCharChecked,
                 handleRightCheckboxesGivenLeftCheckboxes
               );
             }}
-            color={isEasy2ReadChecked ? '#3091e0' : undefined}
+            color={isEasy2Read ? '#3091e0' : undefined}
           />
           <Text style={checkBox.paragraph}>Easy to read</Text>
         </View>
         <View style={checkBox.section}>
           <Checkbox
             style={checkBox.checkbox}
-            value={isAllCharChecked}
+            value={isAllChar}
             onValueChange={(value: boolean) => {
               handleLeftCheckboxes(
+                dispatch,
+                setIsAllChar,
+                setIsEasy2Read,
+                'isAllChar',
+                'isEasy2Read',
                 value,
-                setAllCharChecked,
-                setEasy2ReadChecked,
                 handleRightCheckboxesGivenLeftCheckboxes
               );
             }}
-            color={isAllCharChecked ? '#3091e0' : undefined}
+            color={isAllChar ? '#3091e0' : undefined}
           />
           <Text style={checkBox.paragraph}>All characters</Text>
         </View>
@@ -162,7 +166,7 @@ export const PasswordConfigurator = () => {
               updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
             }}
             color={isNumbers ? '#3091e0' : undefined}
-            disabled={isNumbersCheckDisabled}
+            disabled={!isAllChar}
           />
           <Text style={checkBox.paragraph}>Numbers</Text>
         </View>
@@ -186,7 +190,7 @@ export const PasswordConfigurator = () => {
               updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
             }}
             color={isSymbols ? '#3091e0' : undefined}
-            disabled={isSymbolsCheckDisabled}
+            disabled={!isAllChar}
           />
           <Text style={checkBox.paragraph}>Symbols</Text>
         </View>

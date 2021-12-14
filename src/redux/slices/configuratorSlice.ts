@@ -1,11 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState: {
+  isEasy2Read: boolean;
+  isAllChar: boolean;
   isUpperCase: boolean;
   isLowerCase: boolean;
   isNumbers: boolean;
   isSymbols: boolean;
 } = {
+  isEasy2Read: true,
+  isAllChar: false,
   isUpperCase: true,
   isLowerCase: true,
   isNumbers: false,
@@ -16,6 +20,14 @@ export const configuratorSlice = createSlice({
   name: 'configurator',
   initialState,
   reducers: {
+    setIsEasy2Read: (state, { payload }) => ({
+      ...state,
+      isEasy2Read: payload.isEasy2Read,
+    }),
+    setIsAllChar: (state, { payload }) => ({
+      ...state,
+      isAllChar: payload.isAllChar,
+    }),
     setIsUpperCase: (state, { payload }) => ({
       ...state,
       isUpperCase: payload.isUpperCase,
@@ -46,6 +58,8 @@ export const configuratorSlice = createSlice({
 });
 
 export const {
+  setIsEasy2Read,
+  setIsAllChar,
   setIsUpperCase,
   setIsLowerCase,
   setIsNumbers,
@@ -54,6 +68,10 @@ export const {
   setIsNumbersAndIsSymbols,
 } = configuratorSlice.actions;
 
+export const selectIsEasy2Read = (state: { configurator: { isEasy2Read: boolean } }) =>
+  state.configurator.isEasy2Read;
+export const selectIsAllChar = (state: { configurator: { isAllChar: boolean } }) =>
+  state.configurator.isAllChar;
 export const selectIsUpperCase = (state: { configurator: { isUpperCase: boolean } }) =>
   state.configurator.isUpperCase;
 export const selectIsLowerCase = (state: { configurator: { isLowerCase: boolean } }) =>
