@@ -8,7 +8,15 @@ import {
 } from 'reduxStore/slices/passwordSlice';
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { View, Text, TextInput, TouchableOpacity, Clipboard } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Clipboard,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 import { Snackbar } from 'react-native-paper';
 
@@ -81,9 +89,17 @@ const PasswordGenerator = () => {
 
   return (
     <View style={screen.container}>
-      <View style={[passwordStyle.container, shadow.container]}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={[passwordStyle.container, shadow.container]}
+      >
         <View style={passwordStyle.inputContainer}>
-          <TextInput style={passwordStyle.input} value={password} />
+          <TextInput
+            showSoftInputOnFocus={false}
+            caretHidden={true}
+            style={passwordStyle.input}
+            value={password}
+          />
           <View style={passwordStyle.icons}>
             <TouchableOpacity onPress={handleCopyButton}>
               <MaterialCommunityIcons
@@ -98,24 +114,29 @@ const PasswordGenerator = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
 
       <View style={[configuration.container, shadow.container]}>
         <View style={configuration.textContainer}>
           <Text style={configuration.textHeader}>Configure your password</Text>
         </View>
 
-        <View style={configuration.passwordLengthContainer}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={configuration.passwordLengthContainer}
+        >
           <Text style={{ fontSize: 17 }}>Password length</Text>
           <View style={configuration.lengthSliderContainer}>
             <TextInput
+              showSoftInputOnFocus={false}
+              caretHidden={true}
               style={configuration.inputLength}
               keyboardType={'numeric'}
               value={passwordLength.toString()}
             />
             <SliderContainer defaultValue={10} handleGeneratePassword={handleGeneratePassword} />
           </View>
-        </View>
+        </KeyboardAvoidingView>
 
         <PasswordConfigurator />
       </View>
