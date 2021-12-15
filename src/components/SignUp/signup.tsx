@@ -18,7 +18,7 @@ import {
 // @ts-ignore
 import { StackNavigationProp } from '@react-navigation/native-stack';
 
-import { auth } from 'src/services/firebase';
+import { auth } from 'services/firebase';
 import { shadow } from 'components/PasswordGenerator/styles';
 import styles from 'components/Login/styles';
 
