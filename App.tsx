@@ -8,8 +8,8 @@ import { Provider } from 'react-redux';
 import Login from 'components/Login/login';
 import SignUp from 'components/SignUp/signup';
 import PasswordGenerator from 'components/PasswordGenerator/passwordGenerator';
-
 import PasswordList from 'components/PasswordList/passwordList';
+
 import store from 'reduxStore/store/index';
 import { devWarnings } from 'utils/constants';
 

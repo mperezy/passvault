@@ -15,11 +15,11 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
-const appLength = firebase.apps.length;
+const appLength: number = firebase.apps.length;
 
 // eslint-disable-next-line no-unused-vars
 const app = appLength === 0 ? firebase.initializeApp(firebaseConfig) : firebase.app();
 const database = firebase.firestore(app);
 
 export const auth = firebase.auth();
-export const taskCollection = database.collection('tasks');
+export const passwordsCollection = database.collection('passwords');
