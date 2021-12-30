@@ -62,7 +62,7 @@ export const PasswordConfigurator = () => {
   return (
     <View style={checkBox.container}>
       {/* Left checkboxes */}
-      <View style={{ flexDirection: 'column', marginLeft: -40 }}>
+      <View style={{ flexDirection: 'column', marginLeft: -20 }}>
         <View style={checkBox.section}>
           <CustomCheckBox
             label={'Easy to read'}

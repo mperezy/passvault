@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 const borderWidth = 4;
 
 export const styles = StyleSheet.create({
   sliderContainer: {
-    width: '80%',
+    width: Platform.OS === 'web' ? '80%' : '90%',
     padding: 10,
     flexDirection: 'column',
   },

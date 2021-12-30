@@ -51,11 +51,9 @@ export const passwordStyle = StyleSheet.create({
     fontSize: Platform.OS === 'web' ? 16 : 20,
   },
   icons: {
-    margin: 10,
+    marginLeft: 15,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 10,
   },
 });
 
@@ -82,7 +80,7 @@ export const configuration = StyleSheet.create({
     alignItems: 'flex-start',
   },
   inputLength: {
-    width: Platform.OS === 'web' ? '20%' : '15%',
+    width: Platform.OS === 'web' ? '20%' : '19%',
     borderWidth: 1,
     borderColor: '#000',
     backgroundColor: 'white',
