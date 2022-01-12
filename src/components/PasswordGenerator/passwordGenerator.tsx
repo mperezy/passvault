@@ -19,36 +19,15 @@ import {
   Platform,
 } from 'react-native';
 
-import { Snackbar } from 'react-native-paper';
-
 import Checkbox from 'expo-checkbox';
+import { CustomCheckBox } from 'components/PasswordGenerator/PasswordConfigurator/CustomCheckBox/customCheckBox';
 import SliderContainer from 'components/PasswordGenerator/SliderContainer/sliderContainer';
 import { PasswordConfigurator } from 'components/PasswordGenerator/PasswordConfigurator/passwordConfigurator';
+import { CustomSnackBar } from 'components/common/CustomSnackBar';
 import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
+
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
-
-// Reference for Icons usage: https://icons.expo.fyi/
-
-const MySnackBar = (props: {
-  message: string;
-  isSnackbarVisible: boolean;
-  setSnackbarVisible: any;
-}) => {
-  const { message, isSnackbarVisible, setSnackbarVisible } = props;
-  return (
-    <Snackbar
-      visible={isSnackbarVisible}
-      onDismiss={() => setSnackbarVisible(!isSnackbarVisible)}
-      duration={1500}
-    >
-      {message}
-    </Snackbar>
-  );
-};
-
-const showToastMessage = (message: string) => {
-  ToastAndroid.show(message, ToastAndroid.SHORT);
-};
+import { showToastMessage } from 'utils/toastAndroidMessage';
 
 const PasswordGenerator = () => {
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
@@ -154,7 +133,7 @@ const PasswordGenerator = () => {
         <PasswordConfigurator />
       </View>
 
-      <MySnackBar
+      <CustomSnackBar
         message={snackbarMessage}
         isSnackbarVisible={isSnackbarVisible}
         setSnackbarVisible={setSnackbarVisible}

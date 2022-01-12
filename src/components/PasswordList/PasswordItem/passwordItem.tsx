@@ -15,15 +15,16 @@ import {
   Image,
   TextInput,
   Clipboard,
-  ToastAndroid,
 } from 'react-native';
 import { icons, item, input } from './styles';
 import { Snackbar } from 'react-native-paper';
+
 import {
   imageSourceRetriever,
   socialMediaIcon,
   socialMediaIconColor,
 } from 'utils/imageDataRetriever';
+import { showToastMessage } from 'utils/toastAndroidMessage';
 
 interface PasswordI {
   passwordGenerated: string;
@@ -43,10 +44,6 @@ const SocialMediaIcon = (props: { socialMedia: string }) => {
 
     return <AntDesign name={getSocialMedia} size={24} color={socialMediaColor} />;
   }
-};
-
-const showToastMessage = (message: string) => {
-  ToastAndroid.show(message, ToastAndroid.SHORT);
 };
 
 const PasswordIcons = (props: {
