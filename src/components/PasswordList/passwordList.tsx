@@ -20,6 +20,7 @@ import {
 } from 'reduxStore/slices/passwordSlice';
 
 import { selectUserEmail } from 'reduxStore/slices/userSlice';
+import { CustomSnackBar } from 'components/common/CustomSnackBar';
 
 interface PasswordI {
   id: string;
@@ -29,6 +30,8 @@ interface PasswordI {
 }
 
 const PasswordList = () => {
+  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
   const [scrollIsClose2Bottom, setScrollIsClose2Bottom] = useState(false);
 
   const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
@@ -92,6 +95,8 @@ const PasswordList = () => {
                 key={passwordItem.id}
                 passwordGenerated={passwordItem.password_generated}
                 socialMedia={passwordItem.social_media}
+                setSnackbarVisible={setSnackbarVisible}
+                setSnackbarMessage={setSnackbarMessage}
               />
             ))}
           </View>
@@ -102,13 +107,21 @@ const PasswordList = () => {
           position: 'absolute',
           margin: 26,
           right: 0,
-          bottom: 0,
+          bottom: isSnackbarVisible ? 40 : 0,
           backgroundColor: '#3091e0',
         }}
         color={'#FFF'}
         visible={!scrollIsClose2Bottom}
         icon='plus'
-        onPress={() => console.log('Pressed')}
+        onPress={() => {
+          // @ts-ignore
+          navigation.navigate('PasswordGenerator');
+        }}
+      />
+      <CustomSnackBar
+        message={snackbarMessage}
+        isSnackbarVisible={isSnackbarVisible}
+        setSnackbarVisible={setSnackbarVisible}
       />
     </View>
   );

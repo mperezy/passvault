@@ -29,6 +29,8 @@ import { showToastMessage } from 'utils/toastAndroidMessage';
 interface PasswordI {
   passwordGenerated: string;
   socialMedia: string;
+  setSnackbarVisible: any;
+  setSnackbarMessage: any;
 }
 
 const SocialMediaIcon = (props: { socialMedia: string }) => {
@@ -50,15 +52,28 @@ const PasswordIcons = (props: {
   passwordGenerated: string;
   passwordVisible: boolean;
   setPasswordVisible: any;
+  setSnackbarVisible: any;
+  setSnackbarMessage: any;
 }) => {
-  const { passwordGenerated, passwordVisible, setPasswordVisible } = props;
+  const {
+    passwordGenerated,
+    passwordVisible,
+    setPasswordVisible,
+    setSnackbarVisible,
+    setSnackbarMessage,
+  } = props;
 
   const handleShowHidePassword = () => {
     setPasswordVisible(!passwordVisible);
   };
 
   const handleCopyButton = () => {
-    showToastMessage('The password was copied to clipboard');
+    if (Platform.OS === 'android') {
+      showToastMessage('The password was copied to clipboard');
+    } else {
+      setSnackbarMessage('The password was copied to clipboard');
+      setSnackbarVisible(true);
+    }
 
     Clipboard.setString(passwordGenerated);
   };
@@ -81,7 +96,7 @@ const PasswordIcons = (props: {
           color='grey'
         />
       </TouchableOpacity>
-      <FontAwesome style={{ marginRight: 5 }} name='edit' size={18} color='#0F9D58' />
+      <FontAwesome style={{ marginRight: 5 }} name='edit' size={18} color='grey' />
       <Ionicons name='trash' size={18} color='#DB4437' />
     </View>
   );
@@ -89,7 +104,7 @@ const PasswordIcons = (props: {
 
 const PasswordItem = (props: PasswordI) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { passwordGenerated, socialMedia } = props;
+  const { passwordGenerated, socialMedia, setSnackbarVisible, setSnackbarMessage } = props;
 
   return (
     <View style={item.container}>
@@ -103,6 +118,8 @@ const PasswordItem = (props: PasswordI) => {
         passwordGenerated={passwordGenerated}
         passwordVisible={passwordVisible}
         setPasswordVisible={setPasswordVisible}
+        setSnackbarVisible={setSnackbarVisible}
+        setSnackbarMessage={setSnackbarMessage}
       />
     </View>
   );
