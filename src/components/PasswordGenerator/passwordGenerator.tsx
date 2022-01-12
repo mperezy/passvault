@@ -14,7 +14,6 @@ import {
   TextInput,
   TouchableOpacity,
   Clipboard,
-  KeyboardAvoidingView,
   ToastAndroid,
   Platform,
 } from 'react-native';
@@ -81,10 +80,7 @@ const PasswordGenerator = () => {
 
   return (
     <View style={screen.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={[passwordStyle.container, shadow.container]}
-      >
+      <View style={[passwordStyle.container, shadow.container]}>
         <View style={passwordStyle.inputContainer}>
           <TextInput
             showSoftInputOnFocus={false}
@@ -106,17 +102,14 @@ const PasswordGenerator = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </View>
 
       <View style={[configuration.container, shadow.container]}>
         <View style={configuration.textContainer}>
           <Text style={configuration.textHeader}>Configure your password</Text>
         </View>
 
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={configuration.passwordLengthContainer}
-        >
+        <View style={configuration.passwordLengthContainer}>
           <Text style={{ fontSize: 17 }}>Password length</Text>
           <View style={configuration.lengthSliderContainer}>
             <TextInput
@@ -128,7 +121,7 @@ const PasswordGenerator = () => {
             />
             <SliderContainer defaultValue={10} handleGeneratePassword={handleGeneratePassword} />
           </View>
-        </KeyboardAvoidingView>
+        </View>
 
         <PasswordConfigurator />
       </View>

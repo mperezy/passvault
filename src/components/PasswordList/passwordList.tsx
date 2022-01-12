@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 // @ts-ignore
 import { StackNavigationProp } from '@react-navigation/native-stack';
 
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { FAB } from 'react-native-paper';
 
 import PasswordItem from 'components/PasswordList/PasswordItem/passwordItem';
 import styles from './styles';
@@ -28,6 +29,8 @@ interface PasswordI {
 }
 
 const PasswordList = () => {
+  const [scrollIsClose2Bottom, setScrollIsClose2Bottom] = useState(false);
+
   const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
   const dispatch = useDispatch();
   const scrollViewRef = useRef();
@@ -55,6 +58,15 @@ const PasswordList = () => {
       });
   };
 
+  const handleScrollIsClose2Bottom = (event: any) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    const paddingToBottom = 20;
+    const result =
+      layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom;
+
+    setScrollIsClose2Bottom(result);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.tasksWrapper}>
@@ -68,6 +80,7 @@ const PasswordList = () => {
         </View>
         <ScrollView
           // ref={scrollViewRef}
+          onScroll={handleScrollIsClose2Bottom}
           contentContainerStyle={{
             flexGrow: 1,
           }}
@@ -84,6 +97,19 @@ const PasswordList = () => {
           </View>
         </ScrollView>
       </View>
+      <FAB
+        style={{
+          position: 'absolute',
+          margin: 26,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#3091e0',
+        }}
+        color={'#FFF'}
+        visible={!scrollIsClose2Bottom}
+        icon='plus'
+        onPress={() => console.log('Pressed')}
+      />
     </View>
   );
 };

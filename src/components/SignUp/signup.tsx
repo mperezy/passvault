@@ -5,15 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
-import {
-  View,
-  Text,
-  Platform,
-  KeyboardAvoidingView,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, Platform, Image, TextInput, TouchableOpacity } from 'react-native';
 
 // @ts-ignore
 import { StackNavigationProp } from '@react-navigation/native-stack';
@@ -58,10 +50,7 @@ const SignUp = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <Image style={styles.loginImage} source={require('assets/main/passvault-512px.png')} />
       <View style={styles.inputContainer}>
         <TextInput
@@ -96,7 +85,7 @@ const SignUp = () => {
           <Text style={styles.linkText}>Go to Login if you have an account</Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

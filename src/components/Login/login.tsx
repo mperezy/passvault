@@ -10,15 +10,7 @@ import {
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
 import { setUserData2LS } from 'utils/localStorageFuncs';
-import {
-  Image,
-  Text,
-  KeyboardAvoidingView,
-  TextInput,
-  Platform,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { Image, Text, TextInput, Platform, View, TouchableOpacity } from 'react-native';
 
 import { Popable } from 'react-native-popable';
 // @ts-ignore
@@ -78,10 +70,7 @@ const Login = () => {
     <>
       {isRequesting && <LoadingIndicator />}
       {!isRequesting && (
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.container}
-        >
+        <View style={styles.container}>
           <Image style={styles.loginImage} source={require('assets/main/passvault-512px.png')} />
           <View style={styles.inputContainer}>
             <TextInput
@@ -133,7 +122,7 @@ const Login = () => {
               <Image style={styles.tooltipImage} source={require('assets/info-icon.png')} />
             </Popable>
           </View>
-        </KeyboardAvoidingView>
+        </View>
       )}
     </>
   );
