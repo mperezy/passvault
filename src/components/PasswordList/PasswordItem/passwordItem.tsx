@@ -19,6 +19,11 @@ import {
 } from 'react-native';
 import { icons, item, input } from './styles';
 import { Snackbar } from 'react-native-paper';
+import {
+  imageSourceRetriever,
+  socialMediaIcon,
+  socialMediaIconColor,
+} from 'utils/imageDataRetriever';
 
 interface PasswordI {
   passwordGenerated: string;
@@ -28,32 +33,13 @@ interface PasswordI {
 const SocialMediaIcon = (props: { socialMedia: string }) => {
   const { socialMedia } = props;
 
-  if (['google', 'slack', 'okta'].includes(socialMedia)) {
-    const imageSource =
-      socialMedia === 'google'
-        ? require('assets/google.png')
-        : socialMedia === 'slack'
-        ? require('assets/slack.png')
-        : socialMedia === 'okta'
-        ? require('assets/okta.png')
-        : '';
+  if (['amazon', 'discord', 'google', 'slack', 'okta', 'outlook', 'twitch'].includes(socialMedia)) {
+    const imageSource = imageSourceRetriever(socialMedia);
+
     return <Image style={{ width: 24, height: 24 }} source={imageSource} />;
   } else {
-    const getSocialMedia: any =
-      socialMedia === 'facebook'
-        ? 'facebook-square'
-        : socialMedia === 'linkedin'
-        ? 'linkedin-square'
-        : socialMedia;
-
-    const socialMediaColor: any =
-      socialMedia === 'facebook'
-        ? '#4267B2'
-        : socialMedia === 'twitter'
-        ? '#00ACEE'
-        : socialMedia === 'linkedin'
-        ? '#2867B2'
-        : 'black';
+    const getSocialMedia: any = socialMediaIcon(socialMedia);
+    const socialMediaColor = socialMediaIconColor(socialMedia);
 
     return <AntDesign name={getSocialMedia} size={24} color={socialMediaColor} />;
   }
@@ -98,8 +84,8 @@ const PasswordIcons = (props: {
           color='grey'
         />
       </TouchableOpacity>
-      <FontAwesome style={{ marginRight: 5 }} name='edit' size={18} color='grey' />
-      <Ionicons name='trash' size={18} color='grey' />
+      <FontAwesome style={{ marginRight: 5 }} name='edit' size={18} color='#0F9D58' />
+      <Ionicons name='trash' size={18} color='#DB4437' />
     </View>
   );
 };
