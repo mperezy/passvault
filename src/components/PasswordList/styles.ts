@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   tasksWrapper: {
     paddingTop: 20,
     paddingHorizontal: 20,
-    marginBottom: 150,
+    marginBottom: 70,
   },
   sectionTitle: {
     fontSize: 24,

@@ -75,12 +75,11 @@ const PasswordList = () => {
         >
           <View style={styles.items}>
             {passwords.map((passwordItem: PasswordI) => (
-              <TouchableOpacity key={passwordItem.id} onPress={() => console.log(passwordItem.id)}>
-                <PasswordItem
-                  passwordGenerated={passwordItem.password_generated}
-                  socialMedia={passwordItem.social_media}
-                />
-              </TouchableOpacity>
+              <PasswordItem
+                key={passwordItem.id}
+                passwordGenerated={passwordItem.password_generated}
+                socialMedia={passwordItem.social_media}
+              />
             ))}
           </View>
         </ScrollView>
