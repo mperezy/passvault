@@ -33,18 +33,18 @@ interface PasswordI {
   setSnackbarMessage: any;
 }
 
-const SocialMediaIcon = (props: { socialMedia: string }) => {
-  const { socialMedia } = props;
+const SocialMediaIcon = (props: { style: any; socialMedia: string }) => {
+  const { style, socialMedia } = props;
 
   if (['amazon', 'discord', 'google', 'slack', 'okta', 'outlook', 'twitch'].includes(socialMedia)) {
     const imageSource = imageSourceRetriever(socialMedia);
 
-    return <Image style={{ width: 24, height: 24 }} source={imageSource} />;
+    return <Image style={style} source={imageSource} />;
   } else {
     const getSocialMedia: any = socialMediaIcon(socialMedia);
     const socialMediaColor = socialMediaIconColor(socialMedia);
 
-    return <AntDesign name={getSocialMedia} size={24} color={socialMediaColor} />;
+    return <AntDesign style={style} name={getSocialMedia} size={24} color={socialMediaColor} />;
   }
 };
 
@@ -82,7 +82,7 @@ const PasswordIcons = (props: {
     <View style={icons.container}>
       <TouchableOpacity onPress={handleShowHidePassword}>
         <Entypo
-          style={{ marginRight: 10 }}
+          style={icons.singleIcon}
           name={passwordVisible ? 'eye' : 'eye-with-line'}
           size={18}
           color='grey'
@@ -90,7 +90,7 @@ const PasswordIcons = (props: {
       </TouchableOpacity>
       <TouchableOpacity onPress={handleCopyButton}>
         <MaterialCommunityIcons
-          style={{ marginRight: 10 }}
+          style={icons.singleIcon}
           name='content-copy'
           size={18}
           color='grey'
@@ -108,12 +108,16 @@ const PasswordItem = (props: PasswordI) => {
 
   return (
     <View style={item.container}>
-      <SocialMediaIcon socialMedia={socialMedia} />
-      <TextInput
-        style={input.container}
-        value={passwordGenerated}
-        secureTextEntry={!passwordVisible}
-      />
+      <View style={item.iconPasswordWrapper}>
+        <SocialMediaIcon style={icons.socialMedia} socialMedia={socialMedia} />
+        <TextInput
+          style={input.container}
+          showSoftInputOnFocus={false}
+          caretHidden={true}
+          value={passwordGenerated}
+          secureTextEntry={!passwordVisible}
+        />
+      </View>
       <PasswordIcons
         passwordGenerated={passwordGenerated}
         passwordVisible={passwordVisible}

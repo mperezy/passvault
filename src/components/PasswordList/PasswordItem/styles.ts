@@ -6,6 +6,12 @@ export const icons = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
+
+  singleIcon: {
+    marginRight: 10,
+  },
+
+  socialMedia: { width: 24, height: 24, marginRight: 10 },
 });
 
 export const item = StyleSheet.create({
@@ -30,11 +36,13 @@ export const item = StyleSheet.create({
 
     elevation: 5,
   },
+
+  iconPasswordWrapper: { width: '50%', flexDirection: 'row', alignItems: 'center' },
 });
 
 export const input = StyleSheet.create({
   container: {
-    width: '50%',
+    width: '100%',
     fontFamily: 'monospace',
     fontWeight: 'bold',
     fontSize: Platform.OS === 'web' ? 16 : 13,
