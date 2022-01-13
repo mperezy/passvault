@@ -43,7 +43,7 @@ export const item = StyleSheet.create({
 export const input = StyleSheet.create({
   container: {
     width: '100%',
-    fontFamily: 'monospace',
+    fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
     fontWeight: 'bold',
     fontSize: Platform.OS === 'web' ? 16 : 13,
   },

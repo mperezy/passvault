@@ -46,7 +46,7 @@ export const passwordStyle = StyleSheet.create({
     paddingVertical: 7,
     borderRadius: 10,
     textAlign: 'left',
-    fontFamily: 'monospace',
+    fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
     fontWeight: 'bold',
     fontSize: Platform.OS === 'web' ? 16 : 20,
   },
