@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+// @ts-ignore
+import { StackNavigationProp } from '@react-navigation/native-stack';
+
 import {
   AntDesign,
   Entypo,
@@ -17,14 +20,17 @@ import {
   Clipboard,
 } from 'react-native';
 import { icons, item, input } from './styles';
-import { Snackbar } from 'react-native-paper';
 
+import { Snackbar } from 'react-native-paper';
 import {
   imageSourceRetriever,
   socialMediaIcon,
   socialMediaIconColor,
 } from 'utils/imageDataRetriever';
 import { showToastMessage } from 'utils/toastAndroidMessage';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setIsEditMode, setPassword } from 'reduxStore/slices/passwordSlice';
 
 interface PasswordI {
   passwordGenerated: string;
@@ -55,6 +61,9 @@ const PasswordIcons = (props: {
   setSnackbarVisible: any;
   setSnackbarMessage: any;
 }) => {
+  const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
+  const dispatch = useDispatch();
+
   const {
     passwordGenerated,
     passwordVisible,
@@ -96,7 +105,15 @@ const PasswordIcons = (props: {
           color='grey'
         />
       </TouchableOpacity>
-      <FontAwesome style={{ marginRight: 5 }} name='edit' size={18} color='grey' />
+      <TouchableOpacity
+        onPress={() => {
+          dispatch(setIsEditMode({ isEditMode: true }));
+          dispatch(setPassword({ password: passwordGenerated }));
+          navigation.navigate('PasswordGenerator');
+        }}
+      >
+        <FontAwesome style={{ marginRight: 5 }} name='edit' size={18} color='grey' />
+      </TouchableOpacity>
       <Ionicons name='trash' size={18} color='#DB4437' />
     </View>
   );

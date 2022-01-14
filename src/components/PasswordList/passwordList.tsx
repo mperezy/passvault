@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 // @ts-ignore
 import { StackNavigationProp } from '@react-navigation/native-stack';
 
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, BackHandler } from 'react-native';
 import { FAB } from 'react-native-paper';
 
 import PasswordItem from 'components/PasswordList/PasswordItem/passwordItem';
@@ -16,6 +16,7 @@ import { auth, passwordsCollection } from 'services/firebase';
 import {
   getPasswordsFromFirebase,
   selectPasswords,
+  setIsCreateMode,
   unsetPasswords,
 } from 'reduxStore/slices/passwordSlice';
 
@@ -43,6 +44,10 @@ const PasswordList = () => {
   const passwords = useSelector(selectPasswords);
 
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      BackHandler.exitApp();
+      return true;
+    });
     passwordsCollection.onSnapshot(() => {
       dispatch(getPasswordsFromFirebase());
     });
@@ -114,7 +119,7 @@ const PasswordList = () => {
         visible={!scrollIsClose2Bottom}
         icon='plus'
         onPress={() => {
-          // @ts-ignore
+          dispatch(setIsCreateMode({ isCreateMode: true }));
           navigation.navigate('PasswordGenerator');
         }}
       />

@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+// @ts-ignore
+import { StackNavigationProp } from '@react-navigation/native-stack';
 
 import {
   generatePassword,
+  selectIsCreateMode,
+  selectIsEditMode,
   selectPassword,
   selectPasswordLength,
+  setIsCreateMode,
+  setIsEditMode,
 } from 'reduxStore/slices/passwordSlice';
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -16,6 +23,7 @@ import {
   Clipboard,
   ToastAndroid,
   Platform,
+  BackHandler,
 } from 'react-native';
 
 import Checkbox from 'expo-checkbox';
@@ -29,6 +37,7 @@ import { getPasswordGenerated } from 'utils/localStorageFuncs';
 import { showToastMessage } from 'utils/toastAndroidMessage';
 
 const PasswordGenerator = () => {
+  const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [password, setPassword] = useState('');
@@ -36,14 +45,40 @@ const PasswordGenerator = () => {
   const passwordFromState = useSelector(selectPassword);
   const passwordLength = useSelector(selectPasswordLength);
 
+  const isCreateMode = useSelector(selectIsCreateMode);
+  const isEditMode = useSelector(selectIsEditMode);
+
   const dispatch = useDispatch();
 
   const handleGeneratePassword = () => {
-    dispatch(generatePassword());
+    if (!isEditMode) {
+      dispatch(generatePassword());
+    }
+  };
+
+  const resetCreateEditMode = () => {
+    if (isEditMode) {
+      dispatch(setIsEditMode({ isEditMode: !isEditMode }));
+    }
+
+    if (isCreateMode) {
+      dispatch(setIsCreateMode({ isCreateMode: !isCreateMode }));
+    }
+  };
+
+  const handleBackAction = () => {
+    resetCreateEditMode();
+    navigation.goBack(null);
+    return true;
   };
 
   useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackAction);
     handleGeneratePassword();
+
+    return () => {
+      resetCreateEditMode();
+    };
   }, []);
 
   useEffect(() => {
@@ -60,7 +95,9 @@ const PasswordGenerator = () => {
           setSnackbarVisible(true);
         }
 
-        Clipboard.setString(password.password);
+        const password2Clipboard = isEditMode ? passwordFromState : password.password;
+
+        Clipboard.setString(password2Clipboard);
       })
       .catch((err: any) => {
         console.log({ err });
@@ -119,7 +156,10 @@ const PasswordGenerator = () => {
               keyboardType={'numeric'}
               value={passwordLength.toString()}
             />
-            <SliderContainer defaultValue={10} handleGeneratePassword={handleGeneratePassword} />
+            <SliderContainer
+              defaultValue={isEditMode ? passwordFromState.length : 10}
+              handleGeneratePassword={handleGeneratePassword}
+            />
           </View>
         </View>
 
