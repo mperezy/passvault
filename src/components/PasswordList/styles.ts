@@ -5,18 +5,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#EBEAED',
   },
-  tasksWrapper: {
-    paddingTop: 20,
-    paddingHorizontal: 20,
-    marginBottom: 70,
-  },
   sectionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     paddingBottom: 20,
   },
   items: {
-    marginTop: 10,
+    margin: 20,
   },
   writeTaskWrapper: {
     position: 'absolute',

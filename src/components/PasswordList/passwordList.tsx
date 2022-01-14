@@ -77,36 +77,34 @@ const PasswordList = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.tasksWrapper}>
-        <View style={styles.navWrapper}>
-          <Text style={styles.sectionTitle}>{userName}'s passwords</Text>
-          <TouchableOpacity onPress={handleSignOut}>
-            <View style={styles.navButtonContainer}>
-              <Text style={styles.navButton}>Sign Out</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <ScrollView
-          // ref={scrollViewRef}
-          onScroll={handleScrollIsClose2Bottom}
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
-          keyboardShouldPersistTaps='handled'
-        >
-          <View style={styles.items}>
-            {passwords.map((passwordItem: PasswordI) => (
-              <PasswordItem
-                key={passwordItem.id}
-                passwordGenerated={passwordItem.password_generated}
-                socialMedia={passwordItem.social_media}
-                setSnackbarVisible={setSnackbarVisible}
-                setSnackbarMessage={setSnackbarMessage}
-              />
-            ))}
+      <ScrollView
+        // ref={scrollViewRef}
+        onScroll={handleScrollIsClose2Bottom}
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
+        keyboardShouldPersistTaps='handled'
+      >
+        <View style={styles.items}>
+          <View style={styles.navWrapper}>
+            <Text style={styles.sectionTitle}>{userName}'s passwords</Text>
+            <TouchableOpacity onPress={handleSignOut}>
+              <View style={styles.navButtonContainer}>
+                <Text style={styles.navButton}>Sign Out</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-      </View>
+          {passwords.map((passwordItem: PasswordI) => (
+            <PasswordItem
+              key={passwordItem.id}
+              passwordGenerated={passwordItem.password_generated}
+              socialMedia={passwordItem.social_media}
+              setSnackbarVisible={setSnackbarVisible}
+              setSnackbarMessage={setSnackbarMessage}
+            />
+          ))}
+        </View>
+      </ScrollView>
       <FAB
         style={{
           position: 'absolute',
