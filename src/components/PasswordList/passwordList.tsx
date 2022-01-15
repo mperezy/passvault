@@ -82,7 +82,7 @@ const PasswordList = (props: { navigation: any }) => {
 
   const handleScrollIsClose2Bottom = (event: any) => {
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const paddingToBottom = 20;
+    const paddingToBottom = Platform.OS === 'web' ? 7 : 10;
     const result =
       layoutMeasurement.height + contentOffset.y >= contentSize.height - paddingToBottom;
 
@@ -93,6 +93,7 @@ const PasswordList = (props: { navigation: any }) => {
     <View style={styles.container}>
       <ScrollView
         // ref={scrollViewRef}
+        scrollEventThrottle={16}
         onScroll={handleScrollIsClose2Bottom}
         contentContainerStyle={{
           flexGrow: 1,
