@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 // @ts-ignore
 import { StackNavigationProp } from '@react-navigation/native-stack';
 
-import { View, Text, TouchableOpacity, ScrollView, BackHandler } from 'react-native';
+import { View, TouchableOpacity, ScrollView, BackHandler, Platform } from 'react-native';
 import { FAB } from 'react-native-paper';
 
 import PasswordItem from 'components/PasswordList/PasswordItem/passwordItem';
@@ -22,6 +22,7 @@ import {
 
 import { selectUserEmail } from 'reduxStore/slices/userSlice';
 import { CustomSnackBar } from 'components/common/CustomSnackBar';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface PasswordI {
   id: string;
@@ -30,18 +31,31 @@ interface PasswordI {
   social_media: string;
 }
 
-const PasswordList = () => {
+const PasswordList = (props: { navigation: any }) => {
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [scrollIsClose2Bottom, setScrollIsClose2Bottom] = useState(false);
 
-  const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
+  const { navigation } = props;
   const dispatch = useDispatch();
   const scrollViewRef = useRef();
 
   const userEmail = useSelector(selectUserEmail);
   const userName = userEmail ? userEmail.substring(0, userEmail.indexOf('@')) : '';
   const passwords = useSelector(selectPasswords);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{ paddingRight: Platform.OS === 'web' ? 15 : 0 }}
+          onPress={handleSignOut}
+        >
+          <MaterialIcons name='logout' size={24} color='black' />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -86,14 +100,6 @@ const PasswordList = () => {
         keyboardShouldPersistTaps='handled'
       >
         <View style={styles.items}>
-          <View style={styles.navWrapper}>
-            <Text style={styles.sectionTitle}>{userName}'s passwords</Text>
-            <TouchableOpacity onPress={handleSignOut}>
-              <View style={styles.navButtonContainer}>
-                <Text style={styles.navButton}>Sign Out</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
           {passwords.map((passwordItem: PasswordI) => (
             <PasswordItem
               key={passwordItem.id}
