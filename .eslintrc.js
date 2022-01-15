@@ -41,6 +41,7 @@ module.exports = {
           ['components', './src/components'],
           ['reduxStore', './src/redux'],
           ['services', './src/services'],
+          ['screens', './src/screens'],
           ['utils', './src/utils'],
         ],
         extensions: ['.ts', '.js', '.jsx', '.json'],

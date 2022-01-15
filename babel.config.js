@@ -13,6 +13,7 @@ module.exports = (api) => {
             components: './src/components',
             reduxStore: './src/redux',
             services: './src/services',
+            screens: './src/screens',
             utils: './src/utils',
           },
         },

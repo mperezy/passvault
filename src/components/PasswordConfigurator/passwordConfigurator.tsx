@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Text, View, ToastAndroid, Platform /*, TouchableOpacity*/ } from 'react-native';
 import Checkbox from 'expo-checkbox';
 
-import { CustomCheckBox } from 'components/PasswordGenerator/PasswordConfigurator/CustomCheckBox/customCheckBox';
-import { checkBox } from 'components/PasswordGenerator/styles';
+import { CustomCheckBox } from 'components/PasswordConfigurator/CustomCheckBox/customCheckBox';
+import { checkBox } from 'screens/PasswordGenerator/styles';
 import {
   setIsEasy2Read,
   setIsAllChar,

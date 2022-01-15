@@ -3,7 +3,7 @@ import { Snackbar } from 'react-native-paper';
 
 // Reference for Icons usage: https://icons.expo.fyi/
 
-export const CustomSnackBar = (props: {
+export const CustomSnackbar = (props: {
   message: string;
   isSnackbarVisible: boolean;
   setSnackbarVisible: any;

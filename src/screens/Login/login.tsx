@@ -19,8 +19,8 @@ import { StackNavigationProp } from '@react-navigation/native-stack';
 
 import { auth } from 'services/firebase';
 
-import { LoadingIndicator } from 'components/LoadingIndicator';
-import { shadow } from 'components/PasswordGenerator/styles';
+import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
+import { shadow } from 'screens/PasswordGenerator/styles';
 import styles from './styles';
 
 // Reference for popover: https://github.com/eveningkid/react-native-popable

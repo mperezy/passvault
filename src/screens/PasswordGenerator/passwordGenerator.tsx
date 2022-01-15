@@ -27,10 +27,10 @@ import {
 } from 'react-native';
 
 import Checkbox from 'expo-checkbox';
-import { CustomCheckBox } from 'components/PasswordGenerator/PasswordConfigurator/CustomCheckBox/customCheckBox';
-import SliderContainer from 'components/PasswordGenerator/SliderContainer/sliderContainer';
-import { PasswordConfigurator } from 'components/PasswordGenerator/PasswordConfigurator/passwordConfigurator';
-import { CustomSnackBar } from 'components/common/CustomSnackBar';
+import { CustomCheckBox } from 'components/PasswordConfigurator/CustomCheckBox/customCheckBox';
+import SliderContainer from 'components/SliderContainer/sliderContainer';
+import { PasswordConfigurator } from 'components/PasswordConfigurator/passwordConfigurator';
+import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
 
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
@@ -166,7 +166,7 @@ const PasswordGenerator = () => {
         <PasswordConfigurator />
       </View>
 
-      <CustomSnackBar
+      <CustomSnackbar
         message={snackbarMessage}
         isSnackbarVisible={isSnackbarVisible}
         setSnackbarVisible={setSnackbarVisible}

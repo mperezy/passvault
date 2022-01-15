@@ -8,6 +8,7 @@
       ],
       "reduxStore/*": ["./src/redux/*"],
       "services/*": ["./src/services/*"],
+      "screens/*": ["./src/screens/*"],
       "utils/*": ["./src/utils/*"]
     }
   }

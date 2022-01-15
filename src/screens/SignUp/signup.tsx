@@ -11,8 +11,8 @@ import { View, Text, Platform, Image, TextInput, TouchableOpacity } from 'react-
 import { StackNavigationProp } from '@react-navigation/native-stack';
 
 import { auth } from 'services/firebase';
-import { shadow } from 'components/PasswordGenerator/styles';
-import styles from 'components/Login/styles';
+import { shadow } from 'screens/PasswordGenerator/styles';
+import styles from 'screens/Login/styles';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');

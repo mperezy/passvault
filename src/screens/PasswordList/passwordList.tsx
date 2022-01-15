@@ -7,7 +7,7 @@ import { StackNavigationProp } from '@react-navigation/native-stack';
 import { View, TouchableOpacity, ScrollView, BackHandler, Platform } from 'react-native';
 import { FAB } from 'react-native-paper';
 
-import PasswordItem from 'components/PasswordList/PasswordItem/passwordItem';
+import PasswordItem from 'components/PasswordItem/passwordItem';
 import styles from './styles';
 
 import { clearUserDataFromLS } from 'utils/localStorageFuncs';
@@ -21,7 +21,7 @@ import {
 } from 'reduxStore/slices/passwordSlice';
 
 import { selectUserEmail } from 'reduxStore/slices/userSlice';
-import { CustomSnackBar } from 'components/common/CustomSnackBar';
+import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 import { MaterialIcons } from '@expo/vector-icons';
 
 interface PasswordI {
@@ -128,7 +128,7 @@ const PasswordList = (props: { navigation: any }) => {
           navigation.navigate('PasswordGenerator');
         }}
       />
-      <CustomSnackBar
+      <CustomSnackbar
         message={snackbarMessage}
         isSnackbarVisible={isSnackbarVisible}
         setSnackbarVisible={setSnackbarVisible}
