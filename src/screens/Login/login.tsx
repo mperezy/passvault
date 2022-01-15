@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -7,31 +6,29 @@ import {
   setIsRequest,
   unsetIsRequest,
 } from 'reduxStore/slices/applicationStatusSlice';
+
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
-
 import { setUserData2LS } from 'utils/localStorageFuncs';
+
 import { Image, Text, TextInput, Platform, View, TouchableOpacity } from 'react-native';
-
 import { Popable } from 'react-native-popable';
-// @ts-ignore
-
-import { StackNavigationProp } from '@react-navigation/native-stack';
-
-import { auth } from 'services/firebase';
 
 import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
+
 import { shadow } from 'screens/PasswordGenerator/styles';
+
+import { auth, signIn } from 'services/firebase';
 import styles from './styles';
 
 // Reference for popover: https://github.com/eveningkid/react-native-popable
 
-const Login = () => {
+export const Login = (props: { navigation: any }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
   const isRequesting = useSelector(selectRequest);
-  const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
+  const { navigation } = props;
 
   useEffect(() => {
     dispatch(setIsRequest({ isRequest: true }));
@@ -43,7 +40,7 @@ const Login = () => {
         if (user) {
           dispatch(setUserData({ id: user.uid, email: user.email }));
           dispatch(unsetIsRequest());
-          navigation.replace('PasswordList');
+          navigation.replace('CustomDrawer');
         } else {
           dispatch(unsetUserData());
           dispatch(unsetIsRequest());
@@ -53,17 +50,7 @@ const Login = () => {
   );
 
   const handleLogin = () => {
-    auth
-      .signInWithEmailAndPassword(`${username}@example.com`, password)
-      .then((userCredentials) => {
-        const { user } = userCredentials;
-
-        setUserData2LS(user?.uid, user?.email);
-      })
-      .catch((error) => {
-        alert(error.message);
-        console.log({ exception: error.message });
-      });
+    signIn(username, password);
   };
 
   return (
@@ -127,5 +114,3 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;

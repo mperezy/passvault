@@ -31,7 +31,7 @@ interface PasswordI {
   social_media: string;
 }
 
-const PasswordList = (props: { navigation: any }) => {
+export const PasswordList = (props: { navigation: any }) => {
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [scrollIsClose2Bottom, setScrollIsClose2Bottom] = useState(false);
@@ -40,22 +40,7 @@ const PasswordList = (props: { navigation: any }) => {
   const dispatch = useDispatch();
   const scrollViewRef = useRef();
 
-  const userEmail = useSelector(selectUserEmail);
-  const userName = userEmail ? userEmail.substring(0, userEmail.indexOf('@')) : '';
   const passwords = useSelector(selectPasswords);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={{ paddingRight: Platform.OS === 'web' ? 15 : 0 }}
-          onPress={handleSignOut}
-        >
-          <MaterialIcons name='logout' size={24} color='black' />
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -66,19 +51,6 @@ const PasswordList = (props: { navigation: any }) => {
       dispatch(getPasswordsFromFirebase());
     });
   }, []);
-
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        clearUserDataFromLS();
-        dispatch(unsetPasswords());
-        navigation.replace('Login');
-      })
-      .catch((error) => {
-        console.log({ exception: error.message });
-      });
-  };
 
   const handleScrollIsClose2Bottom = (event: any) => {
     const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
@@ -136,5 +108,3 @@ const PasswordList = (props: { navigation: any }) => {
     </View>
   );
 };
-
-export default PasswordList;

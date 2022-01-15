@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import firebase from 'firebase';
 import 'firebase/firestore';
+import { clearUserDataFromLS, setUserData2LS } from 'utils/localStorageFuncs';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,9 +18,48 @@ const firebaseConfig = {
 
 const appLength: number = firebase.apps.length;
 
-// eslint-disable-next-line no-unused-vars
 const app = appLength === 0 ? firebase.initializeApp(firebaseConfig) : firebase.app();
 const database = firebase.firestore(app);
 
 export const auth = firebase.auth();
 export const passwordsCollection = database.collection('passwords');
+
+export const signIn = (username: string, password: string) => {
+  auth
+    .signInWithEmailAndPassword(`${username}@example.com`, password)
+    .then((userCredentials) => {
+      const { user } = userCredentials;
+
+      setUserData2LS(user?.uid, user?.email);
+    })
+    .catch((error) => {
+      alert(error.message);
+      console.log({ exception: error.message });
+    });
+};
+
+export const signOut = (reduxAction: any, navigation: any) => {
+  auth
+    .signOut()
+    .then(() => {
+      clearUserDataFromLS();
+      reduxAction();
+      navigation.replace('Login');
+    })
+    .catch((error) => {
+      console.log({ exception: error.message });
+    });
+};
+
+export const signUp = (username: string, password: string) => {
+  auth
+    .createUserWithEmailAndPassword(`${username}@example.com`, password)
+    .then((userCredentials) => {
+      const { user } = userCredentials;
+      console.log({ user });
+    })
+    .catch((error) => {
+      alert(error.message);
+      console.log({ exception: error.message });
+    });
+};

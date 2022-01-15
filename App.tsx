@@ -5,10 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Provider } from 'react-redux';
-import Login from 'screens/Login/login';
-import SignUp from 'screens/SignUp/signup';
-import PasswordGenerator from 'screens/PasswordGenerator/passwordGenerator';
-import PasswordList from 'screens/PasswordList/passwordList';
+import { Login } from 'screens/Login/login';
+import { SignUp } from 'screens/SignUp/signup';
+import { PasswordGenerator } from 'screens/PasswordGenerator/passwordGenerator';
+import { CustomDrawer } from 'screens/Drawer/drawer';
 
 import store from 'reduxStore/store/index';
 import { devWarnings } from 'utils/constants';
@@ -34,7 +34,11 @@ export default function App() {
           <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
           <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
           <Stack.Screen name='PasswordGenerator' component={PasswordGenerator} />
-          <Stack.Screen name='PasswordList' component={PasswordList} />
+          <Stack.Screen
+            name='CustomDrawer'
+            component={CustomDrawer}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

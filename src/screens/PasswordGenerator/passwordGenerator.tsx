@@ -36,7 +36,7 @@ import { shadow, screen, passwordStyle, configuration, checkBox } from './styles
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
 import { showToastMessage } from 'utils/toastAndroidMessage';
 
-const PasswordGenerator = () => {
+export const PasswordGenerator = () => {
   const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -174,5 +174,3 @@ const PasswordGenerator = () => {
     </View>
   );
 };
-
-export default PasswordGenerator;

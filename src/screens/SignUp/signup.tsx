@@ -1,32 +1,28 @@
 import React, { useEffect, useState } from 'react';
-
 import { useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
 import { View, Text, Platform, Image, TextInput, TouchableOpacity } from 'react-native';
 
-// @ts-ignore
-import { StackNavigationProp } from '@react-navigation/native-stack';
-
-import { auth } from 'services/firebase';
 import { shadow } from 'screens/PasswordGenerator/styles';
 import styles from 'screens/Login/styles';
 
-const SignUp = () => {
+import { auth, signUp } from 'services/firebase';
+
+export const SignUp = (props: { navigation: any }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
+  const { navigation } = props;
 
   useEffect(
     () =>
       auth.onAuthStateChanged((user) => {
         if (user) {
           dispatch(setUserData({ id: user.uid, email: user.email }));
-          navigation.replace('PasswordList');
+          navigation.replace('CustomDrawer');
         } else {
           dispatch(unsetUserData());
         }
@@ -35,18 +31,9 @@ const SignUp = () => {
   );
 
   const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(`${username}@example.com`, password)
-      .then((userCredentials) => {
-        const { user } = userCredentials;
-        console.log({ user });
-        setUsername('');
-        setPassword('');
-      })
-      .catch((error) => {
-        alert(error.message);
-        console.log({ exception: error.message });
-      });
+    signUp(username, password);
+    setUsername('');
+    setPassword('');
   };
 
   return (
@@ -88,5 +75,3 @@ const SignUp = () => {
     </View>
   );
 };
-
-export default SignUp;
