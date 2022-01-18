@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { appColors } from 'utils/constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: '#3091e0',
+    backgroundColor: appColors.primary,
     width: '70%',
     padding: 10,
     borderRadius: 10,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
   buttonOutLine: {
     backgroundColor: 'white',
     marginTop: 5,
-    borderColor: '#3091e0',
+    borderColor: appColors.primary,
     borderWidth: 2,
   },
   buttonOutLineText: {

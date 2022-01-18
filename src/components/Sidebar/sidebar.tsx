@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { Image, View, Text, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
-import { Divider } from 'react-native-paper';
+import { Divider, Drawer } from 'react-native-paper';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
 import { selectUserEmail } from 'reduxStore/slices/userSlice';
@@ -32,15 +32,21 @@ export const CustomSidebar = (props: any) => {
       >
         <Text style={imageBackground.name}>Hi there, {userName} !</Text>
       </ImageBackground>
-      <ScrollView style={{ paddingTop: 10 }}>
-        <DrawerItemList {...props} />
-      </ScrollView>
+      <Drawer.Section title='Pages'>
+        <ScrollView style={{ paddingTop: 10 }}>
+          <DrawerItemList {...props} />
+        </ScrollView>
+      </Drawer.Section>
 
-      <Divider style={divider.divider} />
-      <TouchableOpacity style={signout.container} onPress={handleSignOut}>
-        <MaterialIcons style={signout.icon} name='logout' size={24} color='black' />
-        <Text style={signout.text}>Sign out</Text>
-      </TouchableOpacity>
+      <Drawer.Section>
+        <DrawerItem
+          icon={({ color, size }) => (
+            <MaterialIcons name='logout' size={size * 0.75} color={color} />
+          )}
+          label='Sign out'
+          onPress={handleSignOut}
+        />
+      </Drawer.Section>
     </View>
   );
 };

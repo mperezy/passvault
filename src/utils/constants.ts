@@ -9,4 +9,12 @@ const devWarnings = [
   'Setting a timer for a long period of time, i.e. multiple minutes',
 ];
 
-export { devWarnings, lower, upper, number, symbols };
+const appColors = {
+  textTint: '#FFF',
+  maximumTintColorSlider: '#d3d3d3',
+  activeTint: '#9ac8fc',
+  primary: '#3091e0',
+  primaryDark: '#236daa',
+};
+
+export { devWarnings, lower, upper, number, symbols, appColors };

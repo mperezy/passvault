@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
-
+import { useDispatch } from 'react-redux';
 // @ts-ignore
 import { StackNavigationProp } from '@react-navigation/native-stack';
-
-import {
-  AntDesign,
-  Entypo,
-  FontAwesome,
-  Ionicons,
-  MaterialCommunityIcons,
-} from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { Snackbar } from 'react-native-paper';
 import {
   View,
   StyleSheet,
@@ -19,18 +13,25 @@ import {
   TextInput,
   Clipboard,
 } from 'react-native';
-import { icons, item, input } from './styles';
 
-import { Snackbar } from 'react-native-paper';
+import { setIsEditMode, setPassword } from 'reduxStore/slices/passwordSlice';
+
+import {
+  AntDesign,
+  Entypo,
+  FontAwesome,
+  Ionicons,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
+
 import {
   imageSourceRetriever,
   socialMediaIcon,
   socialMediaIconColor,
 } from 'utils/imageDataRetriever';
 import { showToastMessage } from 'utils/toastAndroidMessage';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { setIsEditMode, setPassword } from 'reduxStore/slices/passwordSlice';
+
+import { icons, item, input } from './styles';
 
 interface PasswordI {
   passwordGenerated: string;

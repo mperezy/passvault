@@ -12,6 +12,7 @@ import { CustomDrawer } from 'screens/Drawer/drawer';
 
 import store from 'reduxStore/store/index';
 import { devWarnings } from 'utils/constants';
+// import { CustomStatusbar } from 'components/CustomStatusbar/customStatusbar';
 
 if (process.env.ENV === 'dev') {
   LogBox.ignoreLogs(devWarnings);
@@ -29,15 +30,32 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <Provider store={store}>
+      {/*<CustomStatusbar />*/}
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            statusBarStyle: 'dark',
+          }}
+        >
           <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
           <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
-          <Stack.Screen name='PasswordGenerator' component={PasswordGenerator} />
+          <Stack.Screen
+            name='PasswordGenerator'
+            component={PasswordGenerator}
+            options={{
+              title: 'Password Generator (Only)',
+              headerStyle: {
+                backgroundColor: '#3091e0',
+              },
+              headerTintColor: '#FFF',
+            }}
+          />
           <Stack.Screen
             name='CustomDrawer'
             component={CustomDrawer}
-            options={{ headerShown: false }}
+            options={{
+              headerShown: false,
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

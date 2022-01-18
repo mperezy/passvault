@@ -8,16 +8,16 @@ import {
 } from 'reduxStore/slices/applicationStatusSlice';
 
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
-import { setUserData2LS } from 'utils/localStorageFuncs';
 
 import { Image, Text, TextInput, Platform, View, TouchableOpacity } from 'react-native';
 import { Popable } from 'react-native-popable';
 
 import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
-
 import { shadow } from 'screens/PasswordGenerator/styles';
 
+import { setUserData2LS } from 'utils/localStorageFuncs';
 import { auth, signIn } from 'services/firebase';
+
 import styles from './styles';
 
 // Reference for popover: https://github.com/eveningkid/react-native-popable

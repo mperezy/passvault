@@ -19,8 +19,6 @@ export const CustomDrawer = (props: { navigation: any }) => {
         drawerStyle: {
           width: Dimensions.get('window').width * 0.7,
         },
-        // drawerHideStatusBarOnOpen: true,
-        drawerStatusBarAnimation: 'slide',
         drawerActiveBackgroundColor: '#9ac8fc',
         drawerActiveTintColor: '#3091e0',
         drawerItemStyle: {
@@ -34,7 +32,11 @@ export const CustomDrawer = (props: { navigation: any }) => {
         component={PasswordList}
         options={{
           title: 'Password List',
-          drawerIcon: ({ tintColor }) => <Feather name='list' size={24} color={tintColor} />,
+          headerStyle: {
+            backgroundColor: '#3091e0',
+          },
+          headerTintColor: '#FFF',
+          drawerIcon: ({ color, size }) => <Feather name='list' size={size * 0.75} color={color} />,
         }}
       />
       <Drawer.Screen
@@ -42,8 +44,12 @@ export const CustomDrawer = (props: { navigation: any }) => {
         component={PasswordGenerator}
         options={{
           title: 'Password Generator',
-          drawerIcon: ({ tintColor }) => (
-            <MaterialCommunityIcons name='engine-outline' size={24} color={tintColor} />
+          headerStyle: {
+            backgroundColor: '#3091e0',
+          },
+          headerTintColor: '#FFF',
+          drawerIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name='engine-outline' size={size * 0.75} color={color} />
           ),
         }}
       />

@@ -1,17 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-// @ts-ignore
-import { StackNavigationProp } from '@react-navigation/native-stack';
-
-import { View, TouchableOpacity, ScrollView, BackHandler, Platform } from 'react-native';
-import { FAB } from 'react-native-paper';
-
-import PasswordItem from 'components/PasswordItem/passwordItem';
-import styles from './styles';
-
-import { clearUserDataFromLS } from 'utils/localStorageFuncs';
-import { auth, passwordsCollection } from 'services/firebase';
 
 import {
   getPasswordsFromFirebase,
@@ -19,10 +8,20 @@ import {
   setIsCreateMode,
   unsetPasswords,
 } from 'reduxStore/slices/passwordSlice';
-
 import { selectUserEmail } from 'reduxStore/slices/userSlice';
-import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
+
+import { View, TouchableOpacity, ScrollView, BackHandler, Platform } from 'react-native';
+import { FAB } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
+
+import PasswordItem from 'components/PasswordItem/passwordItem';
+import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
+
+import { clearUserDataFromLS } from 'utils/localStorageFuncs';
+import { auth, passwordsCollection } from 'services/firebase';
+
+import { appColors } from 'utils/constants';
+import styles from './styles';
 
 interface PasswordI {
   id: string;
@@ -90,9 +89,9 @@ export const PasswordList = (props: { navigation: any }) => {
           margin: 26,
           right: 0,
           bottom: isSnackbarVisible ? 40 : 0,
-          backgroundColor: '#3091e0',
+          backgroundColor: appColors.primary,
         }}
-        color={'#FFF'}
+        color={appColors.textTint}
         visible={!scrollIsClose2Bottom}
         icon='plus'
         onPress={() => {

@@ -29,6 +29,7 @@ import {
   handleRightCheckboxes,
   updateConfiguratorStateAndGeneratePassword,
 } from 'utils/configuratorUtils';
+import { appColors } from 'utils/constants';
 
 /* Reference for checkbox usage: [
   https://docs.expo.dev/versions/latest/sdk/checkbox/,
@@ -67,7 +68,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label={'Easy to read'}
             isChecked={isEasy2Read}
-            color={'#3091e0'}
+            color={appColors.primary}
             onPress={() => {
               handleLeftCheckboxes(
                 dispatch,
@@ -85,7 +86,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label={'All characters'}
             isChecked={isAllChar}
-            color={'#3091e0'}
+            color={appColors.primary}
             onPress={() => {
               handleLeftCheckboxes(
                 dispatch,
@@ -107,7 +108,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label={'Uppercase'}
             isChecked={isUpperCase}
-            color={'#3091e0'}
+            color={appColors.primary}
             onPress={() => {
               handleRightCheckboxes(
                 !isUpperCase,
@@ -127,7 +128,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label={'Lowercase'}
             isChecked={isLowerCase}
-            color={'#3091e0'}
+            color={appColors.primary}
             onPress={() => {
               handleRightCheckboxes(
                 !isLowerCase,
@@ -148,7 +149,7 @@ export const PasswordConfigurator = () => {
             label={'Numbers'}
             isChecked={isNumbers}
             disabled={!isAllChar}
-            color={'#3091e0'}
+            color={appColors.primary}
             onPress={() => {
               handleRightCheckboxes(
                 !isNumbers,
@@ -171,7 +172,7 @@ export const PasswordConfigurator = () => {
             label={'Symbols'}
             isChecked={isSymbols}
             disabled={!isAllChar}
-            color={'#3091e0'}
+            color={appColors.primary}
             onPress={() => {
               handleRightCheckboxes(
                 !isSymbols,

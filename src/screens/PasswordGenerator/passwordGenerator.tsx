@@ -13,6 +13,7 @@ import {
   setIsCreateMode,
   setIsEditMode,
 } from 'reduxStore/slices/passwordSlice';
+import { selectUserId } from 'reduxStore/slices/userSlice';
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import {
@@ -31,8 +32,8 @@ import { CustomCheckBox } from 'components/PasswordConfigurator/CustomCheckBox/c
 import SliderContainer from 'components/SliderContainer/sliderContainer';
 import { PasswordConfigurator } from 'components/PasswordConfigurator/passwordConfigurator';
 import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
-import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
 
+import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
 import { showToastMessage } from 'utils/toastAndroidMessage';
 
@@ -47,6 +48,8 @@ export const PasswordGenerator = () => {
 
   const isCreateMode = useSelector(selectIsCreateMode);
   const isEditMode = useSelector(selectIsEditMode);
+
+  const userId = useSelector(selectUserId);
 
   const dispatch = useDispatch();
 
@@ -68,7 +71,7 @@ export const PasswordGenerator = () => {
 
   const handleBackAction = () => {
     resetCreateEditMode();
-    navigation.goBack(null);
+    navigation.navigate(userId ? 'PasswordList' : 'Login');
     return true;
   };
 
