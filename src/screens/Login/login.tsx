@@ -13,6 +13,7 @@ import { Image, Text, TextInput, Platform, View, TouchableOpacity } from 'react-
 import { Popable } from 'react-native-popable';
 
 import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
+import { PasswordToggle } from 'components/PasswordToggle/passwordToggle';
 import { shadow } from 'screens/PasswordGenerator/styles';
 
 import { setUserData2LS } from 'utils/localStorageFuncs';
@@ -25,6 +26,8 @@ import styles from './styles';
 export const Login = (props: { navigation: any }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const [hidePassword, setHidePassword] = useState(true);
 
   const dispatch = useDispatch();
   const isRequesting = useSelector(selectRequest);
@@ -53,6 +56,10 @@ export const Login = (props: { navigation: any }) => {
     signIn(username, password);
   };
 
+  const handleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
+
   return (
     <>
       {isRequesting && <LoadingIndicator />}
@@ -71,8 +78,9 @@ export const Login = (props: { navigation: any }) => {
               value={password}
               style={[styles.input, shadow.container]}
               onChangeText={(text: string) => setPassword(text)}
-              secureTextEntry
+              secureTextEntry={hidePassword}
             />
+            <PasswordToggle hidePassword={!hidePassword} action={handleHidePassword} />
           </View>
 
           <View style={styles.buttonContainer}>

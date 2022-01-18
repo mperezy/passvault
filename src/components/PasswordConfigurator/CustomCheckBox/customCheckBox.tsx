@@ -24,7 +24,7 @@ export const CustomCheckBox = (props: {
         disabled={disabled !== null ? disabled : false}
         color={isChecked ? color : undefined}
       />
-      <Text style={{ fontSize: 15, opacity: !disabled ? 1 : 0.3 }}>{label}</Text>
+      <Text style={{ fontSize: 14, opacity: !disabled ? 1 : 0.3 }}>{label}</Text>
     </TouchableOpacity>
   );
 };

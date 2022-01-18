@@ -5,14 +5,18 @@ import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
 import { View, Text, Platform, Image, TextInput, TouchableOpacity } from 'react-native';
 
+import { PasswordToggle } from 'components/PasswordToggle/passwordToggle';
 import { shadow } from 'screens/PasswordGenerator/styles';
-import styles from 'screens/Login/styles';
 
 import { auth, signUp } from 'services/firebase';
+
+import styles from 'screens/Login/styles';
 
 export const SignUp = (props: { navigation: any }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const [hidePassword, setHidePassword] = useState(true);
 
   const dispatch = useDispatch();
   const { navigation } = props;
@@ -36,6 +40,10 @@ export const SignUp = (props: { navigation: any }) => {
     setPassword('');
   };
 
+  const handleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.loginImage} source={require('assets/main/passvault-512px.png')} />
@@ -51,8 +59,9 @@ export const SignUp = (props: { navigation: any }) => {
           value={password}
           style={[styles.input, shadow.container]}
           onChangeText={(text) => setPassword(text)}
-          secureTextEntry
+          secureTextEntry={hidePassword}
         />
+        <PasswordToggle hidePassword={!hidePassword} action={handleHidePassword} />
       </View>
 
       <View style={styles.buttonContainer}>
