@@ -36,6 +36,7 @@ import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
 import { showToastMessage } from 'utils/toastAndroidMessage';
+import { Divider } from 'react-native-paper';
 
 export const PasswordGenerator = () => {
   const navigation = useNavigation<StackNavigationProp<{ route: {} }>>();
@@ -149,6 +150,8 @@ export const PasswordGenerator = () => {
           <Text style={configuration.textHeader}>Configure your password</Text>
         </View>
 
+        <Divider style={{ backgroundColor: 'grey' }} />
+
         <View style={configuration.passwordLengthContainer}>
           <Text style={{ fontSize: 17 }}>Password length</Text>
           <View style={configuration.lengthSliderContainer}>
@@ -165,6 +168,8 @@ export const PasswordGenerator = () => {
             />
           </View>
         </View>
+
+        <Divider style={{ backgroundColor: 'grey' }} />
 
         <PasswordConfigurator />
       </View>

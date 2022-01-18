@@ -75,25 +75,27 @@ export const configuration = StyleSheet.create({
     fontWeight: 'bold',
   },
   passwordLengthContainer: {
-    margin: 10,
+    padding: 10,
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
   inputLength: {
-    width: Platform.OS === 'web' ? '20%' : '19%',
+    width: Platform.OS === 'web' ? '15%' : '20%',
     borderWidth: 1,
     borderColor: '#000',
     backgroundColor: 'white',
-    paddingHorizontal: 15,
+    paddingHorizontal: 7,
     paddingVertical: 10,
+    marginRight: 5,
     borderRadius: 10,
     textAlign: 'center',
     fontWeight: 'bold',
   },
   lengthSliderContainer: {
-    margin: 10,
+    padding: 10,
+    width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
 });
@@ -102,7 +104,7 @@ export const checkBox = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginTop: 15,
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
   },
   section: {
     flexDirection: 'row',

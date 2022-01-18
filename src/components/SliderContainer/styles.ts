@@ -4,8 +4,9 @@ const borderWidth = 4;
 
 export const styles = StyleSheet.create({
   sliderContainer: {
-    width: Platform.OS === 'web' ? '80%' : '90%',
-    padding: 10,
+    width: Platform.OS === 'web' ? '85%' : '80%',
+    paddingVertical: 10,
+    paddingLeft: 10,
     flexDirection: 'column',
   },
 });
