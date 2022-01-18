@@ -22,7 +22,7 @@ export const SignUp = (props: { navigation: any }) => {
       auth.onAuthStateChanged((user) => {
         if (user) {
           dispatch(setUserData({ id: user.uid, email: user.email }));
-          navigation.replace('CustomDrawer');
+          navigation.replace('Drawer');
         } else {
           dispatch(unsetUserData());
         }

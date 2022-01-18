@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { Image, View, Text, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Divider, Drawer } from 'react-native-paper';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
@@ -25,7 +26,7 @@ export const CustomSidebar = (props: any) => {
   };
 
   return (
-    <View>
+    <SafeAreaProvider>
       <ImageBackground
         source={require('assets/img/sidebar-banner.png')}
         style={imageBackground.container}
@@ -47,6 +48,6 @@ export const CustomSidebar = (props: any) => {
           onPress={handleSignOut}
         />
       </Drawer.Section>
-    </View>
+    </SafeAreaProvider>
   );
 };

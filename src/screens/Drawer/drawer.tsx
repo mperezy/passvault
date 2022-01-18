@@ -5,16 +5,16 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { PasswordList } from 'screens/PasswordList/passwordList';
 import { PasswordGenerator } from 'screens/PasswordGenerator/passwordGenerator';
-import { CustomSidebar } from 'components/Sidebar/sidebar';
+import { CustomSidebar } from 'components/CustomSidebar/customSidebar';
 
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Dimensions } from 'react-native';
 
-const Drawer = createDrawerNavigator();
+const CustomDrawer = createDrawerNavigator();
 
-export const CustomDrawer = (props: { navigation: any }) => {
+export const Drawer = (props: { navigation: any }) => {
   return (
-    <Drawer.Navigator
+    <CustomDrawer.Navigator
       screenOptions={{
         drawerStyle: {
           width: Dimensions.get('window').width * 0.7,
@@ -27,7 +27,7 @@ export const CustomDrawer = (props: { navigation: any }) => {
       }}
       drawerContent={(props) => <CustomSidebar {...props} />}
     >
-      <Drawer.Screen
+      <CustomDrawer.Screen
         name='PasswordList'
         component={PasswordList}
         options={{
@@ -39,7 +39,7 @@ export const CustomDrawer = (props: { navigation: any }) => {
           drawerIcon: ({ color, size }) => <Feather name='list' size={size * 0.75} color={color} />,
         }}
       />
-      <Drawer.Screen
+      <CustomDrawer.Screen
         name='PasswordGenerator'
         component={PasswordGenerator}
         options={{
@@ -53,6 +53,6 @@ export const CustomDrawer = (props: { navigation: any }) => {
           ),
         }}
       />
-    </Drawer.Navigator>
+    </CustomDrawer.Navigator>
   );
 };

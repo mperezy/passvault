@@ -40,7 +40,7 @@ export const Login = (props: { navigation: any }) => {
         if (user) {
           dispatch(setUserData({ id: user.uid, email: user.email }));
           dispatch(unsetIsRequest());
-          navigation.replace('CustomDrawer');
+          navigation.replace('Drawer');
         } else {
           dispatch(unsetUserData());
           dispatch(unsetIsRequest());
