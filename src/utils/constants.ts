@@ -9,6 +9,8 @@ const devWarnings = [
   'Setting a timer for a long period of time, i.e. multiple minutes',
 ];
 
+const popoverMessage = 'You can generate passwords without store them.';
+
 const appColors = {
   textTint: '#FFF',
   maximumTintColorSlider: '#d3d3d3',
@@ -17,4 +19,4 @@ const appColors = {
   primaryDark: '#236daa',
 };
 
-export { devWarnings, lower, upper, number, symbols, appColors };
+export { devWarnings, lower, upper, number, symbols, popoverMessage, appColors };

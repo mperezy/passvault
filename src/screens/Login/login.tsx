@@ -10,10 +10,11 @@ import {
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
 import { Image, Text, TextInput, Platform, View, TouchableOpacity } from 'react-native';
-import { Popable } from 'react-native-popable';
+import { usePopover } from 'react-native-modal-popover';
 
 import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
 import { PasswordToggle } from 'components/PasswordToggle/passwordToggle';
+import { CustomPopover } from 'components/Popover/popover';
 import { shadow } from 'screens/PasswordGenerator/styles';
 
 import { setUserData2LS } from 'utils/localStorageFuncs';
@@ -32,6 +33,9 @@ export const Login = (props: { navigation: any }) => {
   const dispatch = useDispatch();
   const isRequesting = useSelector(selectRequest);
   const { navigation } = props;
+
+  const { openPopover, closePopover, popoverVisible, touchableRef, popoverAnchorRect } =
+    usePopover();
 
   useEffect(() => {
     dispatch(setIsRequest({ isRequest: true }));
@@ -109,13 +113,14 @@ export const Login = (props: { navigation: any }) => {
             >
               <Text style={styles.linkText}>Use it without an account </Text>
             </TouchableOpacity>
-            <Popable
-              action='hover'
-              position={'bottom'}
-              content='You can use the app for free but you can only generate passwords and not store them.'
-            >
-              <Image style={styles.tooltipImage} source={require('assets/info-icon.png')} />
-            </Popable>
+
+            <CustomPopover
+              popoverVisible={popoverVisible}
+              closePopover={closePopover}
+              popoverAnchorRect={popoverAnchorRect}
+              touchableRef={touchableRef}
+              onPress={openPopover}
+            />
           </View>
         </View>
       )}

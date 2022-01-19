@@ -57,7 +57,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  link: {},
+  link: {
+    marginRight: 3,
+  },
   linkText: {
     fontSize: 15,
   },
