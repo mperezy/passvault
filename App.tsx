@@ -39,7 +39,6 @@ export default function App() {
             name='PasswordGenerator'
             component={PasswordGenerator}
             options={{
-              title: 'Password Generator (Only)',
               headerStyle: {
                 backgroundColor: '#3091e0',
               },

@@ -29,7 +29,7 @@ import {
   socialMediaIcon,
   socialMediaIconColor,
 } from 'utils/imageDataRetriever';
-import { showToastMessage } from 'utils/toastAndroidMessage';
+import { showInfoMessage } from 'utils/infoMessages';
 
 import { icons, item, input } from './styles';
 
@@ -78,12 +78,7 @@ const PasswordIcons = (props: {
   };
 
   const handleCopyButton = () => {
-    if (Platform.OS === 'android') {
-      showToastMessage('The password was copied to clipboard');
-    } else {
-      setSnackbarMessage('The password was copied to clipboard');
-      setSnackbarVisible(true);
-    }
+    showInfoMessage('The password was copied to clipboard', setSnackbarMessage, setSnackbarVisible);
 
     Clipboard.setString(passwordGenerated);
   };

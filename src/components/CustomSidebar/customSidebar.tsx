@@ -5,10 +5,10 @@ import { DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { Image, View, Text, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Divider, Drawer } from 'react-native-paper';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 import { selectUserEmail } from 'reduxStore/slices/userSlice';
-import { unsetPasswords } from 'reduxStore/slices/passwordSlice';
+import { unsetPasswords, setIsCreateMode } from 'reduxStore/slices/passwordSlice';
 
 import { signOut } from 'services/firebase';
 
@@ -36,6 +36,17 @@ export const CustomSidebar = (props: any) => {
       <Drawer.Section title='Pages'>
         <ScrollView style={{ paddingTop: 10 }}>
           <DrawerItemList {...props} />
+          <DrawerItem
+            label='Password Generator'
+            icon={({ color, size }) => (
+              <MaterialCommunityIcons name='engine-outline' size={size * 0.75} color={color} />
+            )}
+            onPress={() => {
+              navigation.closeDrawer();
+              dispatch(setIsCreateMode({ isCreateMode: true }));
+              navigation.navigate('PasswordGenerator');
+            }}
+          />
         </ScrollView>
       </Drawer.Section>
 

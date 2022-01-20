@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { PasswordList } from 'screens/PasswordList/passwordList';
-import { PasswordGenerator } from 'screens/PasswordGenerator/passwordGenerator';
 import { CustomSidebar } from 'components/CustomSidebar/customSidebar';
 
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -37,20 +36,6 @@ export const Drawer = (props: { navigation: any }) => {
           },
           headerTintColor: '#FFF',
           drawerIcon: ({ color, size }) => <Feather name='list' size={size * 0.75} color={color} />,
-        }}
-      />
-      <CustomDrawer.Screen
-        name='PasswordGenerator'
-        component={PasswordGenerator}
-        options={{
-          title: 'Password Generator',
-          headerStyle: {
-            backgroundColor: '#3091e0',
-          },
-          headerTintColor: '#FFF',
-          drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name='engine-outline' size={size * 0.75} color={color} />
-          ),
         }}
       />
     </CustomDrawer.Navigator>
