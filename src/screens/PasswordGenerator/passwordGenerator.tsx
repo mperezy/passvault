@@ -1,29 +1,16 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 
 import {
-  generatePassword,
   selectIsCreateMode,
   selectIsEditMode,
   selectPassword,
   selectPasswordLength,
-  setIsCreateMode,
-  setIsEditMode,
 } from 'reduxStore/slices/passwordSlice';
 import { selectUserId } from 'reduxStore/slices/userSlice';
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Clipboard,
-  ToastAndroid,
-  Platform,
-  BackHandler,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Clipboard, BackHandler } from 'react-native';
 import { Divider } from 'react-native-paper';
 import Checkbox from 'expo-checkbox';
 
@@ -35,6 +22,11 @@ import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
 import { showInfoMessage } from 'utils/infoMessages';
+import {
+  resetCreateEditMode,
+  handleGeneratePassword,
+  showAuthenticatedMessage,
+} from 'utils/configuratorUtils';
 
 export const PasswordGenerator = (props: { navigation: any }) => {
   const { navigation } = props;
@@ -56,41 +48,47 @@ export const PasswordGenerator = (props: { navigation: any }) => {
 
   const dispatch = useDispatch();
 
-  const handleGeneratePassword = () => {
-    if (!isEditMode) {
-      dispatch(generatePassword());
-      if (userId) {
+  const _handleGeneratePassword = () => {
+    handleGeneratePassword(isEditMode, userId, dispatch, setSnackbarMessage, setSnackbarVisible);
+  };
+
+  const handleCopyButton = () => {
+    getPasswordGenerated()
+      .then((password: any | string) => {
+        const password2Clipboard = isEditMode ? passwordFromState : password.password;
+
         showInfoMessage(
-          "You're about to create a new password",
+          'The password was copied to clipboard',
           setSnackbarMessage,
           setSnackbarVisible
         );
-      }
-    }
+
+        Clipboard.setString(password2Clipboard);
+      })
+      .catch((err: any) => {
+        console.log({ err });
+        Clipboard.setString('');
+      });
   };
 
-  const resetCreateEditMode = () => {
-    if (isEditMode) {
-      dispatch(setIsEditMode({ isEditMode: !isEditMode }));
-    }
-
-    if (isCreateMode) {
-      dispatch(setIsCreateMode({ isCreateMode: !isCreateMode }));
-    }
+  const handleRefreshButton = () => {
+    showInfoMessage('New password generated', setSnackbarMessage, setSnackbarVisible);
+    _handleGeneratePassword();
   };
 
   const handleBackAction = () => {
-    resetCreateEditMode();
+    resetCreateEditMode(isEditMode, isCreateMode, dispatch);
     navigation.navigate(userId ? 'PasswordList' : 'Login');
     return true;
   };
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackAction);
-    handleGeneratePassword();
+    showAuthenticatedMessage(userId, setSnackbarMessage, setSnackbarVisible);
+    _handleGeneratePassword();
 
     return () => {
-      resetCreateEditMode();
+      resetCreateEditMode(isEditMode, isCreateMode, dispatch);
     };
   }, []);
 
@@ -103,29 +101,6 @@ export const PasswordGenerator = (props: { navigation: any }) => {
   useEffect(() => {
     setPassword(passwordFromState);
   }, [passwordFromState]);
-
-  const handleCopyButton = () => {
-    getPasswordGenerated()
-      .then((password: any | string) => {
-        showInfoMessage(
-          'The password was copied to clipboard',
-          setSnackbarMessage,
-          setSnackbarVisible
-        );
-
-        const password2Clipboard = isEditMode ? passwordFromState : password.password;
-
-        Clipboard.setString(password2Clipboard);
-      })
-      .catch((err: any) => {
-        console.log({ err });
-        Clipboard.setString('');
-      });
-  };
-  const handleRefreshButton = () => {
-    showInfoMessage('New password generated', setSnackbarMessage, setSnackbarVisible);
-    handleGeneratePassword();
-  };
 
   return (
     <View style={screen.container}>
@@ -172,7 +147,7 @@ export const PasswordGenerator = (props: { navigation: any }) => {
             />
             <SliderContainer
               defaultValue={isEditMode ? passwordFromState.length : 10}
-              handleGeneratePassword={handleGeneratePassword}
+              handleGeneratePassword={_handleGeneratePassword}
             />
           </View>
         </View>

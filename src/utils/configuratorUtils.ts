@@ -1,4 +1,45 @@
-const handleLeftCheckboxes = (
+import { generatePassword, setIsCreateMode, setIsEditMode } from 'reduxStore/slices/passwordSlice';
+import { showInfoMessage } from 'utils/infoMessages';
+
+/* Password Generator utils */
+export const resetCreateEditMode = (isEditMode: boolean, isCreateMode: boolean, dispatch: any) => {
+  if (isEditMode) {
+    dispatch(setIsEditMode({ isEditMode: !isEditMode }));
+  }
+
+  if (isCreateMode) {
+    dispatch(setIsCreateMode({ isCreateMode: !isCreateMode }));
+  }
+};
+
+export const handleGeneratePassword = (
+  isEditMode: boolean,
+  userId: string,
+  dispatch: any,
+  setSnackbarMessage: any,
+  setSnackbarVisible: any
+) => {
+  if (!isEditMode) {
+    dispatch(generatePassword());
+  }
+};
+
+export const showAuthenticatedMessage = (
+  userId: string,
+  setSnackbarMessage: any,
+  setSnackbarVisible: any
+) => {
+  if (userId) {
+    showInfoMessage(
+      "You're about to create a new password",
+      setSnackbarMessage,
+      setSnackbarVisible
+    );
+  }
+};
+
+/* Password Generator Configurator utils */
+export const handleLeftCheckboxes = (
   dispatch: any,
   setCheck1: any,
   setCheck2: any,
@@ -18,7 +59,7 @@ const handleLeftCheckboxes = (
   handleOtherCheckboxes();
 };
 
-const handleRightCheckboxes = (
+export const handleRightCheckboxes = (
   value: boolean,
   checkbox1: boolean,
   checkbox2: boolean,
@@ -32,8 +73,9 @@ const handleRightCheckboxes = (
   }
 };
 
-const updateConfiguratorStateAndGeneratePassword = (dispatch: any, generatePassword: any) => {
+export const updateConfiguratorStateAndGeneratePassword = (
+  dispatch: any,
+  generatePassword: any
+) => {
   dispatch(generatePassword());
 };
-
-export { handleLeftCheckboxes, handleRightCheckboxes, updateConfiguratorStateAndGeneratePassword };
