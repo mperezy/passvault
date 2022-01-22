@@ -26,10 +26,11 @@ export const handleGeneratePassword = (
 
 export const showAuthenticatedMessage = (
   userId: string,
+  isCreatedMode: boolean,
   setSnackbarMessage: any,
   setSnackbarVisible: any
 ) => {
-  if (userId) {
+  if (userId && isCreatedMode) {
     showInfoMessage(
       "You're about to create a new password",
       setSnackbarMessage,

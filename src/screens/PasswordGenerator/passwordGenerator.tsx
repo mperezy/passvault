@@ -84,7 +84,7 @@ export const PasswordGenerator = (props: { navigation: any }) => {
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackAction);
-    showAuthenticatedMessage(userId, setSnackbarMessage, setSnackbarVisible);
+    showAuthenticatedMessage(userId, isCreateMode, setSnackbarMessage, setSnackbarVisible);
     _handleGeneratePassword();
 
     return () => {
