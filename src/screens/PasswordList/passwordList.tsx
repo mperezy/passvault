@@ -1,24 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 
 import {
   getPasswordsFromFirebase,
   selectPasswords,
   setIsCreateMode,
-  unsetPasswords,
 } from 'reduxStore/slices/passwordSlice';
-import { selectUserEmail } from 'reduxStore/slices/userSlice';
 
-import { View, TouchableOpacity, ScrollView, BackHandler, Platform } from 'react-native';
+import { View, ScrollView, BackHandler, Platform } from 'react-native';
 import { FAB } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
 
 import PasswordItem from 'components/PasswordItem/passwordItem';
 import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 
-import { clearUserDataFromLS } from 'utils/localStorageFuncs';
-import { auth, passwordsCollection } from 'services/firebase';
+import { passwordsCollection } from 'services/firebase';
 
 import { appColors } from 'utils/constants';
 import styles from './styles';
@@ -79,6 +74,7 @@ export const PasswordList = (props: { navigation: any }) => {
               socialMedia={passwordItem.social_media}
               setSnackbarVisible={setSnackbarVisible}
               setSnackbarMessage={setSnackbarMessage}
+              navigation={navigation}
             />
           ))}
         </View>
