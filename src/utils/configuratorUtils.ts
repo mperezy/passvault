@@ -1,5 +1,6 @@
 import { generatePassword, setIsCreateMode, setIsEditMode } from 'reduxStore/slices/passwordSlice';
 import { showInfoMessage } from 'utils/infoMessages';
+import { infoMessages } from 'utils/constants';
 
 /* Password Generator utils */
 export const resetCreateEditMode = (isEditMode: boolean, isCreateMode: boolean, dispatch: any) => {
@@ -24,18 +25,9 @@ export const handleGeneratePassword = (
   }
 };
 
-export const showAuthenticatedMessage = (
-  userId: string,
-  isCreatedMode: boolean,
-  setSnackbarMessage: any,
-  setSnackbarVisible: any
-) => {
+export const showAuthenticatedMessage = (userId: string, isCreatedMode: boolean) => {
   if (userId && isCreatedMode) {
-    showInfoMessage(
-      "You're about to create a new password",
-      setSnackbarMessage,
-      setSnackbarVisible
-    );
+    showInfoMessage(infoMessages.about2CreatePassword);
   }
 };
 

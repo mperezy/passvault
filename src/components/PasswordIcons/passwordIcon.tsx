@@ -4,11 +4,12 @@ import { useDispatch } from 'react-redux';
 
 import { setIsEditMode, setPassword } from 'reduxStore/slices/passwordSlice';
 
-import { Clipboard, TouchableOpacity, View } from 'react-native';
+import { Clipboard, Platform, TouchableOpacity, View } from 'react-native';
 import { Entypo, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { icons } from 'components/PasswordItem/styles';
 
+import { infoMessages } from 'utils/constants';
 import { showInfoMessage } from 'utils/infoMessages';
 
 export const PasswordIcons = (props: {
@@ -35,7 +36,13 @@ export const PasswordIcons = (props: {
   };
 
   const handleCopyButton = () => {
-    showInfoMessage('The password was copied to clipboard', setSnackbarMessage, setSnackbarVisible);
+    if (Platform.OS === 'android') {
+      showInfoMessage(infoMessages.copied2Clipboard);
+    } else {
+      setSnackbarMessage(infoMessages.copied2Clipboard);
+      setSnackbarVisible(true);
+    }
+
     Clipboard.setString(passwordGenerated);
   };
 

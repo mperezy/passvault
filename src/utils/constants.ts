@@ -11,6 +11,12 @@ const devWarnings = [
 
 const popoverMessage = 'You can generate passwords without store them.';
 
+const infoMessages = {
+  copied2Clipboard: 'The password was copied to clipboard',
+  newPassword: 'New password generated',
+  about2CreatePassword: "You're about to create a new password",
+};
+
 const appColors = {
   textTint: '#FFF',
   maximumTintColorSlider: '#d3d3d3',
@@ -19,4 +25,4 @@ const appColors = {
   primaryDark: '#236daa',
 };
 
-export { devWarnings, lower, upper, number, symbols, popoverMessage, appColors };
+export { devWarnings, lower, upper, number, symbols, popoverMessage, appColors, infoMessages };

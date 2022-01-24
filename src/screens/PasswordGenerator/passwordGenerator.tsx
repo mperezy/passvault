@@ -10,7 +10,15 @@ import {
 import { selectUserId } from 'reduxStore/slices/userSlice';
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { View, Text, TextInput, TouchableOpacity, Clipboard, BackHandler } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Clipboard,
+  BackHandler,
+  Platform,
+} from 'react-native';
 import { Divider } from 'react-native-paper';
 import Checkbox from 'expo-checkbox';
 
@@ -21,6 +29,7 @@ import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 
 import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
+import { infoMessages } from 'utils/constants';
 import { showInfoMessage } from 'utils/infoMessages';
 import {
   resetCreateEditMode,
@@ -57,11 +66,12 @@ export const PasswordGenerator = (props: { navigation: any }) => {
       .then((password: any | string) => {
         const password2Clipboard = isEditMode ? passwordFromState : password.password;
 
-        showInfoMessage(
-          'The password was copied to clipboard',
-          setSnackbarMessage,
-          setSnackbarVisible
-        );
+        if (Platform.OS === 'android') {
+          showInfoMessage(infoMessages.copied2Clipboard);
+        } else {
+          setSnackbarMessage(infoMessages.copied2Clipboard);
+          setSnackbarVisible(true);
+        }
 
         Clipboard.setString(password2Clipboard);
       })
@@ -72,7 +82,13 @@ export const PasswordGenerator = (props: { navigation: any }) => {
   };
 
   const handleRefreshButton = () => {
-    showInfoMessage('New password generated', setSnackbarMessage, setSnackbarVisible);
+    if (Platform.OS === 'android') {
+      showInfoMessage(infoMessages.newPassword);
+    } else {
+      setSnackbarMessage(infoMessages.newPassword);
+      setSnackbarVisible(true);
+    }
+
     _handleGeneratePassword();
   };
 
@@ -84,7 +100,12 @@ export const PasswordGenerator = (props: { navigation: any }) => {
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackAction);
-    showAuthenticatedMessage(userId, isCreateMode, setSnackbarMessage, setSnackbarVisible);
+    if (Platform.OS === 'android') {
+      showAuthenticatedMessage(userId, isCreateMode);
+    } else {
+      setSnackbarMessage(infoMessages.about2CreatePassword);
+      setSnackbarVisible(true);
+    }
     _handleGeneratePassword();
 
     return () => {
