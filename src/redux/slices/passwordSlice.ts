@@ -41,7 +41,7 @@ export const passwordSlice = createSlice({
     unsetPasswords: () => ({ ...initialState }),
     generatePassword: () => {},
     getPasswordsFromFirebase: () => {},
-    setPassword2Firebase: () => {},
+    savePassword2Firebase: (state, { payload }) => {},
     deletePasswordFromFirebase: () => {},
   },
 });
@@ -55,7 +55,7 @@ export const {
   unsetPasswords,
   generatePassword,
   getPasswordsFromFirebase,
-  setPassword2Firebase,
+  savePassword2Firebase,
   deletePasswordFromFirebase,
 } = passwordSlice.actions;
 

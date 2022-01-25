@@ -1,4 +1,4 @@
-import { passwordsCollection } from 'services/firebase';
+import { passwordsCollection, socialMediaCollection } from 'services/firebase';
 
 const sortBy = (obj1: object, obj2: object, field: string, kind: string) => {
   const x = kind === 'asc' ? 1 : -1;
@@ -6,8 +6,8 @@ const sortBy = (obj1: object, obj2: object, field: string, kind: string) => {
   return obj1[field] < obj2[field] ? -1 * x : obj1[field] > obj2[field] ? 1 * x : 0;
 };
 
-const getPasswordsByUserId = async (userId: any) => {
-  const tasks: {
+export const getPasswordsByUserId = async (userId: any) => {
+  const passwordList: {
     id: string;
     password_generated: string;
     social_media: string;
@@ -19,7 +19,7 @@ const getPasswordsByUserId = async (userId: any) => {
     .get()
     .then((querySnapshot) =>
       querySnapshot.forEach((doc) =>
-        tasks.push({
+        passwordList.push({
           id: doc.id,
           password_generated: doc.data().password_generated,
           social_media: doc.data().social_media,
@@ -31,23 +31,28 @@ const getPasswordsByUserId = async (userId: any) => {
       console.log('Error getting documents: ', error);
     });
 
-  return tasks.sort((x, y) => sortBy(x, y, 'createdAt', 'asc'));
+  return passwordList.sort((x, y) => sortBy(x, y, 'createdAt', 'asc'));
 };
 
 // Todo: Need to re-implement the next
-const sendPassword2Firebase = async (taskText: any, userId: any) => {
+export const sendPassword2Firebase = async (
+  userId: string,
+  password: string,
+  socialMedia: string
+) => {
   await passwordsCollection
     .add({
-      task: taskText,
-      uid: userId,
       createdAt: new Date().getTime(),
+      password_generated: password,
+      social_media: socialMedia,
+      uid: userId,
     })
-    .then(() => console.log('A new task was added in database.'))
-    .catch(() => console.log('Something went wrong trying to add a new task in database.'));
+    .then(() => console.log('A new password was added in database.'))
+    .catch(() => console.log('Something went wrong trying to add a new password in database.'));
 };
 
 // Todo: Need to re-implement the next
-const deletePasswordById = async (taskId: string | undefined) => {
+export const deletePasswordById = async (taskId: string | undefined) => {
   await passwordsCollection
     .doc(taskId)
     .delete()
@@ -55,4 +60,17 @@ const deletePasswordById = async (taskId: string | undefined) => {
     .catch(() => console.log('Something went wrong trying to delete a task from database.'));
 };
 
-export { getPasswordsByUserId, sendPassword2Firebase, deletePasswordById };
+export const getSocialMedia = async () => {
+  const socialMediaList: { id: string; name: string }[] = [];
+
+  await socialMediaCollection.get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) =>
+      socialMediaList.push({
+        id: doc.id,
+        name: doc.data().name,
+      })
+    );
+  });
+
+  return socialMediaList;
+};

@@ -1,5 +1,16 @@
 import { Platform, StyleSheet } from 'react-native';
 
+export const screen = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 5,
+  },
+});
+
 export const shadow = StyleSheet.create({
   container: {
     shadowColor: '#000',
@@ -14,23 +25,20 @@ export const shadow = StyleSheet.create({
   },
 });
 
-export const screen = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-export const passwordStyle = StyleSheet.create({
+export const cardView = StyleSheet.create({
   container: {
     width: '90%',
     padding: 10,
     backgroundColor: '#FFF',
     borderRadius: 5,
-    flexDirection: 'column',
+    marginBottom: 15,
     justifyContent: 'center',
+  },
+});
+
+export const passwordStyle = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
   },
   inputContainer: {
     margin: 10,
@@ -59,11 +67,6 @@ export const passwordStyle = StyleSheet.create({
 
 export const configuration = StyleSheet.create({
   container: {
-    width: '90%',
-    marginTop: 15,
-    padding: 10,
-    backgroundColor: '#FFF',
-    borderRadius: 5,
     flexDirection: 'column',
   },
   textContainer: {

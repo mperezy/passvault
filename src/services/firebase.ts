@@ -23,6 +23,7 @@ const database = firebase.firestore(app);
 
 export const auth = firebase.auth();
 export const passwordsCollection = database.collection('passwords');
+export const socialMediaCollection = database.collection('social_media');
 
 export const signIn = (username: string, password: string) => {
   auth

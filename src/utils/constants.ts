@@ -7,6 +7,7 @@ const devWarnings = [
   'Clipboard has been extracted from react-native core',
   'AsyncStorage has been extracted from react-native core',
   'Setting a timer for a long period of time, i.e. multiple minutes',
+  'Picker has been extracted from react-native core and will be removed',
 ];
 
 const popoverMessage = 'You can generate passwords without store them.';

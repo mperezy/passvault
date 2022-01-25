@@ -18,6 +18,7 @@ import {
   Clipboard,
   BackHandler,
   Platform,
+  ScrollView,
 } from 'react-native';
 import { Divider } from 'react-native-paper';
 import Checkbox from 'expo-checkbox';
@@ -25,9 +26,10 @@ import Checkbox from 'expo-checkbox';
 import { CustomCheckBox } from 'components/PasswordConfigurator/CustomCheckBox/customCheckBox';
 import SliderContainer from 'components/SliderContainer/sliderContainer';
 import { PasswordConfigurator } from 'components/PasswordConfigurator/passwordConfigurator';
+import { CreateEditPasswordConfigurator } from 'components/CreateEditPasswordConfigurator/createEditPasswordConfigurator';
 import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 
-import { shadow, screen, passwordStyle, configuration, checkBox } from './styles';
+import { cardView, shadow, screen, passwordStyle, configuration, checkBox } from './styles';
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
 import { infoMessages } from 'utils/constants';
 import { showInfoMessage } from 'utils/infoMessages';
@@ -46,7 +48,7 @@ export const PasswordGenerator = (props: { navigation: any }) => {
   const passwordFromState = useSelector(selectPassword);
   const passwordLength = useSelector(selectPasswordLength);
 
-  const isCreateMode = useSelector(selectIsCreateMode);
+  const isCreateMode = useSelector(selectIsCreateMode) || true;
   const isEditMode = useSelector(selectIsEditMode);
 
   const userId = useSelector(selectUserId);
@@ -100,12 +102,14 @@ export const PasswordGenerator = (props: { navigation: any }) => {
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackAction);
+
     if (Platform.OS === 'android') {
       showAuthenticatedMessage(userId, isCreateMode);
     } else {
       setSnackbarMessage(infoMessages.about2CreatePassword);
       setSnackbarVisible(true);
     }
+
     _handleGeneratePassword();
 
     return () => {
@@ -124,65 +128,71 @@ export const PasswordGenerator = (props: { navigation: any }) => {
   }, [passwordFromState]);
 
   return (
-    <View style={screen.container}>
-      <View style={[passwordStyle.container, shadow.container]}>
-        <View style={passwordStyle.inputContainer}>
-          <TextInput
-            showSoftInputOnFocus={false}
-            caretHidden={true}
-            style={passwordStyle.input}
-            value={password}
-          />
-          <View style={passwordStyle.icons}>
-            <TouchableOpacity onPress={handleCopyButton}>
-              <MaterialCommunityIcons
-                style={{ marginRight: 10 }}
-                name='content-copy'
-                size={24}
-                color='grey'
+    <>
+      <ScrollView>
+        <View style={screen.container}>
+          <View style={[cardView.container, passwordStyle.container, shadow.container]}>
+            <View style={passwordStyle.inputContainer}>
+              <TextInput
+                showSoftInputOnFocus={false}
+                caretHidden={true}
+                style={passwordStyle.input}
+                value={password}
               />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleRefreshButton}>
-              <Ionicons name='reload' size={24} color='grey' />
-            </TouchableOpacity>
+              <View style={passwordStyle.icons}>
+                <TouchableOpacity onPress={handleCopyButton}>
+                  <MaterialCommunityIcons
+                    style={{ marginRight: 10 }}
+                    name='content-copy'
+                    size={24}
+                    color='grey'
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleRefreshButton}>
+                  <Ionicons name='reload' size={24} color='grey' />
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
 
-      <View style={[configuration.container, shadow.container]}>
-        <View style={configuration.textContainer}>
-          <Text style={configuration.textHeader}>Configure your password</Text>
-        </View>
+          <View style={[cardView.container, configuration.container, shadow.container]}>
+            <View style={configuration.textContainer}>
+              <Text style={configuration.textHeader}>Configure your password</Text>
+            </View>
 
-        <Divider style={{ backgroundColor: 'grey' }} />
+            <Divider style={{ backgroundColor: 'grey' }} />
 
-        <View style={configuration.passwordLengthContainer}>
-          <Text style={{ fontSize: 17 }}>Password length</Text>
-          <View style={configuration.lengthSliderContainer}>
-            <TextInput
-              showSoftInputOnFocus={false}
-              caretHidden={true}
-              style={configuration.inputLength}
-              keyboardType={'numeric'}
-              value={passwordLength.toString()}
-            />
-            <SliderContainer
-              defaultValue={isEditMode ? passwordFromState.length : 10}
-              handleGeneratePassword={_handleGeneratePassword}
-            />
+            <View style={configuration.passwordLengthContainer}>
+              <Text style={{ fontSize: 17 }}>Password length</Text>
+              <View style={configuration.lengthSliderContainer}>
+                <TextInput
+                  showSoftInputOnFocus={false}
+                  caretHidden={true}
+                  style={configuration.inputLength}
+                  keyboardType={'numeric'}
+                  value={passwordLength.toString()}
+                />
+                <SliderContainer
+                  defaultValue={isEditMode ? passwordFromState.length : 10}
+                  handleGeneratePassword={_handleGeneratePassword}
+                />
+              </View>
+            </View>
+
+            <Divider style={{ backgroundColor: 'grey' }} />
+
+            <PasswordConfigurator />
           </View>
+
+          {isCreateMode && <CreateEditPasswordConfigurator navigation={navigation} />}
         </View>
-
-        <Divider style={{ backgroundColor: 'grey' }} />
-
-        <PasswordConfigurator />
-      </View>
+      </ScrollView>
 
       <CustomSnackbar
         message={snackbarMessage}
         isSnackbarVisible={isSnackbarVisible}
         setSnackbarVisible={setSnackbarVisible}
       />
-    </View>
+    </>
   );
 };
