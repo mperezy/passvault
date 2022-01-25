@@ -48,7 +48,7 @@ export const PasswordGenerator = (props: { navigation: any }) => {
   const passwordFromState = useSelector(selectPassword);
   const passwordLength = useSelector(selectPasswordLength);
 
-  const isCreateMode = useSelector(selectIsCreateMode) || true;
+  const isCreateMode = useSelector(selectIsCreateMode);
   const isEditMode = useSelector(selectIsEditMode);
 
   const userId = useSelector(selectUserId);
@@ -184,7 +184,9 @@ export const PasswordGenerator = (props: { navigation: any }) => {
             <PasswordConfigurator />
           </View>
 
-          {isCreateMode && <CreateEditPasswordConfigurator navigation={navigation} />}
+          {(isCreateMode || isEditMode) && (
+            <CreateEditPasswordConfigurator navigation={navigation} />
+          )}
         </View>
       </ScrollView>
 

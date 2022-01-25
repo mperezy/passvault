@@ -3,6 +3,7 @@ import { passwordGeneratorSaga } from 'reduxStore/sagas/passwordGeneratorSaga';
 import { getPasswordsSaga } from 'reduxStore/sagas/getPasswordsSaga';
 import { getSocialMediaSaga } from 'reduxStore/sagas/getSocialMediaSaga';
 import { savePasswordSaga } from 'reduxStore/sagas/savePasswordSaga';
+import { deletePasswordSaga } from 'reduxStore/sagas/deletePasswordSaga';
 
 export default function* IndexSagas() {
   yield all([
@@ -10,5 +11,6 @@ export default function* IndexSagas() {
     ...getPasswordsSaga,
     ...getSocialMediaSaga,
     ...savePasswordSaga,
+    ...deletePasswordSaga,
   ]);
 }

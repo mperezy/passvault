@@ -34,7 +34,6 @@ export const getPasswordsByUserId = async (userId: any) => {
   return passwordList.sort((x, y) => sortBy(x, y, 'createdAt', 'asc'));
 };
 
-// Todo: Need to re-implement the next
 export const sendPassword2Firebase = async (
   userId: string,
   password: string,
@@ -51,13 +50,12 @@ export const sendPassword2Firebase = async (
     .catch(() => console.log('Something went wrong trying to add a new password in database.'));
 };
 
-// Todo: Need to re-implement the next
-export const deletePasswordById = async (taskId: string | undefined) => {
+export const deletePasswordById = async (passwordId: string | undefined) => {
   await passwordsCollection
-    .doc(taskId)
+    .doc(passwordId)
     .delete()
-    .then(() => console.log('A task was deleted from database.'))
-    .catch(() => console.log('Something went wrong trying to delete a task from database.'));
+    .then(() => console.log('A password was deleted from database.'))
+    .catch(() => console.log('Something went wrong trying to delete a password from database.'));
 };
 
 export const getSocialMedia = async () => {

@@ -6,18 +6,18 @@ import { PasswordIcons } from 'components/PasswordIcons/passwordIcon';
 
 import { icons, item, input } from './styles';
 
-interface PasswordI {
-  passwordGenerated: string;
-  socialMedia: string;
-  setSnackbarVisible: any;
-  setSnackbarMessage: any;
-  navigation: any;
-}
+import { PasswordItemI } from 'utils/constants';
 
-const PasswordItem = (props: PasswordI) => {
+const PasswordItem = (props: PasswordItemI) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { passwordGenerated, socialMedia, setSnackbarVisible, setSnackbarMessage, navigation } =
-    props;
+  const {
+    passwordId,
+    passwordGenerated,
+    socialMedia,
+    setSnackbarVisible,
+    setSnackbarMessage,
+    navigation,
+  } = props;
 
   return (
     <View style={item.container}>
@@ -32,6 +32,8 @@ const PasswordItem = (props: PasswordI) => {
         />
       </View>
       <PasswordIcons
+        passwordId={passwordId}
+        socialMedia={socialMedia}
         passwordGenerated={passwordGenerated}
         passwordVisible={passwordVisible}
         setPasswordVisible={setPasswordVisible}

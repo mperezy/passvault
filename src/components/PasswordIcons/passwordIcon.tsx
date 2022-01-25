@@ -2,27 +2,26 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
-import { setIsEditMode, setPassword } from 'reduxStore/slices/passwordSlice';
+import {
+  deletePasswordFromFirebase,
+  setIsEditMode,
+  setPassword,
+} from 'reduxStore/slices/passwordSlice';
 
-import { Clipboard, Platform, TouchableOpacity, View } from 'react-native';
+import { Alert, Clipboard, Platform, TouchableOpacity, View } from 'react-native';
 import { Entypo, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { icons } from 'components/PasswordItem/styles';
 
-import { infoMessages } from 'utils/constants';
+import { infoMessages, PasswordIconsI } from 'utils/constants';
 import { showInfoMessage } from 'utils/infoMessages';
 
-export const PasswordIcons = (props: {
-  passwordGenerated: string;
-  passwordVisible: boolean;
-  setPasswordVisible: any;
-  setSnackbarVisible: any;
-  setSnackbarMessage: any;
-  navigation: any;
-}) => {
+export const PasswordIcons = (props: PasswordIconsI) => {
   const dispatch = useDispatch();
 
   const {
+    passwordId,
+    socialMedia,
     passwordGenerated,
     passwordVisible,
     setPasswordVisible,
@@ -30,6 +29,8 @@ export const PasswordIcons = (props: {
     setSnackbarMessage,
     navigation,
   } = props;
+
+  const _socialMedia = socialMedia.charAt(0).toUpperCase() + socialMedia.slice(1);
 
   const handleShowHidePassword = () => {
     setPasswordVisible(!passwordVisible);
@@ -73,7 +74,23 @@ export const PasswordIcons = (props: {
       >
         <FontAwesome style={{ marginRight: 5 }} name='edit' size={18} color='grey' />
       </TouchableOpacity>
-      <Ionicons name='trash' size={18} color='#DB4437' />
+      <TouchableOpacity
+        onPress={() => {
+          Alert.alert(
+            'Delete password warning',
+            `Are you sure you want to delete this ${_socialMedia}'s password?`,
+            [
+              {
+                text: 'No',
+                style: 'cancel',
+              },
+              { text: 'Yes', onPress: () => dispatch(deletePasswordFromFirebase({ passwordId })) },
+            ]
+          );
+        }}
+      >
+        <Ionicons name='trash' size={18} color='#DB4437' />
+      </TouchableOpacity>
     </View>
   );
 };

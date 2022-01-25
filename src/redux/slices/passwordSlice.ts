@@ -42,7 +42,7 @@ export const passwordSlice = createSlice({
     generatePassword: () => {},
     getPasswordsFromFirebase: () => {},
     savePassword2Firebase: (state, { payload }) => {},
-    deletePasswordFromFirebase: () => {},
+    deletePasswordFromFirebase: (state, { payload }) => {},
   },
 });
 

@@ -26,4 +26,31 @@ const appColors = {
   primaryDark: '#236daa',
 };
 
+export interface PasswordItemI {
+  passwordId: string;
+  passwordGenerated: string;
+  socialMedia: string;
+  setSnackbarVisible: any;
+  setSnackbarMessage: any;
+  navigation: any;
+}
+
+export interface PasswordIconsI {
+  passwordId: string;
+  socialMedia: string;
+  passwordGenerated: string;
+  passwordVisible: boolean;
+  setPasswordVisible: any;
+  setSnackbarVisible: any;
+  setSnackbarMessage: any;
+  navigation: any;
+}
+
+export interface PasswordI {
+  id: string;
+  createdAt: number;
+  password_generated: string;
+  social_media: string;
+}
+
 export { devWarnings, lower, upper, number, symbols, popoverMessage, appColors, infoMessages };

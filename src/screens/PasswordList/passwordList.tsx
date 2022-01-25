@@ -17,15 +17,8 @@ import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 
 import { passwordsCollection } from 'services/firebase';
 
-import { appColors } from 'utils/constants';
+import { appColors, PasswordI } from 'utils/constants';
 import styles from './styles';
-
-interface PasswordI {
-  id: string;
-  createdAt: number;
-  password_generated: string;
-  social_media: string;
-}
 
 export const PasswordList = (props: { navigation: any }) => {
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
@@ -73,16 +66,20 @@ export const PasswordList = (props: { navigation: any }) => {
             keyboardShouldPersistTaps='handled'
           >
             <View style={styles.items}>
-              {passwords.map((passwordItem: PasswordI) => (
-                <PasswordItem
-                  key={passwordItem.id}
-                  passwordGenerated={passwordItem.password_generated}
-                  socialMedia={passwordItem.social_media}
-                  setSnackbarVisible={setSnackbarVisible}
-                  setSnackbarMessage={setSnackbarMessage}
-                  navigation={navigation}
-                />
-              ))}
+              {passwords.map((passwordItem: PasswordI) => {
+                console.log();
+                return (
+                  <PasswordItem
+                    key={passwordItem.id}
+                    passwordId={passwordItem.id}
+                    passwordGenerated={passwordItem.password_generated}
+                    socialMedia={passwordItem.social_media}
+                    setSnackbarVisible={setSnackbarVisible}
+                    setSnackbarMessage={setSnackbarMessage}
+                    navigation={navigation}
+                  />
+                );
+              })}
             </View>
           </ScrollView>
           <FAB
