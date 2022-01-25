@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState: {
-  socialMediaSelected: string;
+  socialMediaPicked: string;
   socialMediaList: any;
 } = {
-  socialMediaSelected: '',
+  socialMediaPicked: '',
   socialMediaList: [],
 };
 
@@ -12,9 +12,9 @@ export const socialMediaSlice = createSlice({
   name: 'socialMedia',
   initialState,
   reducers: {
-    setSocialMediaSelected: (state, { payload }) => ({
+    setSocialMediaPicked: (state, { payload }) => ({
       ...state,
-      socialMediaSelected: payload.socialMediaSelected,
+      socialMediaPicked: payload.socialMediaPicked,
     }),
     setSocialMediaList: (state, { payload }) => ({
       ...state,
@@ -24,10 +24,10 @@ export const socialMediaSlice = createSlice({
   },
 });
 
-export const { setSocialMediaSelected, setSocialMediaList, getSocialMediaListFromFirebase } =
+export const { setSocialMediaPicked, setSocialMediaList, getSocialMediaListFromFirebase } =
   socialMediaSlice.actions;
 
-export const selectSocialMediaSelected = (state: { socialMedia: { socialMediaSelected: any } }) =>
-  state.socialMedia.socialMediaSelected;
+export const selectSocialMediaPicked = (state: { socialMedia: { socialMediaPicked: any } }) =>
+  state.socialMedia.socialMediaPicked;
 export const selectSocialMediaList = (state: { socialMedia: { socialMediaList: any } }) =>
   state.socialMedia.socialMediaList;

@@ -1,26 +1,19 @@
-import { generatePassword, setIsCreateMode, setIsEditMode } from 'reduxStore/slices/passwordSlice';
+import {
+  generatePassword,
+  setIsCreateMode,
+  setIsEditMode,
+  resetPasswordGeneratorState,
+} from 'reduxStore/slices/passwordSlice';
 import { showInfoMessage } from 'utils/infoMessages';
 import { infoMessages } from 'utils/constants';
 
 /* Password Generator utils */
-export const resetCreateEditMode = (isEditMode: boolean, isCreateMode: boolean, dispatch: any) => {
-  if (isEditMode) {
-    dispatch(setIsEditMode({ isEditMode: !isEditMode }));
-  }
-
-  if (isCreateMode) {
-    dispatch(setIsCreateMode({ isCreateMode: !isCreateMode }));
-  }
+export const resetConfigurationState = (dispatch: any) => {
+  dispatch(resetPasswordGeneratorState());
 };
 
-export const handleGeneratePassword = (
-  isEditMode: boolean,
-  userId: string,
-  dispatch: any,
-  setSnackbarMessage: any,
-  setSnackbarVisible: any
-) => {
-  if (!isEditMode) {
+export const handleGeneratePassword = (passwordFromState: string, dispatch: any) => {
+  if (!passwordFromState) {
     dispatch(generatePassword());
   }
 };

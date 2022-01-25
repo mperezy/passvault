@@ -1,7 +1,6 @@
 import { put, select, call, takeLeading } from 'redux-saga/effects';
 import { savePassword2Firebase, selectPassword } from 'reduxStore/slices/passwordSlice';
 import { selectUserId } from 'reduxStore/slices/userSlice';
-import { selectSocialMediaSelected } from 'reduxStore/slices/socialMediaSlice';
 import { sendPassword2Firebase } from 'services/database';
 
 // @ts-ignore

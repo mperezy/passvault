@@ -2,10 +2,12 @@ import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  generatePassword,
   selectIsCreateMode,
   selectIsEditMode,
   selectPassword,
   selectPasswordLength,
+  selectPasswordPicked,
 } from 'reduxStore/slices/passwordSlice';
 import { selectUserId } from 'reduxStore/slices/userSlice';
 
@@ -34,7 +36,7 @@ import { getPasswordGenerated } from 'utils/localStorageFuncs';
 import { infoMessages } from 'utils/constants';
 import { showInfoMessage } from 'utils/infoMessages';
 import {
-  resetCreateEditMode,
+  resetConfigurationState,
   handleGeneratePassword,
   showAuthenticatedMessage,
 } from 'utils/configuratorUtils';
@@ -43,13 +45,13 @@ export const PasswordGenerator = (props: { navigation: any }) => {
   const { navigation } = props;
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [password, setPassword] = useState('');
 
   const passwordFromState = useSelector(selectPassword);
   const passwordLength = useSelector(selectPasswordLength);
 
   const isCreateMode = useSelector(selectIsCreateMode);
   const isEditMode = useSelector(selectIsEditMode);
+  const passwordPicked = useSelector(selectPasswordPicked);
 
   const userId = useSelector(selectUserId);
 
@@ -60,7 +62,7 @@ export const PasswordGenerator = (props: { navigation: any }) => {
   const dispatch = useDispatch();
 
   const _handleGeneratePassword = () => {
-    handleGeneratePassword(isEditMode, userId, dispatch, setSnackbarMessage, setSnackbarVisible);
+    handleGeneratePassword(passwordFromState, dispatch);
   };
 
   const handleCopyButton = () => {
@@ -91,11 +93,11 @@ export const PasswordGenerator = (props: { navigation: any }) => {
       setSnackbarVisible(true);
     }
 
-    _handleGeneratePassword();
+    dispatch(generatePassword());
   };
 
   const handleBackAction = () => {
-    resetCreateEditMode(isEditMode, isCreateMode, dispatch);
+    resetConfigurationState(dispatch);
     navigation.navigate(userId ? 'PasswordList' : 'Login');
     return true;
   };
@@ -110,10 +112,8 @@ export const PasswordGenerator = (props: { navigation: any }) => {
       setSnackbarVisible(true);
     }
 
-    _handleGeneratePassword();
-
     return () => {
-      resetCreateEditMode(isEditMode, isCreateMode, dispatch);
+      resetConfigurationState(dispatch);
     };
   }, []);
 
@@ -122,10 +122,6 @@ export const PasswordGenerator = (props: { navigation: any }) => {
       title: screenTitle,
     });
   });
-
-  useEffect(() => {
-    setPassword(passwordFromState);
-  }, [passwordFromState]);
 
   return (
     <>
@@ -137,7 +133,7 @@ export const PasswordGenerator = (props: { navigation: any }) => {
                 showSoftInputOnFocus={false}
                 caretHidden={true}
                 style={passwordStyle.input}
-                value={password}
+                value={passwordFromState}
               />
               <View style={passwordStyle.icons}>
                 <TouchableOpacity onPress={handleCopyButton}>
@@ -170,7 +166,7 @@ export const PasswordGenerator = (props: { navigation: any }) => {
                   caretHidden={true}
                   style={configuration.inputLength}
                   keyboardType={'numeric'}
-                  value={passwordLength.toString()}
+                  value={passwordFromState.length.toString()}
                 />
                 <SliderContainer
                   defaultValue={isEditMode ? passwordFromState.length : 10}

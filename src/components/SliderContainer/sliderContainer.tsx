@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { setLength } from 'reduxStore/slices/passwordSlice';
+import { generatePassword, setLength } from 'reduxStore/slices/passwordSlice';
 
 import { View, Text } from 'react-native';
 import Slider from '@react-native-community/slider';
@@ -19,7 +19,7 @@ const SliderContainer = (props: { defaultValue: number; handleGeneratePassword: 
   useEffect(() => {
     if (!isNaN(value)) {
       dispatch(setLength({ length: value }));
-      handleGeneratePassword();
+      dispatch(generatePassword());
     }
   }, [value]);
 

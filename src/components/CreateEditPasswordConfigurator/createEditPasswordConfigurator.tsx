@@ -2,14 +2,16 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   savePassword2Firebase,
+  editPasswordFromFirebase,
   selectIsCreateMode,
+  selectIsEditMode,
   selectPassword,
 } from 'reduxStore/slices/passwordSlice';
 import {
   getSocialMediaListFromFirebase,
   selectSocialMediaList,
-  selectSocialMediaSelected,
-  setSocialMediaSelected,
+  selectSocialMediaPicked,
+  setSocialMediaPicked,
 } from 'reduxStore/slices/socialMediaSlice';
 
 import { Picker, Text, View } from 'react-native';
@@ -22,16 +24,17 @@ import { socialMediaCollection } from 'services/firebase';
 
 export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
   const dispatch = useDispatch();
-  const socialMediaSelected = useSelector(selectSocialMediaSelected);
+  const socialMediaPicked = useSelector(selectSocialMediaPicked);
   const socialMediaList = useSelector(selectSocialMediaList);
   const isCreateMode = useSelector(selectIsCreateMode);
+  const isEditMode = useSelector(selectIsEditMode);
   const password = useSelector(selectPassword);
 
   const { navigation } = props;
   const createEditButtonLabel = isCreateMode ? 'Save' : 'Edit';
 
   useEffect(() => {
-    if (isCreateMode) {
+    if (isCreateMode || isEditMode) {
       socialMediaCollection.onSnapshot(() => {
         dispatch(getSocialMediaListFromFirebase());
       });
@@ -44,9 +47,9 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
         <Text style={savePassword.textLabel}>Social media:</Text>
         <Picker
           // ref={pickerRef}
-          selectedValue={'Select one'}
+          selectedValue={socialMediaPicked}
           onValueChange={(itemValue, itemIndex) => {
-            dispatch(setSocialMediaSelected({ socialMediaSelected: itemValue }));
+            dispatch(setSocialMediaPicked({ socialMediaPicked: itemValue }));
           }}
         >
           {socialMediaList.map((item: { id: string; name: string }) => {
@@ -63,13 +66,16 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
         color={appColors.textTint}
         backgroundColor={appColors.primary}
         onPress={() => {
-          if (socialMediaSelected !== '') {
-            dispatch(
-              savePassword2Firebase({
-                password: password,
-                socialMedia: socialMediaSelected,
-              })
-            );
+          if (socialMediaPicked !== '') {
+            const data = {
+              password,
+              socialMedia: socialMediaPicked,
+            };
+            if (isEditMode) {
+              dispatch(editPasswordFromFirebase(data));
+            } else {
+              dispatch(savePassword2Firebase(data));
+            }
             navigation.navigate('PasswordList');
           }
         }}

@@ -21,6 +21,8 @@ export const socialMediaIcon = (socialMedia: string) => {
     ? 'facebook-square'
     : socialMedia === 'linkedin'
     ? 'linkedin-square'
+    : socialMedia === 'other'
+    ? 'questioncircle'
     : socialMedia;
 };
 

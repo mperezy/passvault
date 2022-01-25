@@ -58,6 +58,21 @@ export const deletePasswordById = async (passwordId: string | undefined) => {
     .catch(() => console.log('Something went wrong trying to delete a password from database.'));
 };
 
+export const updatePasswordByIdFromFirebase = async (
+  passwordId: string,
+  passwordGenerated: string,
+  socialMedia: string
+) => {
+  await passwordsCollection
+    .doc(passwordId)
+    .update({
+      password_generated: passwordGenerated,
+      social_media: socialMedia,
+    })
+    .then(() => console.log('A password was updated from database.'))
+    .catch(() => console.log('Something went wrong trying to update a password from database.'));
+};
+
 export const getSocialMedia = async () => {
   const socialMediaList: { id: string; name: string }[] = [];
 

@@ -1,21 +1,33 @@
-import { call, put, takeLeading } from 'redux-saga/effects';
+import { call, put, takeLeading, select } from 'redux-saga/effects';
 import {
   getSocialMediaListFromFirebase,
+  selectSocialMediaPicked,
   setSocialMediaList,
-  setSocialMediaSelected,
+  setSocialMediaPicked,
 } from 'reduxStore/slices/socialMediaSlice';
+import {
+  selectIsEditMode,
+  selectPasswordPicked,
+  setPassword,
+} from 'reduxStore/slices/passwordSlice';
 import { getSocialMedia } from 'services/database';
 
 function* getSocialMediaFlow(): Generator {
   try {
+    const passwordPicked = yield select(selectPasswordPicked);
+    const socialMediaPicked = yield select(selectSocialMediaPicked);
+    const isEditMode = yield select(selectIsEditMode);
     const socialMediaList = yield call(getSocialMedia);
-    const socialMediaSelected = {
-      socialMediaSelected: socialMediaList[0].name || '',
-    };
-
+    const socialMediaSelected = socialMediaPicked ? socialMediaPicked : socialMediaList[0].name;
     yield put(setSocialMediaList({ socialMediaList }));
 
-    return yield put(setSocialMediaSelected({ socialMediaSelected }));
+    yield put(setSocialMediaPicked({ socialMediaPicked: socialMediaSelected }));
+
+    if (isEditMode) {
+      return yield put(setPassword({ password: passwordPicked }));
+    } else {
+      return;
+    }
   } catch (exception) {
     console.log({ source: 'Exception from getSocialMediaSaga', exception });
   }

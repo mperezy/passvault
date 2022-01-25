@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 import {
   deletePasswordFromFirebase,
   setIsEditMode,
-  setPassword,
+  setPasswordIdPicked,
+  setPasswordPicked,
 } from 'reduxStore/slices/passwordSlice';
 
 import { Alert, Clipboard, Platform, TouchableOpacity, View } from 'react-native';
@@ -15,6 +16,7 @@ import { icons } from 'components/PasswordItem/styles';
 
 import { infoMessages, PasswordIconsI } from 'utils/constants';
 import { showInfoMessage } from 'utils/infoMessages';
+import { setSocialMediaPicked } from 'reduxStore/slices/socialMediaSlice';
 
 export const PasswordIcons = (props: PasswordIconsI) => {
   const dispatch = useDispatch();
@@ -68,7 +70,9 @@ export const PasswordIcons = (props: PasswordIconsI) => {
       <TouchableOpacity
         onPress={() => {
           dispatch(setIsEditMode({ isEditMode: true }));
-          dispatch(setPassword({ password: passwordGenerated }));
+          dispatch(setPasswordIdPicked({ passwordIdPicked: passwordId }));
+          dispatch(setPasswordPicked({ passwordPicked: passwordGenerated }));
+          dispatch(setSocialMediaPicked({ socialMediaPicked: socialMedia }));
           navigation.navigate('PasswordGenerator');
         }}
       >
