@@ -6,11 +6,13 @@ import {
   selectPasswords,
   setIsCreateMode,
 } from 'reduxStore/slices/passwordSlice';
+import { selectRequest } from 'reduxStore/slices/applicationStatusSlice';
 
 import { View, ScrollView, BackHandler, Platform } from 'react-native';
 import { FAB } from 'react-native-paper';
 
 import PasswordItem from 'components/PasswordItem/passwordItem';
+import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
 import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 
 import { passwordsCollection } from 'services/firebase';
@@ -35,6 +37,7 @@ export const PasswordList = (props: { navigation: any }) => {
   const scrollViewRef = useRef();
 
   const passwords = useSelector(selectPasswords);
+  const isRequesting = useSelector(selectRequest);
 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => {
@@ -56,50 +59,55 @@ export const PasswordList = (props: { navigation: any }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        // ref={scrollViewRef}
-        scrollEventThrottle={16}
-        onScroll={handleScrollIsClose2Bottom}
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
-        keyboardShouldPersistTaps='handled'
-      >
-        <View style={styles.items}>
-          {passwords.map((passwordItem: PasswordI) => (
-            <PasswordItem
-              key={passwordItem.id}
-              passwordGenerated={passwordItem.password_generated}
-              socialMedia={passwordItem.social_media}
-              setSnackbarVisible={setSnackbarVisible}
-              setSnackbarMessage={setSnackbarMessage}
-              navigation={navigation}
-            />
-          ))}
+    <>
+      {isRequesting && <LoadingIndicator />}
+      {!isRequesting && (
+        <View style={styles.container}>
+          <ScrollView
+            // ref={scrollViewRef}
+            scrollEventThrottle={16}
+            onScroll={handleScrollIsClose2Bottom}
+            contentContainerStyle={{
+              flexGrow: 1,
+            }}
+            keyboardShouldPersistTaps='handled'
+          >
+            <View style={styles.items}>
+              {passwords.map((passwordItem: PasswordI) => (
+                <PasswordItem
+                  key={passwordItem.id}
+                  passwordGenerated={passwordItem.password_generated}
+                  socialMedia={passwordItem.social_media}
+                  setSnackbarVisible={setSnackbarVisible}
+                  setSnackbarMessage={setSnackbarMessage}
+                  navigation={navigation}
+                />
+              ))}
+            </View>
+          </ScrollView>
+          <FAB
+            style={{
+              position: 'absolute',
+              margin: 26,
+              right: 0,
+              bottom: isSnackbarVisible ? 40 : 0,
+              backgroundColor: appColors.primary,
+            }}
+            color={appColors.textTint}
+            visible={!scrollIsClose2Bottom}
+            icon='plus'
+            onPress={() => {
+              dispatch(setIsCreateMode({ isCreateMode: true }));
+              navigation.navigate('PasswordGenerator');
+            }}
+          />
+          <CustomSnackbar
+            message={snackbarMessage}
+            isSnackbarVisible={isSnackbarVisible}
+            setSnackbarVisible={setSnackbarVisible}
+          />
         </View>
-      </ScrollView>
-      <FAB
-        style={{
-          position: 'absolute',
-          margin: 26,
-          right: 0,
-          bottom: isSnackbarVisible ? 40 : 0,
-          backgroundColor: appColors.primary,
-        }}
-        color={appColors.textTint}
-        visible={!scrollIsClose2Bottom}
-        icon='plus'
-        onPress={() => {
-          dispatch(setIsCreateMode({ isCreateMode: true }));
-          navigation.navigate('PasswordGenerator');
-        }}
-      />
-      <CustomSnackbar
-        message={snackbarMessage}
-        isSnackbarVisible={isSnackbarVisible}
-        setSnackbarVisible={setSnackbarVisible}
-      />
-    </View>
+      )}
+    </>
   );
 };

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getPasswordsFromFirebase, setPasswords } from 'reduxStore/slices/passwordSlice';
 
 export const initialState = {
   isRequest: false,
@@ -15,6 +16,16 @@ export const applicationStatusSlice = createSlice({
     unsetIsRequest: () => ({
       ...initialState,
     }),
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getPasswordsFromFirebase, (state, { payload }) => ({
+      ...state,
+      isRequest: true,
+    })),
+      builder.addCase(setPasswords, (state, { payload }) => ({
+        ...state,
+        isRequest: false,
+      }));
   },
 });
 
