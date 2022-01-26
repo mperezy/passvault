@@ -1,23 +1,9 @@
 import { Platform, StyleSheet } from 'react-native';
 
-export const icons = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-
-  singleIcon: {
-    marginRight: 10,
-  },
-
-  socialMedia: { width: 24, height: 24, marginRight: 10 },
-});
-
 export const item = StyleSheet.create({
   container: {
     backgroundColor: '#FFF',
-    padding: 17,
+    padding: 10,
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
@@ -37,14 +23,31 @@ export const item = StyleSheet.create({
     elevation: 5,
   },
 
-  iconPasswordWrapper: { width: '50%', flexDirection: 'row', alignItems: 'center' },
-});
+  socialIconAndPasswordInfo: { flex: 1, width: '50%', flexDirection: 'row', alignItems: 'center' },
 
-export const input = StyleSheet.create({
-  container: {
-    width: '100%',
+  passwordAndDescription: {
+    width: '81%',
+    paddingHorizontal: 5,
+    flexDirection: 'column',
+  },
+
+  passwordInput: {
     fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
     fontWeight: 'bold',
-    fontSize: Platform.OS === 'web' ? 16 : 13,
+    fontSize: Platform.OS === 'web' ? 15 : 14,
+  },
+});
+
+export const icons = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+
+  socialMedia: { width: 24, height: 24, marginRight: 10 },
+
+  singleIcon: {
+    marginRight: 10,
   },
 });

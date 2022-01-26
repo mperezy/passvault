@@ -11,6 +11,7 @@ export const getPasswordsByUserId = async (userId: any) => {
     id: string;
     password_generated: string;
     social_media: string;
+    description: string;
     createdAt: number;
   }[] = [];
 
@@ -23,6 +24,8 @@ export const getPasswordsByUserId = async (userId: any) => {
           id: doc.id,
           password_generated: doc.data().password_generated,
           social_media: doc.data().social_media,
+          description:
+            doc.data().description || 'This password has no description. Please update it.',
           createdAt: doc.data().createdAt,
         })
       )

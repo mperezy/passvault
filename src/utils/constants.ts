@@ -30,6 +30,7 @@ export interface PasswordItemI {
   passwordId: string;
   passwordGenerated: string;
   socialMedia: string;
+  description: string;
   setSnackbarVisible: any;
   setSnackbarMessage: any;
   navigation: any;
@@ -49,6 +50,7 @@ export interface PasswordIconsI {
 export interface PasswordI {
   id: string;
   createdAt: number;
+  description: string;
   password_generated: string;
   social_media: string;
 }

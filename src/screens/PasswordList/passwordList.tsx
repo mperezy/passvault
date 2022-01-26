@@ -74,6 +74,7 @@ export const PasswordList = (props: { navigation: any }) => {
                     passwordId={passwordItem.id}
                     passwordGenerated={passwordItem.password_generated}
                     socialMedia={passwordItem.social_media}
+                    description={passwordItem.description}
                     setSnackbarVisible={setSnackbarVisible}
                     setSnackbarMessage={setSnackbarMessage}
                     navigation={navigation}
