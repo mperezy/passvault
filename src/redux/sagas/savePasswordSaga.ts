@@ -7,10 +7,10 @@ import { sendPassword2Firebase } from 'services/database';
 function* savePasswordFlow({ payload }): Generator {
   try {
     const userId = yield select(selectUserId);
-    const { socialMedia, password } = payload;
+    const { socialMedia, password, description } = payload;
 
     // @ts-ignore
-    return yield call(sendPassword2Firebase, userId, password, socialMedia);
+    return yield call(sendPassword2Firebase, userId, password, description, socialMedia);
   } catch (exception) {
     console.log({ source: 'Exception from savePasswordSaga', exception });
   }

@@ -40,6 +40,7 @@ export const getPasswordsByUserId = async (userId: any) => {
 export const sendPassword2Firebase = async (
   userId: string,
   password: string,
+  description: string,
   socialMedia: string
 ) => {
   await passwordsCollection
@@ -47,6 +48,7 @@ export const sendPassword2Firebase = async (
       createdAt: new Date().getTime(),
       password_generated: password,
       social_media: socialMedia,
+      description: description,
       uid: userId,
     })
     .then(() => console.log('A new password was added in database.'))

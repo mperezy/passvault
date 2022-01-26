@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   savePassword2Firebase,
@@ -14,17 +14,19 @@ import {
   setSocialMediaPicked,
 } from 'reduxStore/slices/socialMediaSlice';
 
-import { Picker, Text, View } from 'react-native';
+import { Picker, Text, TextInput, View } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 import { cardView, shadow } from 'screens/PasswordGenerator/styles';
-import { savePassword } from 'components/CreateEditPasswordConfigurator/styles';
+import { createEditPassword } from './styles';
 import { appColors } from 'utils/constants';
 import { socialMediaCollection } from 'services/firebase';
 import { customAlertMessage } from 'utils/infoMessages';
 
 export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
   const dispatch = useDispatch();
+  const passwordDescriptionMaxLen = 60;
+  const [description, setDescription] = useState('');
   const socialMediaPicked = useSelector(selectSocialMediaPicked);
   const socialMediaList = useSelector(selectSocialMediaList);
   const isCreateMode = useSelector(selectIsCreateMode);
@@ -43,11 +45,12 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
   }, []);
 
   return (
-    <View style={[cardView.container, shadow.container, savePassword.container]}>
-      <View style={savePassword.dropdown}>
-        <Text style={savePassword.textLabel}>Social media:</Text>
+    <View style={[cardView.container, shadow.container, createEditPassword.container]}>
+      <View style={createEditPassword.userInputContainer}>
+        <Text style={createEditPassword.textLabel}>Social media:</Text>
         <Picker
           // ref={pickerRef}
+          style={createEditPassword.dropdown}
           selectedValue={socialMediaPicked}
           onValueChange={(itemValue, itemIndex) => {
             dispatch(setSocialMediaPicked({ socialMediaPicked: itemValue }));
@@ -60,8 +63,21 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
         </Picker>
       </View>
 
+      <View style={createEditPassword.userInputContainer}>
+        <Text style={createEditPassword.textLabel}>Description:</Text>
+        <TextInput
+          style={createEditPassword.textInput}
+          maxLength={passwordDescriptionMaxLen}
+          value={description}
+          onChangeText={(text: string) => setDescription(text)}
+        />
+        <Text style={createEditPassword.descriptionLengthIndicator}>
+          {description.length}/{passwordDescriptionMaxLen}
+        </Text>
+      </View>
+
       <Entypo.Button
-        style={savePassword.button}
+        style={createEditPassword.button}
         name={isCreateMode ? 'save' : 'edit'}
         size={24}
         color={appColors.textTint}
@@ -70,6 +86,7 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
           if (socialMediaPicked !== '') {
             const data = {
               password,
+              description,
               socialMedia: socialMediaPicked,
             };
             if (isEditMode) {
