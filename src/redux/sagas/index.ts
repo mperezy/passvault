@@ -4,7 +4,7 @@ import { getPasswordsSaga } from 'reduxStore/sagas/getPasswordsSaga';
 import { getSocialMediaSaga } from 'reduxStore/sagas/getSocialMediaSaga';
 import { savePasswordSaga } from 'reduxStore/sagas/savePasswordSaga';
 import { deletePasswordSaga } from 'reduxStore/sagas/deletePasswordSaga';
-import { updatePasswordSaga } from 'reduxStore/sagas/updatePassword';
+import { updatePasswordSaga } from 'reduxStore/sagas/updatePasswordSaga';
 
 export default function* IndexSagas() {
   yield all([

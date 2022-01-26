@@ -66,12 +66,14 @@ export const deletePasswordById = async (passwordId: string | undefined) => {
 export const updatePasswordByIdFromFirebase = async (
   passwordId: string,
   passwordGenerated: string,
+  description: string,
   socialMedia: string
 ) => {
   await passwordsCollection
     .doc(passwordId)
     .update({
       password_generated: passwordGenerated,
+      description,
       social_media: socialMedia,
     })
     .then(() => console.log('A password was updated from database.'))
