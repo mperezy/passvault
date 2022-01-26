@@ -1,7 +1,7 @@
 {
   "files": {
-    "app.js": "/passvault/static/js/app.59b381b8.chunk.js",
-    "app.js.map": "/passvault/static/js/app.59b381b8.chunk.js.map",
+    "app.js": "/passvault/static/js/app.f5c51294.chunk.js",
+    "app.js.map": "/passvault/static/js/app.f5c51294.chunk.js.map",
     "runtime~app.js": "/passvault/static/js/runtime~app.b783ad55.js",
     "runtime~app.js.map": "/passvault/static/js/runtime~app.b783ad55.js.map",
     "static/js/2.740755f8.chunk.js": "/passvault/static/js/2.740755f8.chunk.js",
@@ -38,6 +38,6 @@
   "entrypoints": [
     "static/js/runtime~app.b783ad55.js",
     "static/js/2.740755f8.chunk.js",
-    "static/js/app.59b381b8.chunk.js"
+    "static/js/app.f5c51294.chunk.js"
   ]
 }

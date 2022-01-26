@@ -9,8 +9,8 @@
   "related_applications": [
     {
       "platform": "play",
-      "url": "http://play.google.com/store/apps/details?id=com.dev.passvault",
-      "id": "com.dev.passvault"
+      "url": "http://play.google.com/store/apps/details?id=com.mperezy.passvault",
+      "id": "com.mperezy.passvault"
     }
   ],
   "prefer_related_applications": true,
