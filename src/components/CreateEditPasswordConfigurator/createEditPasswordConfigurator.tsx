@@ -21,6 +21,7 @@ import { cardView, shadow } from 'screens/PasswordGenerator/styles';
 import { savePassword } from 'components/CreateEditPasswordConfigurator/styles';
 import { appColors } from 'utils/constants';
 import { socialMediaCollection } from 'services/firebase';
+import { customAlertMessage } from 'utils/infoMessages';
 
 export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
   const dispatch = useDispatch();
@@ -72,11 +73,18 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
               socialMedia: socialMediaPicked,
             };
             if (isEditMode) {
-              dispatch(editPasswordFromFirebase(data));
+              customAlertMessage(
+                'Edit password warning !',
+                "If you update this password, you won't be able to recover it.",
+                () => {
+                  dispatch(editPasswordFromFirebase(data));
+                  navigation.navigate('PasswordList');
+                }
+              );
             } else {
               dispatch(savePassword2Firebase(data));
+              navigation.navigate('PasswordList');
             }
-            navigation.navigate('PasswordList');
           }
         }}
       >

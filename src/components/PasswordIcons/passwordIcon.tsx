@@ -9,13 +9,13 @@ import {
   setPasswordPicked,
 } from 'reduxStore/slices/passwordSlice';
 
-import { Alert, Clipboard, Platform, TouchableOpacity, View } from 'react-native';
+import { Clipboard, Platform, TouchableOpacity, View } from 'react-native';
 import { Entypo, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { icons } from 'components/PasswordItem/styles';
 
 import { infoMessages, PasswordIconsI } from 'utils/constants';
-import { showInfoMessage } from 'utils/infoMessages';
+import { customAlertMessage, showInfoMessage } from 'utils/infoMessages';
 import { setSocialMediaPicked } from 'reduxStore/slices/socialMediaSlice';
 
 export const PasswordIcons = (props: PasswordIconsI) => {
@@ -80,16 +80,10 @@ export const PasswordIcons = (props: PasswordIconsI) => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          Alert.alert(
+          customAlertMessage(
             'Delete password warning',
             `Are you sure you want to delete this ${_socialMedia}'s password?`,
-            [
-              {
-                text: 'No',
-                style: 'cancel',
-              },
-              { text: 'Yes', onPress: () => dispatch(deletePasswordFromFirebase({ passwordId })) },
-            ]
+            () => dispatch(deletePasswordFromFirebase({ passwordId }))
           );
         }}
       >
