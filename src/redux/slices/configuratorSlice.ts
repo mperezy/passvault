@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { resetPasswordGeneratorState } from 'reduxStore/slices/passwordSlice';
 
 export const initialState: {
   isEasy2Read: boolean;
@@ -15,6 +16,11 @@ export const initialState: {
   isNumbers: false,
   isSymbols: false,
 };
+
+const resetPasswordConfiguratorState = (state: any) => ({
+  ...state,
+  ...initialState,
+});
 
 export const configuratorSlice = createSlice({
   name: 'configurator',
@@ -54,6 +60,11 @@ export const configuratorSlice = createSlice({
       isNumbers: payload.isNumbers,
       isSymbols: payload.isSymbols,
     }),
+  },
+  extraReducers: (builder) => {
+    builder.addCase(resetPasswordGeneratorState, (state, { payload }) =>
+      resetPasswordConfiguratorState(state)
+    );
   },
 });
 

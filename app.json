@@ -21,10 +21,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/main/passvault-64px.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.dev.passvault"
+      "package": "com.mperezy.passvault",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/main/passvault-64px.png"
