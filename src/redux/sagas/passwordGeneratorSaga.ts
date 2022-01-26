@@ -1,7 +1,9 @@
 import { select, put, takeLeading } from 'redux-saga/effects';
 import {
   generatePassword,
+  selectIsEditMode,
   selectPasswordLength,
+  selectPasswordPicked,
   setPassword,
 } from 'reduxStore/slices/passwordSlice';
 import { lower, upper, number, symbols } from 'utils/constants';
@@ -22,6 +24,9 @@ export function* getPasswordGeneratorFlow(): Generator {
     const isNumbers = yield select(selectIsNumbers);
     const isSymbols = yield select(selectIsSymbols);
 
+    const isEditMode = yield select(selectIsEditMode);
+    const passwordPicked = yield select(selectPasswordPicked);
+
     const isUpper: string = isUpperCase ? upper : '';
     const isLower: string = isLowerCase ? lower : '';
     const isNumber: string = isNumbers ? number : '';
@@ -37,6 +42,17 @@ export function* getPasswordGeneratorFlow(): Generator {
 
     setPasswordGenerated(password);
 
+    if (isEditMode) {
+      if (passwordPicked) {
+        //TODO: This flow needs to be updated in future
+        /* This condition will only be applied at the first time the user
+         * click in edit password, the password picked will be set as
+         * a generated password, and then will be deleted from the state.
+         * */
+        // @ts-ignore
+        password = passwordPicked;
+      }
+    }
     return yield put(setPassword({ password }));
   } catch (exception) {
     console.log({ exception });
