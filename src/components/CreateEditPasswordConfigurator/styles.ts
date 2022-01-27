@@ -22,6 +22,7 @@ export const createEditPassword = StyleSheet.create({
 
   dropdown: {
     borderRadius: 10,
+    backgroundColor: 'white',
     paddingHorizontal: Platform.OS === 'web' ? 7 : 8,
     paddingVertical: Platform.OS === 'web' ? 6 : 3,
   },
