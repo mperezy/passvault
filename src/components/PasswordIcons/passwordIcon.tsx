@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import {
   deletePasswordFromFirebase,
   setIsEditMode,
+  setPasswordDescriptionPicked,
   setPasswordIdPicked,
   setPasswordPicked,
 } from 'reduxStore/slices/passwordSlice';
@@ -24,6 +25,7 @@ export const PasswordIcons = (props: PasswordIconsI) => {
   const {
     passwordId,
     socialMedia,
+    description,
     passwordGenerated,
     passwordVisible,
     setPasswordVisible,
@@ -72,6 +74,7 @@ export const PasswordIcons = (props: PasswordIconsI) => {
           dispatch(setIsEditMode({ isEditMode: true }));
           dispatch(setPasswordIdPicked({ passwordIdPicked: passwordId }));
           dispatch(setPasswordPicked({ passwordPicked: passwordGenerated }));
+          dispatch(setPasswordDescriptionPicked({ passwordDescriptionPicked: description }));
           dispatch(setSocialMediaPicked({ socialMediaPicked: socialMedia }));
           navigation.navigate('PasswordGenerator');
         }}

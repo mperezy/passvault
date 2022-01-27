@@ -38,6 +38,7 @@ const PasswordItem = (props: PasswordItemI) => {
       <PasswordIcons
         passwordId={passwordId}
         socialMedia={socialMedia}
+        description={description}
         passwordGenerated={passwordGenerated}
         passwordVisible={passwordVisible}
         setPasswordVisible={setPasswordVisible}

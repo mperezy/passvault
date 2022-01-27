@@ -39,6 +39,7 @@ export interface PasswordItemI {
 export interface PasswordIconsI {
   passwordId: string;
   socialMedia: string;
+  description: string;
   passwordGenerated: string;
   passwordVisible: boolean;
   setPasswordVisible: any;

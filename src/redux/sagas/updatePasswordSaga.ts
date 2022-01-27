@@ -6,14 +6,13 @@ import {
 } from 'reduxStore/slices/passwordSlice';
 import { updatePasswordByIdFromFirebase } from 'services/database';
 
-// @ts-ignore
-function* updatePasswordFlow({ payload }): Generator {
+function* updatePasswordFlow({ payload }: any): Generator {
   try {
     const passwordId = yield select(selectPasswordIdPicked);
     const { socialMedia, password, description } = payload;
 
-    // @ts-ignore
     return yield call(
+      // @ts-ignore
       updatePasswordByIdFromFirebase,
       passwordId,
       password,
@@ -25,5 +24,4 @@ function* updatePasswordFlow({ payload }): Generator {
   }
 }
 
-// @ts-ignore
 export const updatePasswordSaga = [takeLeading(editPasswordFromFirebase.type, updatePasswordFlow)];

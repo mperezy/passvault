@@ -4,6 +4,7 @@ export const initialState: {
   password: string;
   passwordIdPicked: string;
   passwordPicked: string;
+  passwordDescriptionPicked: string;
   length: number;
   isCreateMode: boolean;
   isEditMode: boolean;
@@ -12,6 +13,7 @@ export const initialState: {
   password: '',
   passwordIdPicked: '',
   passwordPicked: '',
+  passwordDescriptionPicked: '',
   length: 6,
   isCreateMode: false,
   isEditMode: false,
@@ -23,6 +25,7 @@ const resetPasswordState = (state: any) => ({
   password: '',
   passwordIdPicked: '',
   passwordPicked: '',
+  passwordDescriptionPicked: '',
   length: 6,
   isCreateMode: false,
   isEditMode: false,
@@ -43,6 +46,10 @@ export const passwordSlice = createSlice({
     setPasswordIdPicked: (state, { payload }) => ({
       ...state,
       passwordIdPicked: payload.passwordIdPicked,
+    }),
+    setPasswordDescriptionPicked: (state, { payload }) => ({
+      ...state,
+      passwordDescriptionPicked: payload.passwordDescriptionPicked,
     }),
     setLength: (state, { payload }) => ({
       ...state,
@@ -74,6 +81,7 @@ export const {
   setPassword,
   setPasswordPicked,
   setPasswordIdPicked,
+  setPasswordDescriptionPicked,
   setLength,
   setIsCreateMode,
   setIsEditMode,
@@ -92,6 +100,9 @@ export const selectPasswordIdPicked = (state: { password: { passwordIdPicked: an
   state.password.passwordIdPicked;
 export const selectPasswordPicked = (state: { password: { passwordPicked: any } }) =>
   state.password.passwordPicked;
+export const selectPasswordDescriptionPicked = (state: {
+  password: { passwordDescriptionPicked: any };
+}) => state.password.passwordDescriptionPicked;
 export const selectIsCreateMode = (state: { password: { isCreateMode: boolean } }) =>
   state.password.isCreateMode;
 export const selectIsEditMode = (state: { password: { isEditMode: boolean } }) =>

@@ -6,6 +6,7 @@ import {
   selectIsCreateMode,
   selectIsEditMode,
   selectPassword,
+  selectPasswordDescriptionPicked,
 } from 'reduxStore/slices/passwordSlice';
 import {
   getSocialMediaListFromFirebase,
@@ -28,6 +29,7 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
   const passwordDescriptionMaxLen = 60;
   const [description, setDescription] = useState('');
   const socialMediaPicked = useSelector(selectSocialMediaPicked);
+  const passwordDescriptionPicked = useSelector(selectPasswordDescriptionPicked);
   const socialMediaList = useSelector(selectSocialMediaList);
   const isCreateMode = useSelector(selectIsCreateMode);
   const isEditMode = useSelector(selectIsEditMode);
@@ -38,6 +40,10 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
 
   useEffect(() => {
     if (isCreateMode || isEditMode) {
+      if (isEditMode) {
+        setDescription(passwordDescriptionPicked);
+      }
+
       socialMediaCollection.onSnapshot(() => {
         dispatch(getSocialMediaListFromFirebase());
       });
