@@ -5,11 +5,18 @@ export const showInfoMessage = (message: string) => {
 };
 
 export const customAlertMessage = (title: string, message: string, action: any) => {
-  return Alert.alert(title, message, [
-    {
-      text: 'No',
-      style: 'cancel',
-    },
-    { text: 'Yes', onPress: () => action() },
-  ]);
+  if (Platform.OS === 'web') {
+    const response = confirm(message);
+    if (response) {
+      action();
+    }
+  } else {
+    return Alert.alert(title, message, [
+      {
+        text: 'No',
+        style: 'cancel',
+      },
+      { text: 'Yes', onPress: () => action() },
+    ]);
+  }
 };
