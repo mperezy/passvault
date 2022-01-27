@@ -1,4 +1,5 @@
 import { passwordsCollection, socialMediaCollection } from 'services/firebase';
+import { defaultEmptyPasswordDescription } from 'utils/constants';
 
 const sortBy = (obj1: object, obj2: object, field: string, kind: string) => {
   const x = kind === 'asc' ? 1 : -1;
@@ -24,8 +25,7 @@ export const getPasswordsByUserId = async (userId: any) => {
           id: doc.id,
           password_generated: doc.data().password_generated,
           social_media: doc.data().social_media,
-          description:
-            doc.data().description || 'This password has no description. Please update it.',
+          description: doc.data().description || defaultEmptyPasswordDescription,
           createdAt: doc.data().createdAt,
         })
       )

@@ -20,7 +20,7 @@ import { Entypo } from '@expo/vector-icons';
 
 import { cardView, shadow } from 'screens/PasswordGenerator/styles';
 import { createEditPassword } from './styles';
-import { appColors } from 'utils/constants';
+import { appColors, defaultEmptyPasswordDescription } from 'utils/constants';
 import { socialMediaCollection } from 'services/firebase';
 import { customAlertMessage } from 'utils/infoMessages';
 
@@ -41,7 +41,11 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
   useEffect(() => {
     if (isCreateMode || isEditMode) {
       if (isEditMode) {
-        setDescription(passwordDescriptionPicked);
+        setDescription(
+          passwordDescriptionPicked !== defaultEmptyPasswordDescription
+            ? passwordDescriptionPicked
+            : ''
+        );
       }
 
       socialMediaCollection.onSnapshot(() => {
@@ -73,6 +77,7 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
         <Text style={createEditPassword.textLabel}>Description:</Text>
         <TextInput
           style={createEditPassword.textInput}
+          placeholder={'Type in here...'}
           maxLength={passwordDescriptionMaxLen}
           value={description}
           onChangeText={(text: string) => setDescription(text)}

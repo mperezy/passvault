@@ -12,6 +12,8 @@ const devWarnings = [
 
 const popoverMessage = 'You can generate passwords without store them.';
 
+const defaultEmptyPasswordDescription = 'This password has no description. Please update it.';
+
 const infoMessages = {
   copied2Clipboard: 'The password was copied to clipboard',
   newPassword: 'New password generated',
@@ -56,4 +58,14 @@ export interface PasswordI {
   social_media: string;
 }
 
-export { devWarnings, lower, upper, number, symbols, popoverMessage, appColors, infoMessages };
+export {
+  devWarnings,
+  lower,
+  upper,
+  number,
+  symbols,
+  popoverMessage,
+  defaultEmptyPasswordDescription,
+  appColors,
+  infoMessages,
+};
