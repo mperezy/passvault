@@ -1,9 +1,8 @@
 import { passwordsCollection, socialMediaCollection } from 'services/firebase';
 import { defaultEmptyPasswordDescription } from 'utils/constants';
 
-const sortBy = (obj1: object, obj2: object, field: string, kind: string) => {
+const sortBy = (obj1: any, obj2: any, field: string, kind: string = 'asc') => {
   const x = kind === 'asc' ? 1 : -1;
-  // @ts-ignore
   return obj1[field] < obj2[field] ? -1 * x : obj1[field] > obj2[field] ? 1 * x : 0;
 };
 
@@ -34,7 +33,9 @@ export const getPasswordsByUserId = async (userId: any) => {
       console.log('Error getting documents: ', error);
     });
 
-  return passwordList.sort((x, y) => sortBy(x, y, 'createdAt', 'asc'));
+  return passwordList.sort((x, y) =>
+    sortBy(x, y, 'createdAt', process.env.PASSWORD_LIST_ORDER_TYPE)
+  );
 };
 
 export const sendPassword2Firebase = async (
