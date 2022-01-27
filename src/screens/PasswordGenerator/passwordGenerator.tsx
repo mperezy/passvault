@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -21,6 +21,7 @@ import {
   BackHandler,
   Platform,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import { Divider } from 'react-native-paper';
 import Checkbox from 'expo-checkbox';
@@ -43,7 +44,9 @@ import {
 
 export const PasswordGenerator = (props: { navigation: any }) => {
   const { navigation } = props;
+  const scrollViewRef = useRef();
   const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const passwordFromState = useSelector(selectPassword);
@@ -112,10 +115,26 @@ export const PasswordGenerator = (props: { navigation: any }) => {
       setSnackbarVisible(true);
     }
 
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
     return () => {
       resetConfigurationState(dispatch);
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
     };
   }, []);
+
+  useEffect(() => {
+    if (isKeyboardVisible) {
+      // @ts-ignore
+      scrollViewRef.current.scrollToEnd({ animating: true });
+    }
+  }, [isKeyboardVisible]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -125,7 +144,8 @@ export const PasswordGenerator = (props: { navigation: any }) => {
 
   return (
     <>
-      <ScrollView>
+      {/* @ts-ignore */}
+      <ScrollView ref={scrollViewRef}>
         <View style={screen.container}>
           <View style={[cardView.container, passwordStyle.container, shadow.container]}>
             <View style={passwordStyle.inputContainer}>
