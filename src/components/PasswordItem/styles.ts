@@ -31,6 +31,8 @@ export const item = StyleSheet.create({
     flexDirection: 'column',
   },
 
+  descriptionTextLabel: { fontSize: 13, marginBottom: 5 },
+
   passwordInput: {
     fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
     fontWeight: 'bold',

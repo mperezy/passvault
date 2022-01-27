@@ -25,7 +25,7 @@ const PasswordItem = (props: PasswordItemI) => {
       <View style={item.socialIconAndPasswordInfo}>
         <SocialMediaIcon style={icons.socialMedia} socialMedia={socialMedia} />
         <View style={item.passwordAndDescription}>
-          <Text style={{ marginBottom: 5 }}>{description}</Text>
+          <Text style={item.descriptionTextLabel}>{description}</Text>
           <TextInput
             style={item.passwordInput}
             showSoftInputOnFocus={false}
