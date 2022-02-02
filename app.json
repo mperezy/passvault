@@ -4,9 +4,9 @@
     "slug": "passvault",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/main/passvault-64px.png",
+    "icon": "./assets/main/passvault-icon.png",
     "splash": {
-      "image": "./assets/main/passvault-512px.png",
+      "image": "./assets/main/passvault-splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,14 +21,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/main/passvault-64px.png",
+        "foregroundImage": "./assets/main/passvault-icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.mperezy.passvault",
       "versionCode": 1
     },
     "web": {
-      "favicon": "./assets/main/passvault-64px.png"
+      "favicon": "./assets/main/passvault-icon.png"
     }
   }
 }

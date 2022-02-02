@@ -20,6 +20,19 @@ const infoMessages = {
   about2CreatePassword: "You're about to create a new password",
 };
 
+const FIREBASE_STORAGE_URL = 'https://firebasestorage.googleapis.com';
+const FIREBASE_STORAGE_BUCKET = process.env.FIREBASE_STORAGE_BUCKET;
+
+const imagesTokens = {
+  FIREBASE_FIRESTORAGE_WELCOME_IMAGE_TOKEN: '9a72b084-fbf7-4ec0-bfc7-4c0c4fe923c7',
+  FIREBASE_FIRESTORAGE_PASSWORD_GENERATOR_IMAGE_TOKEN: '48ac40a8-14ac-4b31-8246-1b9a64efc19e',
+  FIREBASE_FIRESTORAGE_SIGNUP_IMAGE_TOKEN: 'dc6946e2-b384-45c3-8ccd-4e4ed27b3b41',
+  FIREBASE_FIRESTORAGE_FREE2USE_IMAGE_TOKEN: '0a457929-f205-4b5f-afbe-2f832991a673',
+  FIREBASE_FIRESTORAGE_PASSWORDS_LISTED_IMAGE_TOKEN: '79295f0a-cf45-4ed2-aa1d-0e7c29cafea3',
+  FIREBASE_FIRESTORAGE_PASSWORD_EDIT_IMAGE_TOKEN: '5f6da2b8-26cc-48ca-8352-30afd0cb3dd3',
+  FIREBASE_FIRESTORAGE_ONBOARDING_COMPLETE_IMAGE_TOKEN: '5cf416cc-0f22-4ca6-be38-fc816742a76e',
+};
+
 const appColors = {
   textTint: '#FFF',
   maximumTintColorSlider: '#d3d3d3',
@@ -68,4 +81,7 @@ export {
   defaultEmptyPasswordDescription,
   appColors,
   infoMessages,
+  FIREBASE_STORAGE_URL,
+  FIREBASE_STORAGE_BUCKET,
+  imagesTokens,
 };
