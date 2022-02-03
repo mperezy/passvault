@@ -25,9 +25,9 @@ export const auth = firebase.auth();
 export const passwordsCollection = database.collection('passwords');
 export const socialMediaCollection = database.collection('social_media');
 
-export const signIn = (username: string, password: string) => {
+export const signIn = (username: string) => {
   auth
-    .signInWithEmailAndPassword(`${username}@example.com`, password)
+    .signInWithEmailAndPassword(`${username}@example.com`, username.toLowerCase())
     .then((userCredentials) => {
       const { user } = userCredentials;
 
@@ -52,9 +52,9 @@ export const signOut = (reduxAction: any, navigation: any) => {
     });
 };
 
-export const signUp = (username: string, password: string) => {
+export const signUp = (username: string) => {
   auth
-    .createUserWithEmailAndPassword(`${username}@example.com`, password)
+    .createUserWithEmailAndPassword(`${username}@example.com`, username.toLowerCase())
     .then((userCredentials) => {
       const { user } = userCredentials;
       console.log({ user });

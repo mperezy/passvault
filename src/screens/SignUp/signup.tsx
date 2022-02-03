@@ -5,7 +5,6 @@ import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
 import { View, Text, Platform, Image, TextInput, TouchableOpacity } from 'react-native';
 
-import { PasswordToggle } from 'components/PasswordToggle/passwordToggle';
 import { shadow } from 'screens/PasswordGenerator/styles';
 
 import { auth, signUp } from 'services/firebase';
@@ -14,9 +13,6 @@ import styles from 'screens/Login/styles';
 
 export const SignUp = (props: { navigation: any }) => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [hidePassword, setHidePassword] = useState(true);
 
   const dispatch = useDispatch();
   const { navigation } = props;
@@ -35,13 +31,8 @@ export const SignUp = (props: { navigation: any }) => {
   );
 
   const handleSignUp = () => {
-    signUp(username, password);
+    signUp(username);
     setUsername('');
-    setPassword('');
-  };
-
-  const handleHidePassword = () => {
-    setHidePassword(!hidePassword);
   };
 
   return (
@@ -54,14 +45,6 @@ export const SignUp = (props: { navigation: any }) => {
           style={[styles.input, shadow.container]}
           onChangeText={(text) => setUsername(text)}
         />
-        <TextInput
-          placeholder='Password'
-          value={password}
-          style={[styles.input, shadow.container]}
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry={hidePassword}
-        />
-        <PasswordToggle hidePassword={!hidePassword} action={handleHidePassword} />
       </View>
 
       <View style={styles.buttonContainer}>

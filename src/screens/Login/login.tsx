@@ -13,7 +13,6 @@ import { Image, Text, TextInput, Platform, View, TouchableOpacity } from 'react-
 import { usePopover } from 'react-native-modal-popover';
 
 import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
-import { PasswordToggle } from 'components/PasswordToggle/passwordToggle';
 import { CustomPopover } from 'components/Popover/popover';
 import { shadow } from 'screens/PasswordGenerator/styles';
 
@@ -26,9 +25,6 @@ import styles from './styles';
 
 export const Login = (props: { navigation: any }) => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [hidePassword, setHidePassword] = useState(true);
 
   const dispatch = useDispatch();
   const isRequesting = useSelector(selectRequest);
@@ -57,11 +53,8 @@ export const Login = (props: { navigation: any }) => {
   );
 
   const handleLogin = () => {
-    signIn(username, password);
-  };
-
-  const handleHidePassword = () => {
-    setHidePassword(!hidePassword);
+    signIn(username);
+    setUsername('');
   };
 
   return (
@@ -77,14 +70,6 @@ export const Login = (props: { navigation: any }) => {
               style={[styles.input, shadow.container]}
               onChangeText={(text: string) => setUsername(text)}
             />
-            <TextInput
-              placeholder='Password'
-              value={password}
-              style={[styles.input, shadow.container]}
-              onChangeText={(text: string) => setPassword(text)}
-              secureTextEntry={hidePassword}
-            />
-            <PasswordToggle hidePassword={!hidePassword} action={handleHidePassword} />
           </View>
 
           <View style={styles.buttonContainer}>

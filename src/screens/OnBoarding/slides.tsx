@@ -4,6 +4,7 @@ const {
   FIREBASE_FIRESTORAGE_WELCOME_IMAGE_TOKEN,
   FIREBASE_FIRESTORAGE_PASSWORD_GENERATOR_IMAGE_TOKEN,
   FIREBASE_FIRESTORAGE_SIGNUP_IMAGE_TOKEN,
+  FIREBASE_FIRESTORAGE_EASY_SIGNUP_IMAGE_TOKEN,
   FIREBASE_FIRESTORAGE_FREE2USE_IMAGE_TOKEN,
   FIREBASE_FIRESTORAGE_PASSWORDS_LISTED_IMAGE_TOKEN,
   FIREBASE_FIRESTORAGE_PASSWORD_EDIT_IMAGE_TOKEN,
@@ -32,29 +33,36 @@ export const slides = [
   },
   {
     id: 4,
+    title: 'Signup is very easy!',
+    description:
+      "No passwords required, duh! you only need a username with more than 6 characters for signup and login. That's it!",
+    image: `${FIREBASE_STORAGE_FINAL_URL}/easy-signup.gif?alt=media&token=${FIREBASE_FIRESTORAGE_EASY_SIGNUP_IMAGE_TOKEN}`,
+  },
+  {
+    id: 5,
     title: 'Free to use',
     description:
       "If you don't feel comfortable creating an account, you can still generate passwords but those wont't be stored",
     image: `${FIREBASE_STORAGE_FINAL_URL}/free-to-use.png?alt=media&token=${FIREBASE_FIRESTORAGE_FREE2USE_IMAGE_TOKEN}`,
   },
   {
-    id: 5,
+    id: 6,
     title: 'Check your Generated Passwords listed',
     description:
       "If you're an authenticated user all your passwords will be listed (latest listed first), and navigate with a sidebar menu",
     image: `${FIREBASE_STORAGE_FINAL_URL}/passwords-listed.png?alt=media&token=${FIREBASE_FIRESTORAGE_PASSWORDS_LISTED_IMAGE_TOKEN}`,
   },
   {
-    id: 6,
+    id: 7,
     title: 'Update your existing passwords',
     description:
-      'In order to avoid to create one entries, you can update an existing password and save the changes',
+      'In order to avoid to create more entries, you can update an existing password and save the changes',
     image: `${FIREBASE_STORAGE_FINAL_URL}/password-edit.gif?alt=media&token=${FIREBASE_FIRESTORAGE_PASSWORD_EDIT_IMAGE_TOKEN}`,
   },
   {
-    id: 7,
+    id: 8,
     title: "Let's go with it!",
-    description: "Now we're ready to start use Passvault!",
+    description: "Now we're ready to start to use Passvault!",
     image: `${FIREBASE_STORAGE_FINAL_URL}/onboarding-completed.png?alt=media&token=${FIREBASE_FIRESTORAGE_ONBOARDING_COMPLETE_IMAGE_TOKEN}`,
   },
 ];
