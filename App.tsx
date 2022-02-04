@@ -37,7 +37,7 @@ const App = () => {
   useEffect(() => {
     getOnBoardingViewed()
       .then((value) => {
-        if (value === 'false') {
+        if (value === 'false' || value === undefined) {
           setOnBoardingViewed(false);
         } else {
           setOnBoardingViewed(true);
