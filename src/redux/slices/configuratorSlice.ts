@@ -62,9 +62,7 @@ export const configuratorSlice = createSlice({
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(resetPasswordGeneratorState, (state, { payload }) =>
-      resetPasswordConfiguratorState(state)
-    );
+    builder.addCase(resetPasswordGeneratorState, (state) => resetPasswordConfiguratorState(state));
   },
 });
 

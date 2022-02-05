@@ -1,9 +1,4 @@
-import {
-  generatePassword,
-  setIsCreateMode,
-  setIsEditMode,
-  resetPasswordGeneratorState,
-} from 'reduxStore/slices/passwordSlice';
+import { generatePassword, resetPasswordGeneratorState } from 'reduxStore/slices/passwordSlice';
 import { showInfoMessage } from 'utils/infoMessages';
 import { infoMessages } from 'utils/constants';
 
@@ -59,9 +54,6 @@ export const handleRightCheckboxes = (
   }
 };
 
-export const updateConfiguratorStateAndGeneratePassword = (
-  dispatch: any,
-  generatePassword: any
-) => {
+export const updateConfiguratorStateAndGeneratePassword = (dispatch: any) => {
   dispatch(generatePassword());
 };

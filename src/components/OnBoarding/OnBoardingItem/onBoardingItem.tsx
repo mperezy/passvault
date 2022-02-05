@@ -3,10 +3,7 @@ import React from 'react';
 
 import { styles } from './styles';
 
-export const OnBoardingItem = (props: {
-  item: { id: number; title: string; description: string; image: string };
-}) => {
-  const { item } = props;
+export const OnBoardingItem = ({ item }: Props) => {
   const { title, description, image } = item;
   const { width } = useWindowDimensions();
 
@@ -26,3 +23,7 @@ export const OnBoardingItem = (props: {
     </View>
   );
 };
+
+interface Props {
+  item: { id: number; title: string; description: string; image: string };
+}

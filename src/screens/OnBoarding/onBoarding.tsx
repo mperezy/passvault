@@ -3,8 +3,8 @@ import { View, StyleSheet, FlatList, Animated } from 'react-native';
 import { OnBoardingItem } from 'components/OnBoarding/OnBoardingItem/onBoardingItem';
 import { Paginator } from 'components/OnBoarding/Paginator/paginator';
 import { NextButton } from 'components/OnBoarding/NextButton/nextButton';
-import { slides } from './slides';
 import { setOnBoardingViewed } from 'utils/localStorageFuncs';
+import { slides } from './slides';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,8 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const OnBoarding = (props: { navigation: any }) => {
-  const { navigation } = props;
+export const OnBoarding = ({ navigation }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef(null);
@@ -61,3 +60,7 @@ export const OnBoarding = (props: { navigation: any }) => {
     </View>
   );
 };
+
+interface Props {
+  navigation: any;
+}

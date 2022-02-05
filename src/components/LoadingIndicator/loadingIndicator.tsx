@@ -14,10 +14,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export const LoadingIndicator = () => {
-  return (
-    <View style={[styles.container, styles.horizontal]}>
-      <ActivityIndicator size='large' color='#3091e0' />
-    </View>
-  );
-};
+export const LoadingIndicator = () => (
+  <View style={[styles.container, styles.horizontal]}>
+    <ActivityIndicator size='large' color='#3091e0' />
+  </View>
+);

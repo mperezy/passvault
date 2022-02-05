@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   savePassword2Firebase,
-  editPasswordFromFirebase,
   selectIsCreateMode,
   selectIsEditMode,
   selectPassword,
   selectPasswordDescriptionPicked,
+  selectPasswordIdPicked,
+  setPasswordIdPicked,
+  setPasswordDescriptionPicked,
 } from 'reduxStore/slices/passwordSlice';
 import {
   getSocialMediaListFromFirebase,
@@ -19,23 +21,24 @@ import { Picker, Text, TextInput, View } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 import { cardView, shadow } from 'screens/PasswordGenerator/styles';
-import { createEditPassword } from './styles';
 import { appColors, defaultEmptyPasswordDescription } from 'utils/constants';
 import { socialMediaCollection } from 'services/firebase';
-import { customAlertMessage } from 'utils/infoMessages';
+import { setModalMessage, setModalTitle, setModalVisible } from 'reduxStore/slices/uiElementsSlice';
+import { createEditPassword } from './styles';
 
-export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
+export const CreateEditPasswordConfigurator = ({ navigation }: Props) => {
   const dispatch = useDispatch();
   const passwordDescriptionMaxLen = 60;
   const [description, setDescription] = useState('');
+
   const socialMediaPicked = useSelector(selectSocialMediaPicked);
   const passwordDescriptionPicked = useSelector(selectPasswordDescriptionPicked);
   const socialMediaList = useSelector(selectSocialMediaList);
   const isCreateMode = useSelector(selectIsCreateMode);
   const isEditMode = useSelector(selectIsEditMode);
+  const passwordIdPicked = useSelector(selectPasswordIdPicked);
   const password = useSelector(selectPassword);
 
-  const { navigation } = props;
   const createEditButtonLabel = isCreateMode ? 'Save' : 'Edit';
 
   useEffect(() => {
@@ -54,6 +57,30 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
     }
   }, []);
 
+  const handleCreateEditButton = () => {
+    if (socialMediaPicked !== '') {
+      const data = {
+        password,
+        description,
+        socialMedia: socialMediaPicked,
+      };
+      if (isEditMode) {
+        dispatch(setPasswordDescriptionPicked({ passwordDescriptionPicked: description }));
+        dispatch(setPasswordIdPicked({ passwordIdPicked }));
+        dispatch(setModalTitle({ modalTitle: 'Edit password warning !' }));
+        dispatch(
+          setModalMessage({
+            modalMessage: "If you update this password, you won't be able to recover it.",
+          })
+        );
+        dispatch(setModalVisible({ modalVisible: true }));
+      } else {
+        dispatch(savePassword2Firebase(data));
+        navigation.navigate('PasswordList');
+      }
+    }
+  };
+
   return (
     <View style={[cardView.container, shadow.container, createEditPassword.container]}>
       <View style={createEditPassword.userInputContainer}>
@@ -62,7 +89,7 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
           // ref={pickerRef}
           style={createEditPassword.dropdown}
           selectedValue={socialMediaPicked}
-          onValueChange={(itemValue, itemIndex) => {
+          onValueChange={(itemValue) => {
             dispatch(setSocialMediaPicked({ socialMediaPicked: itemValue }));
           }}
         >
@@ -77,7 +104,7 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
         <Text style={createEditPassword.textLabel}>Description:</Text>
         <TextInput
           style={createEditPassword.textInput}
-          placeholder={'Type in here...'}
+          placeholder='Type in here...'
           maxLength={passwordDescriptionMaxLen}
           value={description}
           onChangeText={(text: string) => setDescription(text)}
@@ -93,31 +120,14 @@ export const CreateEditPasswordConfigurator = (props: { navigation: any }) => {
         size={24}
         color={appColors.textTint}
         backgroundColor={appColors.primary}
-        onPress={() => {
-          if (socialMediaPicked !== '') {
-            const data = {
-              password,
-              description,
-              socialMedia: socialMediaPicked,
-            };
-            if (isEditMode) {
-              customAlertMessage(
-                'Edit password warning !',
-                "If you update this password, you won't be able to recover it.",
-                () => {
-                  dispatch(editPasswordFromFirebase(data));
-                  navigation.navigate('PasswordList');
-                }
-              );
-            } else {
-              dispatch(savePassword2Firebase(data));
-              navigation.navigate('PasswordList');
-            }
-          }
-        }}
+        onPress={handleCreateEditButton}
       >
         {createEditButtonLabel}
       </Entypo.Button>
     </View>
   );
 };
+
+interface Props {
+  navigation: any;
+}

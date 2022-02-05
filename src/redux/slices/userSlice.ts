@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getUserDataFromLS } from 'utils/localStorageFuncs';
-
 export const initialState = {
   id: '',
   email: '',

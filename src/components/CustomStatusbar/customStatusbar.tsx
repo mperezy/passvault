@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { appColors } from 'utils/constants';
 
 /*
@@ -7,10 +7,8 @@ import { appColors } from 'utils/constants';
  *   https://snack.expo.dev/@ahmed_gaber/safe-area-context?platform=ios
  */
 
-export const CustomStatusbar = () => {
-  return (
-    <StatusBar animated={true} barStyle={'light-content'} backgroundColor={appColors.primaryDark} />
-  );
-};
+export const CustomStatusbar = () => (
+  <StatusBar animated barStyle='light-content' backgroundColor={appColors.primaryDark} />
+);
 
 export default CustomStatusbar;

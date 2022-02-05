@@ -9,32 +9,30 @@ import {
 
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
-import { Image, Text, TextInput, Platform, View, TouchableOpacity } from 'react-native';
+import { Image, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { usePopover } from 'react-native-modal-popover';
 
 import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
 import { CustomPopover } from 'components/Popover/popover';
 import { shadow } from 'screens/PasswordGenerator/styles';
 
-import { setUserData2LS } from 'utils/localStorageFuncs';
 import { auth, signIn } from 'services/firebase';
 
 import styles from './styles';
 
 // Reference for popover: https://github.com/eveningkid/react-native-popable
 
-export const Login = (props: { navigation: any }) => {
+export const Login = ({ navigation }: Props) => {
   const [username, setUsername] = useState('');
 
   const dispatch = useDispatch();
   const isRequesting = useSelector(selectRequest);
-  const { navigation } = props;
 
   const { openPopover, closePopover, popoverVisible, touchableRef, popoverAnchorRect } =
     usePopover();
 
   useEffect(() => {
-    dispatch(setIsRequest({ isRequest: true }));
+    dispatch(setIsRequest());
   }, []);
 
   useEffect(
@@ -112,3 +110,7 @@ export const Login = (props: { navigation: any }) => {
     </>
   );
 };
+
+interface Props {
+  navigation: any;
+}

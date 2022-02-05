@@ -6,10 +6,15 @@ import {
   selectIsCreateMode,
   selectIsEditMode,
   selectPassword,
-  selectPasswordLength,
-  selectPasswordPicked,
 } from 'reduxStore/slices/passwordSlice';
 import { selectUserId } from 'reduxStore/slices/userSlice';
+import {
+  resetSnackbar,
+  selectSnackbarMessage,
+  selectSnackbarVisible,
+  setSnackbarMessage,
+  setSnackbarVisible,
+} from 'reduxStore/slices/uiElementsSlice';
 
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import {
@@ -24,15 +29,12 @@ import {
   Keyboard,
 } from 'react-native';
 import { Divider } from 'react-native-paper';
-import Checkbox from 'expo-checkbox';
 
-import { CustomCheckBox } from 'components/PasswordConfigurator/CustomCheckBox/customCheckBox';
 import SliderContainer from 'components/SliderContainer/sliderContainer';
 import { PasswordConfigurator } from 'components/PasswordConfigurator/passwordConfigurator';
 import { CreateEditPasswordConfigurator } from 'components/CreateEditPasswordConfigurator/createEditPasswordConfigurator';
-import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 
-import { cardView, shadow, screen, passwordStyle, configuration, checkBox } from './styles';
+import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
 import { infoMessages } from 'utils/constants';
 import { showInfoMessage } from 'utils/infoMessages';
@@ -41,20 +43,19 @@ import {
   handleGeneratePassword,
   showAuthenticatedMessage,
 } from 'utils/configuratorUtils';
+import { cardView, shadow, screen, passwordStyle, configuration } from './styles';
 
-export const PasswordGenerator = (props: { navigation: any }) => {
-  const { navigation } = props;
+export const PasswordGenerator = ({ navigation }: Props) => {
   const scrollViewRef = useRef();
-  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+
+  const snackbarMessage = useSelector(selectSnackbarMessage);
+  const snackbarVisible = useSelector(selectSnackbarVisible);
 
   const passwordFromState = useSelector(selectPassword);
-  const passwordLength = useSelector(selectPasswordLength);
 
   const isCreateMode = useSelector(selectIsCreateMode);
   const isEditMode = useSelector(selectIsEditMode);
-  const passwordPicked = useSelector(selectPasswordPicked);
 
   const userId = useSelector(selectUserId);
 
@@ -64,7 +65,7 @@ export const PasswordGenerator = (props: { navigation: any }) => {
 
   const dispatch = useDispatch();
 
-  const _handleGeneratePassword = () => {
+  const mHandleGeneratePassword = () => {
     handleGeneratePassword(passwordFromState, dispatch);
   };
 
@@ -76,13 +77,14 @@ export const PasswordGenerator = (props: { navigation: any }) => {
         if (Platform.OS === 'android') {
           showInfoMessage(infoMessages.copied2Clipboard);
         } else {
-          setSnackbarMessage(infoMessages.copied2Clipboard);
-          setSnackbarVisible(true);
+          dispatch(setSnackbarMessage({ snackbarMessage: infoMessages.copied2Clipboard }));
+          dispatch(setSnackbarVisible({ snackbarVisible: true }));
         }
 
         Clipboard.setString(password2Clipboard);
       })
       .catch((err: any) => {
+        // eslint-disable-next-line no-console
         console.log({ err });
         Clipboard.setString('');
       });
@@ -92,8 +94,8 @@ export const PasswordGenerator = (props: { navigation: any }) => {
     if (Platform.OS === 'android') {
       showInfoMessage(infoMessages.newPassword);
     } else {
-      setSnackbarMessage(infoMessages.newPassword);
-      setSnackbarVisible(true);
+      dispatch(setSnackbarMessage({ snackbarMessage: infoMessages.newPassword }));
+      dispatch(setSnackbarVisible({ snackbarVisible: true }));
     }
 
     dispatch(generatePassword());
@@ -105,14 +107,18 @@ export const PasswordGenerator = (props: { navigation: any }) => {
     return true;
   };
 
+  const handleOnDismissSnackbar = () => {
+    dispatch(resetSnackbar());
+  };
+
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackAction);
 
     if (Platform.OS === 'android') {
       showAuthenticatedMessage(userId, isCreateMode);
     } else {
-      setSnackbarMessage(infoMessages.about2CreatePassword);
-      setSnackbarVisible(true);
+      dispatch(setSnackbarMessage({ snackbarMessage: infoMessages.about2CreatePassword }));
+      dispatch(setSnackbarVisible({ snackbarVisible: true }));
     }
 
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -151,7 +157,7 @@ export const PasswordGenerator = (props: { navigation: any }) => {
             <View style={passwordStyle.inputContainer}>
               <TextInput
                 showSoftInputOnFocus={false}
-                caretHidden={true}
+                caretHidden
                 style={passwordStyle.input}
                 value={passwordFromState}
               />
@@ -183,14 +189,14 @@ export const PasswordGenerator = (props: { navigation: any }) => {
               <View style={configuration.lengthSliderContainer}>
                 <TextInput
                   showSoftInputOnFocus={false}
-                  caretHidden={true}
+                  caretHidden
                   style={configuration.inputLength}
-                  keyboardType={'numeric'}
+                  keyboardType='numeric'
                   value={passwordFromState.length.toString()}
                 />
                 <SliderContainer
                   defaultValue={isEditMode ? passwordFromState.length : 10}
-                  handleGeneratePassword={_handleGeneratePassword}
+                  handleGeneratePassword={mHandleGeneratePassword}
                 />
               </View>
             </View>
@@ -208,9 +214,13 @@ export const PasswordGenerator = (props: { navigation: any }) => {
 
       <CustomSnackbar
         message={snackbarMessage}
-        isSnackbarVisible={isSnackbarVisible}
-        setSnackbarVisible={setSnackbarVisible}
+        isSnackbarVisible={snackbarVisible}
+        onDismiss={handleOnDismissSnackbar}
       />
     </>
   );
 };
+
+interface Props {
+  navigation: any;
+}

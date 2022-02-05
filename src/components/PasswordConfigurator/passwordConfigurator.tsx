@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Text, View, ToastAndroid, Platform /*, TouchableOpacity*/ } from 'react-native';
-import Checkbox from 'expo-checkbox';
+import { View } from 'react-native';
 
 import { CustomCheckBox } from 'components/PasswordConfigurator/CustomCheckBox/customCheckBox';
 import { checkBox } from 'screens/PasswordGenerator/styles';
@@ -66,7 +65,7 @@ export const PasswordConfigurator = () => {
       <View style={{ flexDirection: 'column', marginLeft: -20 }}>
         <View style={checkBox.section}>
           <CustomCheckBox
-            label={'Easy to read'}
+            label='Easy to read'
             isChecked={isEasy2Read}
             color={appColors.primary}
             onPress={() => {
@@ -84,7 +83,7 @@ export const PasswordConfigurator = () => {
         </View>
         <View style={checkBox.section}>
           <CustomCheckBox
-            label={'All characters'}
+            label='All characters'
             isChecked={isAllChar}
             color={appColors.primary}
             onPress={() => {
@@ -106,7 +105,7 @@ export const PasswordConfigurator = () => {
       <View style={{ flexDirection: 'column' }}>
         <View style={checkBox.section}>
           <CustomCheckBox
-            label={'Uppercase'}
+            label='Uppercase'
             isChecked={isUpperCase}
             color={appColors.primary}
             onPress={() => {
@@ -120,13 +119,13 @@ export const PasswordConfigurator = () => {
                 { isUpperCase: !isUpperCase }
               );
 
-              updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
+              updateConfiguratorStateAndGeneratePassword(dispatch);
             }}
           />
         </View>
         <View style={checkBox.section}>
           <CustomCheckBox
-            label={'Lowercase'}
+            label='Lowercase'
             isChecked={isLowerCase}
             color={appColors.primary}
             onPress={() => {
@@ -140,13 +139,13 @@ export const PasswordConfigurator = () => {
                 { isLowerCase: !isLowerCase }
               );
 
-              updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
+              updateConfiguratorStateAndGeneratePassword(dispatch);
             }}
           />
         </View>
         <View style={checkBox.section}>
           <CustomCheckBox
-            label={'Numbers'}
+            label='Numbers'
             isChecked={isNumbers}
             disabled={!isAllChar}
             color={appColors.primary}
@@ -163,13 +162,13 @@ export const PasswordConfigurator = () => {
                 }
               );
 
-              updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
+              updateConfiguratorStateAndGeneratePassword(dispatch);
             }}
           />
         </View>
         <View style={checkBox.section}>
           <CustomCheckBox
-            label={'Symbols'}
+            label='Symbols'
             isChecked={isSymbols}
             disabled={!isAllChar}
             color={appColors.primary}
@@ -186,7 +185,7 @@ export const PasswordConfigurator = () => {
                 }
               );
 
-              updateConfiguratorStateAndGeneratePassword(dispatch, generatePassword);
+              updateConfiguratorStateAndGeneratePassword(dispatch);
             }}
           />
         </View>

@@ -6,8 +6,7 @@ import { appColors } from 'utils/constants';
 
 import { styles } from './styles';
 
-export const NextButton = (props: { scrollTo: any; percentage: any }) => {
-  const { percentage, scrollTo } = props;
+export const NextButton = ({ scrollTo, percentage }: Props) => {
   const size = 80;
   const strokeWidth = 2;
   const center = size / 2;
@@ -17,13 +16,12 @@ export const NextButton = (props: { scrollTo: any; percentage: any }) => {
   const progressAnimation = useRef(new Animated.Value(0)).current;
   const progressRef = useRef(null);
 
-  const animation = (toValue: any) => {
-    return Animated.timing(progressAnimation, {
+  const animation = (toValue: any) =>
+    Animated.timing(progressAnimation, {
       toValue,
       duration: 250,
       useNativeDriver: true,
     }).start();
-  };
 
   useEffect(() => {
     animation(percentage);
@@ -79,3 +77,8 @@ export const NextButton = (props: { scrollTo: any; percentage: any }) => {
     </View>
   );
 };
+
+interface Props {
+  scrollTo: any;
+  percentage: any;
+}

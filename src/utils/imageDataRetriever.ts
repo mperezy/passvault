@@ -1,5 +1,5 @@
-export const imageSourceRetriever = (socialMedia: string) => {
-  return socialMedia === 'amazon'
+export const imageSourceRetriever = (socialMedia: string) =>
+  socialMedia === 'amazon'
     ? require('assets/amazon.png')
     : socialMedia === 'discord'
     ? require('assets/discord.png')
@@ -14,24 +14,21 @@ export const imageSourceRetriever = (socialMedia: string) => {
     : socialMedia === 'twitch'
     ? require('assets/twitch.png')
     : '';
-};
 
-export const socialMediaIcon = (socialMedia: string) => {
-  return socialMedia === 'facebook'
+export const socialMediaIcon = (socialMedia: string) =>
+  socialMedia === 'facebook'
     ? 'facebook-square'
     : socialMedia === 'linkedin'
     ? 'linkedin-square'
     : socialMedia === 'other'
     ? 'questioncircle'
     : socialMedia;
-};
 
-export const socialMediaIconColor = (socialMedia: string) => {
-  return socialMedia === 'facebook'
+export const socialMediaIconColor = (socialMedia: string) =>
+  socialMedia === 'facebook'
     ? '#4267B2'
     : socialMedia === 'twitter'
     ? '#00ACEE'
     : socialMedia === 'linkedin'
     ? '#2867B2'
     : 'black';
-};

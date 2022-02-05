@@ -21,7 +21,7 @@ const infoMessages = {
 };
 
 const FIREBASE_STORAGE_URL = 'https://firebasestorage.googleapis.com';
-const FIREBASE_STORAGE_BUCKET = process.env.FIREBASE_STORAGE_BUCKET;
+const { FIREBASE_STORAGE_BUCKET } = process.env;
 
 const imagesTokens = {
   FIREBASE_FIRESTORAGE_WELCOME_IMAGE_TOKEN: '9a72b084-fbf7-4ec0-bfc7-4c0c4fe923c7',
@@ -40,36 +40,14 @@ const appColors = {
   activeTint: '#9ac8fc',
   primary: '#3091e0',
   primaryDark: '#236daa',
+  red: '#DB4437',
 };
-
-export interface PasswordItemI {
-  passwordId: string;
-  passwordGenerated: string;
-  socialMedia: string;
-  description: string;
-  setSnackbarVisible: any;
-  setSnackbarMessage: any;
-  navigation: any;
-}
-
-export interface PasswordIconsI {
-  passwordId: string;
-  socialMedia: string;
-  description: string;
-  passwordGenerated: string;
-  passwordVisible: boolean;
-  setPasswordVisible: any;
-  setSnackbarVisible: any;
-  setSnackbarMessage: any;
-  navigation: any;
-}
 
 export interface PasswordI {
   id: string;
-  createdAt: number;
   description: string;
-  password_generated: string;
-  social_media: string;
+  passwordGenerated: string;
+  socialMedia: string;
 }
 
 export {

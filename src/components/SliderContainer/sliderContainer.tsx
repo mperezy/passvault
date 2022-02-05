@@ -3,23 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { generatePassword, selectPasswordPicked, setLength } from 'reduxStore/slices/passwordSlice';
 
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Slider from '@react-native-community/slider';
 
-import { trackMarkStyles, styles } from './styles';
 import { appColors } from 'utils/constants';
+import { styles } from './styles';
 
 // Reference: https://youtu.be/MwSudWtT7ps?t=271
 
-const SliderContainer = (props: { defaultValue: number; handleGeneratePassword: any }) => {
-  const { defaultValue, handleGeneratePassword } = props;
+const SliderContainer = ({ defaultValue }: Props) => {
   const [value, setValue] = useState(defaultValue);
   const passwordPicked = useSelector(selectPasswordPicked);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isNaN(value) && !passwordPicked) {
-      //TODO: This flow needs to be updated in future
+    if (!Number.isNaN(value) && !passwordPicked) {
+      // TODO: This flow needs to be updated in future
       /* If there was a password picked for the edit flow
        * a new password won't be generated.
        * */
@@ -45,3 +44,7 @@ const SliderContainer = (props: { defaultValue: number; handleGeneratePassword: 
 };
 
 export default SliderContainer;
+
+interface Props {
+  defaultValue: number;
+}

@@ -3,19 +3,16 @@ import { useDispatch } from 'react-redux';
 
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
-import { View, Text, Platform, Image, TextInput, TouchableOpacity } from 'react-native';
-
-import { shadow } from 'screens/PasswordGenerator/styles';
+import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 
 import { auth, signUp } from 'services/firebase';
 
+import { shadow } from 'screens/PasswordGenerator/styles';
 import styles from 'screens/Login/styles';
 
-export const SignUp = (props: { navigation: any }) => {
+export const SignUp = ({ navigation }: Props) => {
   const [username, setUsername] = useState('');
-
   const dispatch = useDispatch();
-  const { navigation } = props;
 
   useEffect(
     () =>
@@ -67,3 +64,7 @@ export const SignUp = (props: { navigation: any }) => {
     </View>
   );
 };
+
+interface Props {
+  navigation: any;
+}

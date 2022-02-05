@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, Animated, useWindowDimensions } from 'react-native';
+import { View, Animated, useWindowDimensions } from 'react-native';
 
 import { styles } from './styles';
 
-export const Paginator = (props: { data: any; scrollX: any }) => {
-  const { data, scrollX } = props;
+export function Paginator({ data, scrollX }: Props) {
   const { width } = useWindowDimensions();
 
   return (
@@ -26,4 +25,9 @@ export const Paginator = (props: { data: any; scrollX: any }) => {
       })}
     </View>
   );
-};
+}
+
+interface Props {
+  data: any;
+  scrollX: any;
+}

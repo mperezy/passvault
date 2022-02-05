@@ -28,7 +28,7 @@ function* getSocialMediaFlow(): Generator {
     if (isCreateMode) {
       yield put(setSocialMediaPicked({ socialMediaPicked: socialMediaSelected }));
     } else if (isEditMode) {
-      //TODO: This flow needs to be updated in future
+      // TODO: This flow needs to be updated in future
       /* this flow is only to put the passwordPicked in the
        * text input in Password Generator and then delete it
        * passwordPicked state.
@@ -37,6 +37,7 @@ function* getSocialMediaFlow(): Generator {
       yield put(setPasswordPicked({ passwordPicked: '' }));
     }
   } catch (exception) {
+    // eslint-disable-next-line no-console
     console.log({ source: 'Exception from getSocialMediaSaga', exception });
   }
 }

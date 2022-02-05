@@ -8,10 +8,12 @@ const storeData = async (key: string, value: any) => {
     const finalValue = isObject(value) ? JSON.stringify(value) : value.toString();
     await AsyncStorage.setItem(key, finalValue);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log({ asyncStorageException: e });
   }
 };
 
+// eslint-disable-next-line consistent-return
 const getData = async (key: string) => {
   try {
     const value = await AsyncStorage.getItem(key);
@@ -19,6 +21,7 @@ const getData = async (key: string) => {
       return isObject(value) ? JSON.parse(value) : value;
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log({ asyncStorageException: e });
   }
 };
@@ -27,6 +30,7 @@ const removeItem = async (key: string) => {
   try {
     await AsyncStorage.removeItem(key);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log({ asyncStorageException: e });
   }
 };
@@ -46,6 +50,7 @@ const getPasswordGenerated = () => {
   return getData(`${appName}.password`)
     .then((password: string) => ({ password }))
     .catch((err) => {
+      // eslint-disable-next-line no-console
       console.log({ err });
       return empty;
     });
@@ -62,11 +67,13 @@ const getUserDataFromLS = () => {
           email,
         }))
         .catch((err: any) => {
+          // eslint-disable-next-line no-console
           console.log(err);
           return empty;
         });
     })
     .catch((err) => {
+      // eslint-disable-next-line no-console
       console.log(err);
       return empty;
     });
@@ -81,14 +88,14 @@ const setOnBoardingViewed = (value: any) => {
   storeData(`${appName}.alreadyLaunched`, value).then((data: void) => data);
 };
 
-const getOnBoardingViewed = () => {
-  return getData(`${appName}.alreadyLaunched`)
+const getOnBoardingViewed = () =>
+  getData(`${appName}.alreadyLaunched`)
     .then((firstLaunchFlag) => firstLaunchFlag)
     .catch((err) => {
+      // eslint-disable-next-line no-console
       console.log({ err });
       return null;
     });
-};
 
 export {
   setUserData2LS,

@@ -35,32 +35,36 @@ export const signIn = (username: string) => {
     })
     .catch((error) => {
       alert(error.message);
+
+      // eslint-disable-next-line no-console
       console.log({ exception: error.message });
     });
 };
 
-export const signOut = (reduxAction: any, navigation: any) => {
+export const signOut = () =>
   auth
     .signOut()
     .then(() => {
       clearUserDataFromLS();
-      reduxAction();
-      navigation.replace('Login');
     })
     .catch((error) => {
+      // eslint-disable-next-line no-console
       console.log({ exception: error.message });
     });
-};
 
 export const signUp = (username: string) => {
   auth
     .createUserWithEmailAndPassword(`${username}@example.com`, username.toLowerCase())
     .then((userCredentials) => {
       const { user } = userCredentials;
+
+      // eslint-disable-next-line no-console
       console.log({ user });
     })
     .catch((error) => {
       alert(error.message);
+
+      // eslint-disable-next-line no-console
       console.log({ exception: error.message });
     });
 };

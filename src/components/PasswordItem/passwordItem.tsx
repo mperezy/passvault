@@ -6,19 +6,14 @@ import { PasswordIcons } from 'components/PasswordIcons/passwordIcon';
 
 import { icons, item } from './styles';
 
-import { PasswordItemI } from 'utils/constants';
-
-const PasswordItem = (props: PasswordItemI) => {
+export const PasswordItem = ({
+  passwordId,
+  passwordGenerated,
+  socialMedia,
+  description,
+  navigation,
+}: Props) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const {
-    passwordId,
-    passwordGenerated,
-    socialMedia,
-    description,
-    setSnackbarVisible,
-    setSnackbarMessage,
-    navigation,
-  } = props;
 
   return (
     <View style={item.container}>
@@ -29,7 +24,7 @@ const PasswordItem = (props: PasswordItemI) => {
           <TextInput
             style={item.passwordInput}
             showSoftInputOnFocus={false}
-            caretHidden={true}
+            caretHidden
             value={passwordGenerated}
             secureTextEntry={!passwordVisible}
           />
@@ -42,12 +37,16 @@ const PasswordItem = (props: PasswordItemI) => {
         passwordGenerated={passwordGenerated}
         passwordVisible={passwordVisible}
         setPasswordVisible={setPasswordVisible}
-        setSnackbarVisible={setSnackbarVisible}
-        setSnackbarMessage={setSnackbarMessage}
         navigation={navigation}
       />
     </View>
   );
 };
 
-export default PasswordItem;
+interface Props {
+  passwordId: string;
+  passwordGenerated: string;
+  socialMedia: string;
+  description: string;
+  navigation: any;
+}

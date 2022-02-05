@@ -1,17 +1,23 @@
-import { put, select, call, takeLeading } from 'redux-saga/effects';
+import { select, call, takeLeading, put } from 'redux-saga/effects';
 import {
   editPasswordFromFirebase,
   selectPassword,
+  selectPasswordDescriptionPicked,
   selectPasswordIdPicked,
 } from 'reduxStore/slices/passwordSlice';
 import { updatePasswordByIdFromFirebase } from 'services/database';
+import { selectSocialMediaPicked } from 'reduxStore/slices/socialMediaSlice';
+import { setIsRequest, unsetIsRequest } from 'reduxStore/slices/applicationStatusSlice';
 
-function* updatePasswordFlow({ payload }: any): Generator {
+function* updatePasswordFlow(): Generator {
   try {
     const passwordId = yield select(selectPasswordIdPicked);
-    const { socialMedia, password, description } = payload;
+    const socialMedia = yield select(selectSocialMediaPicked);
+    const password = yield select(selectPassword);
+    const description = yield select(selectPasswordDescriptionPicked);
 
-    return yield call(
+    yield put(setIsRequest());
+    yield call(
       // @ts-ignore
       updatePasswordByIdFromFirebase,
       passwordId,
@@ -19,7 +25,9 @@ function* updatePasswordFlow({ payload }: any): Generator {
       description,
       socialMedia
     );
+    yield put(unsetIsRequest());
   } catch (exception) {
+    // eslint-disable-next-line no-console
     console.log({ source: 'Exception from savePasswordSaga', exception });
   }
 }

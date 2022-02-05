@@ -8,6 +8,7 @@ export const initialState: {
   length: number;
   isCreateMode: boolean;
   isEditMode: boolean;
+  isDeleteMode: boolean;
   passwords: any;
 } = {
   password: '',
@@ -17,6 +18,7 @@ export const initialState: {
   length: 6,
   isCreateMode: false,
   isEditMode: false,
+  isDeleteMode: false,
   passwords: [],
 };
 
@@ -29,6 +31,7 @@ const resetPasswordState = (state: any) => ({
   length: 6,
   isCreateMode: false,
   isEditMode: false,
+  isDeleteMode: false,
 });
 
 export const passwordSlice = createSlice({
@@ -63,6 +66,10 @@ export const passwordSlice = createSlice({
       ...state,
       isEditMode: payload.isEditMode,
     }),
+    setIsDeleteMode: (state, { payload }) => ({
+      ...state,
+      isDeleteMode: payload.isDeleteMode,
+    }),
     setPasswords: (state, { payload }) => ({
       ...state,
       passwords: payload.passwords,
@@ -72,8 +79,8 @@ export const passwordSlice = createSlice({
     generatePassword: () => {},
     getPasswordsFromFirebase: () => {},
     savePassword2Firebase: (state, { payload }) => {},
-    deletePasswordFromFirebase: (state, { payload }) => {},
-    editPasswordFromFirebase: (state, { payload }) => {},
+    deletePasswordFromFirebase: () => {},
+    editPasswordFromFirebase: () => {},
   },
 });
 
@@ -85,6 +92,7 @@ export const {
   setLength,
   setIsCreateMode,
   setIsEditMode,
+  setIsDeleteMode,
   setPasswords,
   resetPasswordGeneratorState,
   unsetPasswords,
@@ -95,18 +103,22 @@ export const {
   editPasswordFromFirebase,
 } = passwordSlice.actions;
 
-export const selectPassword = (state: { password: { password: any } }) => state.password.password;
-export const selectPasswordIdPicked = (state: { password: { passwordIdPicked: any } }) =>
+export const selectPassword = (state: { password: { password: string } }) =>
+  state.password.password;
+export const selectPasswordIdPicked = (state: { password: { passwordIdPicked: string } }) =>
   state.password.passwordIdPicked;
-export const selectPasswordPicked = (state: { password: { passwordPicked: any } }) =>
+export const selectPasswordPicked = (state: { password: { passwordPicked: string } }) =>
   state.password.passwordPicked;
 export const selectPasswordDescriptionPicked = (state: {
-  password: { passwordDescriptionPicked: any };
+  password: { passwordDescriptionPicked: string };
 }) => state.password.passwordDescriptionPicked;
 export const selectIsCreateMode = (state: { password: { isCreateMode: boolean } }) =>
   state.password.isCreateMode;
 export const selectIsEditMode = (state: { password: { isEditMode: boolean } }) =>
   state.password.isEditMode;
-export const selectPasswordLength = (state: { password: string | any[] }) => state.password.length;
+export const selectIsDeleteMode = (state: { password: { isDeleteMode: boolean } }) =>
+  state.password.isDeleteMode;
+export const selectPasswordLength = (state: { password: { length: number } }) =>
+  state.password.length;
 export const selectPasswords = (state: { password: { passwords: any } }) =>
   state.password.passwords;

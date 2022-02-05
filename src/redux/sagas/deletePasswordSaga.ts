@@ -1,20 +1,28 @@
 import { put, select, call, takeLeading } from 'redux-saga/effects';
-import { deletePasswordFromFirebase } from 'reduxStore/slices/passwordSlice';
+import {
+  deletePasswordFromFirebase,
+  selectPasswordIdPicked,
+} from 'reduxStore/slices/passwordSlice';
 import { deletePasswordById } from 'services/database';
+import { setIsRequest, unsetIsRequest } from 'reduxStore/slices/applicationStatusSlice';
 
-// @ts-ignore
-function* deletePasswordFlow({ payload }): Generator {
+function* deletePasswordFlow(): Generator {
   try {
-    const { passwordId } = payload;
+    const passwordId = yield select(selectPasswordIdPicked);
+
+    yield put(setIsRequest());
 
     // @ts-ignore
-    return yield call(deletePasswordById, passwordId);
+    yield call(deletePasswordById, passwordId);
+
+    yield put(unsetIsRequest());
   } catch (exception) {
+    // eslint-disable-next-line no-console
     console.log({ source: 'Exception from savePasswordSaga', exception });
   }
 }
 
-// @ts-ignore
 export const deletePasswordSaga = [
+  // @ts-ignore
   takeLeading(deletePasswordFromFirebase.type, deletePasswordFlow),
 ];

@@ -1,33 +1,53 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  deletePasswordFromFirebase,
+  editPasswordFromFirebase,
   getPasswordsFromFirebase,
+  selectIsDeleteMode,
+  selectIsEditMode,
   selectPasswords,
   setIsCreateMode,
 } from 'reduxStore/slices/passwordSlice';
 import { selectRequest } from 'reduxStore/slices/applicationStatusSlice';
+import {
+  resetModal,
+  resetSnackbar,
+  selectModalMessage,
+  selectModalTitle,
+  selectModalVisible,
+  selectSnackbarMessage,
+  selectSnackbarVisible,
+} from 'reduxStore/slices/uiElementsSlice';
 
 import { View, ScrollView, BackHandler, Platform } from 'react-native';
 import { FAB } from 'react-native-paper';
 
-import PasswordItem from 'components/PasswordItem/passwordItem';
+import { PasswordItem } from 'components/PasswordItem/passwordItem';
 import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
 import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
+import { CustomModal as Modal } from 'components/CustomModal/customModal';
 
 import { passwordsCollection } from 'services/firebase';
 
 import { appColors, PasswordI } from 'utils/constants';
 import styles from './styles';
 
-export const PasswordList = (props: { navigation: any }) => {
-  const [isSnackbarVisible, setSnackbarVisible] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+export const PasswordList = ({ navigation }: Props) => {
+  const snackbarVisible = useSelector(selectSnackbarVisible);
+  const snackbarMessage = useSelector(selectSnackbarMessage);
+
+  const modalTitle = useSelector(selectModalTitle);
+  const modalMessage = useSelector(selectModalMessage);
+  const modalVisible = useSelector(selectModalVisible);
+
+  const isEditMode = useSelector(selectIsEditMode);
+  const isDeleteMode = useSelector(selectIsDeleteMode);
+
   const [scrollIsClose2Bottom, setScrollIsClose2Bottom] = useState(false);
 
-  const { navigation } = props;
   const dispatch = useDispatch();
-  const scrollViewRef = useRef();
 
   const passwords = useSelector(selectPasswords);
   const isRequesting = useSelector(selectRequest);
@@ -37,6 +57,7 @@ export const PasswordList = (props: { navigation: any }) => {
       BackHandler.exitApp();
       return true;
     });
+
     passwordsCollection.onSnapshot(() => {
       dispatch(getPasswordsFromFirebase());
     });
@@ -51,61 +72,79 @@ export const PasswordList = (props: { navigation: any }) => {
     setScrollIsClose2Bottom(result);
   };
 
+  const handleOnDismissSnackbar = () => {
+    dispatch(resetSnackbar());
+  };
+
+  const handleOnPressFAB = () => {
+    dispatch(setIsCreateMode({ isCreateMode: true }));
+    navigation.navigate('PasswordGenerator');
+  };
+
+  const handleModalToggle = () => {
+    dispatch(resetModal());
+  };
+  const handleModalOnSubmit = () => {
+    if (isDeleteMode) {
+      dispatch(deletePasswordFromFirebase());
+    } else if (isEditMode) {
+      dispatch(editPasswordFromFirebase());
+      navigation.navigate('PasswordList');
+    }
+    dispatch(resetModal());
+  };
+
   return (
     <>
       {isRequesting && <LoadingIndicator />}
       {!isRequesting && (
         <View style={styles.container}>
           <ScrollView
-            // ref={scrollViewRef}
             scrollEventThrottle={16}
             onScroll={handleScrollIsClose2Bottom}
-            contentContainerStyle={{
-              flexGrow: 1,
-            }}
+            contentContainerStyle={{ flexGrow: 1 }}
             keyboardShouldPersistTaps='handled'
           >
             <View style={styles.items}>
-              {passwords.map((passwordItem: PasswordI) => {
-                console.log();
-                return (
-                  <PasswordItem
-                    key={passwordItem.id}
-                    passwordId={passwordItem.id}
-                    passwordGenerated={passwordItem.password_generated}
-                    socialMedia={passwordItem.social_media}
-                    description={passwordItem.description}
-                    setSnackbarVisible={setSnackbarVisible}
-                    setSnackbarMessage={setSnackbarMessage}
-                    navigation={navigation}
-                  />
-                );
-              })}
+              {passwords.map(({ id, description, passwordGenerated, socialMedia }: PasswordI) => (
+                <PasswordItem
+                  key={id}
+                  passwordId={id}
+                  passwordGenerated={passwordGenerated}
+                  socialMedia={socialMedia}
+                  description={description}
+                  navigation={navigation}
+                />
+              ))}
             </View>
           </ScrollView>
           <FAB
-            style={{
-              position: 'absolute',
-              margin: 26,
-              right: 0,
-              bottom: isSnackbarVisible ? 40 : 0,
-              backgroundColor: appColors.primary,
-            }}
+            style={[styles.fab, { bottom: snackbarVisible ? 40 : 0 }]}
             color={appColors.textTint}
             visible={!scrollIsClose2Bottom}
             icon='plus'
-            onPress={() => {
-              dispatch(setIsCreateMode({ isCreateMode: true }));
-              navigation.navigate('PasswordGenerator');
-            }}
+            onPress={handleOnPressFAB}
           />
           <CustomSnackbar
             message={snackbarMessage}
-            isSnackbarVisible={isSnackbarVisible}
-            setSnackbarVisible={setSnackbarVisible}
+            isSnackbarVisible={snackbarVisible}
+            onDismiss={handleOnDismissSnackbar}
+          />
+          <Modal
+            visible={modalVisible}
+            toggle={handleModalToggle}
+            onSubmit={handleModalOnSubmit}
+            title={modalTitle}
+            message={modalMessage}
+            okButtonMessage='Yes'
+            cancelButtonMessage='No'
           />
         </View>
       )}
     </>
   );
 };
+
+interface Props {
+  navigation: any;
+}

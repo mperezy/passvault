@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { appColors } from 'utils/constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -63,6 +64,13 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
     color: 'white',
+  },
+
+  fab: {
+    position: 'absolute',
+    margin: 26,
+    right: 0,
+    backgroundColor: appColors.primary,
   },
 });
 

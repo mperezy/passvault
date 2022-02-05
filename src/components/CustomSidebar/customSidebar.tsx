@@ -2,19 +2,22 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import { Image, View, Text, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
+import { Text, ScrollView, ImageBackground } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Divider, Drawer } from 'react-native-paper';
-import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Drawer } from 'react-native-paper';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 import { selectUserEmail } from 'reduxStore/slices/userSlice';
 import { unsetPasswords, setIsCreateMode } from 'reduxStore/slices/passwordSlice';
 
 import { signOut } from 'services/firebase';
 
-import { imageBackground, divider, signout } from './styles';
+// eslint-disable-next-line import/no-unresolved
+import { DrawerDescriptorMap } from '@react-navigation/drawer/lib/typescript/src/types';
+import { DrawerNavigationState, ParamListBase } from '@react-navigation/routers';
+import { imageBackground } from './styles';
 
-export const CustomSidebar = (props: any) => {
+export const CustomSidebar = (props: Props) => {
   const userEmail = useSelector(selectUserEmail);
   const name = userEmail ? userEmail.substring(0, userEmail.indexOf('@')) : '';
   const userName = name.charAt(0).toUpperCase() + name.slice(1);
@@ -22,7 +25,10 @@ export const CustomSidebar = (props: any) => {
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
-    signOut(dispatch(unsetPasswords()), navigation.replace('Login'));
+    signOut().then(() => {
+      dispatch(unsetPasswords());
+      navigation.replace('Login');
+    });
   };
 
   return (
@@ -62,3 +68,9 @@ export const CustomSidebar = (props: any) => {
     </SafeAreaProvider>
   );
 };
+
+interface Props {
+  state: DrawerNavigationState<ParamListBase>;
+  navigation: any;
+  descriptors: DrawerDescriptorMap;
+}

@@ -9,20 +9,21 @@ export const applicationStatusSlice = createSlice({
   name: 'applicationStatus',
   initialState,
   reducers: {
-    setIsRequest: (state, { payload }) => ({
+    setIsRequest: (state) => ({
       ...state,
-      isRequest: payload.isRequest,
+      isRequest: true,
     }),
     unsetIsRequest: () => ({
       ...initialState,
     }),
   },
   extraReducers: (builder) => {
-    builder.addCase(getPasswordsFromFirebase, (state, { payload }) => ({
-      ...state,
-      isRequest: true,
-    })),
-      builder.addCase(setPasswords, (state, { payload }) => ({
+    builder
+      .addCase(getPasswordsFromFirebase, (state) => ({
+        ...state,
+        isRequest: true,
+      }))
+      .addCase(setPasswords, (state) => ({
         ...state,
         isRequest: false,
       }));

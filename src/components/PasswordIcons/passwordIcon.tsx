@@ -1,9 +1,8 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
 import {
-  deletePasswordFromFirebase,
+  setIsDeleteMode,
   setIsEditMode,
   setPasswordDescriptionPicked,
   setPasswordIdPicked,
@@ -15,26 +14,29 @@ import { Entypo, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vec
 
 import { icons } from 'components/PasswordItem/styles';
 
-import { infoMessages, PasswordIconsI } from 'utils/constants';
-import { customAlertMessage, showInfoMessage } from 'utils/infoMessages';
+import { appColors, infoMessages } from 'utils/constants';
+import { showInfoMessage } from 'utils/infoMessages';
 import { setSocialMediaPicked } from 'reduxStore/slices/socialMediaSlice';
+import {
+  setModalMessage,
+  setModalTitle,
+  setModalVisible,
+  setSnackbarMessage,
+  setSnackbarVisible,
+} from 'reduxStore/slices/uiElementsSlice';
 
-export const PasswordIcons = (props: PasswordIconsI) => {
+export const PasswordIcons = ({
+  passwordId,
+  socialMedia,
+  description,
+  passwordGenerated,
+  passwordVisible,
+  setPasswordVisible,
+  navigation,
+}: Props) => {
   const dispatch = useDispatch();
 
-  const {
-    passwordId,
-    socialMedia,
-    description,
-    passwordGenerated,
-    passwordVisible,
-    setPasswordVisible,
-    setSnackbarVisible,
-    setSnackbarMessage,
-    navigation,
-  } = props;
-
-  const _socialMedia = socialMedia.charAt(0).toUpperCase() + socialMedia.slice(1);
+  const mSocialMedia = socialMedia.charAt(0).toUpperCase() + socialMedia.slice(1);
 
   const handleShowHidePassword = () => {
     setPasswordVisible(!passwordVisible);
@@ -44,11 +46,32 @@ export const PasswordIcons = (props: PasswordIconsI) => {
     if (Platform.OS === 'android') {
       showInfoMessage(infoMessages.copied2Clipboard);
     } else {
-      setSnackbarMessage(infoMessages.copied2Clipboard);
-      setSnackbarVisible(true);
+      dispatch(setSnackbarMessage({ snackbarMessage: infoMessages.copied2Clipboard }));
+      dispatch(setSnackbarVisible({ snackbarVisible: true }));
     }
 
     Clipboard.setString(passwordGenerated);
+  };
+
+  const handleEditButton = () => {
+    dispatch(setIsEditMode({ isEditMode: true }));
+    dispatch(setPasswordIdPicked({ passwordIdPicked: passwordId }));
+    dispatch(setPasswordPicked({ passwordPicked: passwordGenerated }));
+    dispatch(setPasswordDescriptionPicked({ passwordDescriptionPicked: description }));
+    dispatch(setSocialMediaPicked({ socialMediaPicked: socialMedia }));
+    navigation.navigate('PasswordGenerator');
+  };
+
+  const handleDeleteButton = () => {
+    dispatch(setIsDeleteMode({ isDeleteMode: true }));
+    dispatch(setPasswordIdPicked({ passwordIdPicked: passwordId }));
+    dispatch(setModalTitle({ modalTitle: 'Delete password warning' }));
+    dispatch(
+      setModalMessage({
+        modalMessage: `Are you sure you want to delete this ${mSocialMedia}'s password?`,
+      })
+    );
+    dispatch(setModalVisible({ modalVisible: true }));
   };
 
   return (
@@ -69,29 +92,22 @@ export const PasswordIcons = (props: PasswordIconsI) => {
           color='grey'
         />
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          dispatch(setIsEditMode({ isEditMode: true }));
-          dispatch(setPasswordIdPicked({ passwordIdPicked: passwordId }));
-          dispatch(setPasswordPicked({ passwordPicked: passwordGenerated }));
-          dispatch(setPasswordDescriptionPicked({ passwordDescriptionPicked: description }));
-          dispatch(setSocialMediaPicked({ socialMediaPicked: socialMedia }));
-          navigation.navigate('PasswordGenerator');
-        }}
-      >
+      <TouchableOpacity onPress={handleEditButton}>
         <FontAwesome style={{ marginRight: 5 }} name='edit' size={18} color='grey' />
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          customAlertMessage(
-            'Delete password warning',
-            `Are you sure you want to delete this ${_socialMedia}'s password?`,
-            () => dispatch(deletePasswordFromFirebase({ passwordId }))
-          );
-        }}
-      >
-        <Ionicons name='trash' size={18} color='#DB4437' />
+      <TouchableOpacity onPress={handleDeleteButton}>
+        <Ionicons name='trash' size={18} color={appColors.red} />
       </TouchableOpacity>
     </View>
   );
 };
+
+interface Props {
+  passwordId: string;
+  socialMedia: string;
+  description: string;
+  passwordGenerated: string;
+  passwordVisible: boolean;
+  setPasswordVisible: any;
+  navigation: any;
+}

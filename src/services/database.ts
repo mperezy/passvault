@@ -9,8 +9,8 @@ const sortBy = (obj1: any, obj2: any, field: string, kind: string = 'asc') => {
 export const getPasswordsByUserId = async (userId: any) => {
   const passwordList: {
     id: string;
-    password_generated: string;
-    social_media: string;
+    passwordGenerated: string;
+    socialMedia: string;
     description: string;
     createdAt: number;
   }[] = [];
@@ -22,14 +22,15 @@ export const getPasswordsByUserId = async (userId: any) => {
       querySnapshot.forEach((doc) =>
         passwordList.push({
           id: doc.id,
-          password_generated: doc.data().password_generated,
-          social_media: doc.data().social_media,
+          passwordGenerated: doc.data().password_generated,
+          socialMedia: doc.data().social_media,
           description: doc.data().description || defaultEmptyPasswordDescription,
           createdAt: doc.data().createdAt,
         })
       )
     )
     .catch((error) => {
+      // eslint-disable-next-line no-console
       console.log('Error getting documents: ', error);
     });
 
@@ -49,19 +50,31 @@ export const sendPassword2Firebase = async (
       createdAt: new Date().getTime(),
       password_generated: password,
       social_media: socialMedia,
-      description: description,
+      description,
       uid: userId,
     })
-    .then(() => console.log('A new password was added in database.'))
-    .catch(() => console.log('Something went wrong trying to add a new password in database.'));
+    .then(() => {
+      // eslint-disable-next-line no-console
+      console.log('A new password was added in database.');
+    })
+    .catch(() => {
+      // eslint-disable-next-line no-console
+      console.log('Something went wrong trying to add a new password in database.');
+    });
 };
 
-export const deletePasswordById = async (passwordId: string | undefined) => {
+export const deletePasswordById = async (passwordId: string) => {
   await passwordsCollection
     .doc(passwordId)
     .delete()
-    .then(() => console.log('A password was deleted from database.'))
-    .catch(() => console.log('Something went wrong trying to delete a password from database.'));
+    .then(() => {
+      // eslint-disable-next-line no-console
+      console.log('A password was deleted from database.');
+    })
+    .catch(() => {
+      // eslint-disable-next-line no-console
+      console.log('Something went wrong trying to delete a password from database.');
+    });
 };
 
 export const updatePasswordByIdFromFirebase = async (
@@ -77,8 +90,14 @@ export const updatePasswordByIdFromFirebase = async (
       description,
       social_media: socialMedia,
     })
-    .then(() => console.log('A password was updated from database.'))
-    .catch(() => console.log('Something went wrong trying to update a password from database.'));
+    .then(() => {
+      // eslint-disable-next-line no-console
+      console.log('A password was updated from database.');
+    })
+    .catch(() => {
+      // eslint-disable-next-line no-console
+      console.log('Something went wrong trying to update a password from database.');
+    });
 };
 
 export const getSocialMedia = async () => {

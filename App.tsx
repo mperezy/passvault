@@ -12,7 +12,7 @@ import { PasswordGenerator } from 'screens/PasswordGenerator/passwordGenerator';
 import { Drawer } from 'screens/Drawer/drawer';
 
 import store from 'reduxStore/store/index';
-import { appColors, devWarnings } from 'utils/constants';
+import { devWarnings } from 'utils/constants';
 import { CustomStatusbar } from 'components/CustomStatusbar/customStatusbar';
 import { getOnBoardingViewed } from 'utils/localStorageFuncs';
 import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
@@ -22,6 +22,7 @@ if (process.env.ENV === 'dev') {
 }
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   interface Window {
     store: any;
   }
@@ -44,6 +45,7 @@ const App = () => {
         }
       })
       .catch((err) => {
+        // eslint-disable-next-line no-console
         console.log('Error checking is first launch: ', { err });
       })
       .finally(() => {
@@ -53,50 +55,49 @@ const App = () => {
 
   if (onBoardingViewed === null) {
     return null;
-  } else {
-    return (
-      <Provider store={store}>
-        <CustomStatusbar />
-        <NavigationContainer>
-          <Stack.Navigator>
-            {loading && (
-              <Stack.Screen
-                name='Loading'
-                component={LoadingIndicator}
-                options={{ headerShown: false }}
-              />
-            )}
-            {!onBoardingViewed && Platform.OS !== 'web' && (
-              <Stack.Screen
-                name='OnBoarding'
-                component={OnBoarding}
-                options={{ headerShown: false }}
-              />
-            )}
-            <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-            <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
-            <Stack.Screen
-              name='PasswordGenerator'
-              component={PasswordGenerator}
-              options={{
-                headerStyle: {
-                  backgroundColor: '#3091e0',
-                },
-                headerTintColor: '#FFF',
-              }}
-            />
-            <Stack.Screen
-              name='Drawer'
-              component={Drawer}
-              options={{
-                headerShown: false,
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </Provider>
-    );
   }
+  return (
+    <Provider store={store}>
+      <CustomStatusbar />
+      <NavigationContainer>
+        <Stack.Navigator>
+          {loading && (
+            <Stack.Screen
+              name='Loading'
+              component={LoadingIndicator}
+              options={{ headerShown: false }}
+            />
+          )}
+          {!onBoardingViewed && Platform.OS !== 'web' && (
+            <Stack.Screen
+              name='OnBoarding'
+              component={OnBoarding}
+              options={{ headerShown: false }}
+            />
+          )}
+          <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
+          <Stack.Screen
+            name='PasswordGenerator'
+            component={PasswordGenerator}
+            options={{
+              headerStyle: {
+                backgroundColor: '#3091e0',
+              },
+              headerTintColor: '#FFF',
+            }}
+          />
+          <Stack.Screen
+            name='Drawer'
+            component={Drawer}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  );
 };
 
 export default App;

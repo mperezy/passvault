@@ -16,7 +16,7 @@ import {
   selectIsUpperCase,
 } from 'reduxStore/slices/configuratorSlice';
 
-export function* getPasswordGeneratorFlow(): Generator {
+function* getPasswordGeneratorFlow(): Generator {
   try {
     const length = yield select(selectPasswordLength);
     const isUpperCase = yield select(selectIsUpperCase);
@@ -44,7 +44,7 @@ export function* getPasswordGeneratorFlow(): Generator {
 
     if (isEditMode) {
       if (passwordPicked) {
-        //TODO: This flow needs to be updated in future
+        // TODO: This flow needs to be updated in future
         /* This condition will only be applied at the first time the user
          * click in edit password, the password picked will be set as
          * a generated password, and then will be deleted from the state.
@@ -53,8 +53,9 @@ export function* getPasswordGeneratorFlow(): Generator {
         password = passwordPicked;
       }
     }
-    return yield put(setPassword({ password }));
+    yield put(setPassword({ password }));
   } catch (exception) {
+    // eslint-disable-next-line no-console
     console.log({ exception });
   }
 }
