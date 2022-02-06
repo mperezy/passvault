@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/passvault/static/js/app.5ae43e38.chunk.js",
-    "app.js.map": "/passvault/static/js/app.5ae43e38.chunk.js.map",
+    "app.js": "/passvault/static/js/app.83fda96f.chunk.js",
+    "app.js.map": "/passvault/static/js/app.83fda96f.chunk.js.map",
     "runtime~app.js": "/passvault/static/js/runtime~app.b783ad55.js",
     "runtime~app.js.map": "/passvault/static/js/runtime~app.b783ad55.js.map",
-    "static/js/2.dbac2450.chunk.js": "/passvault/static/js/2.dbac2450.chunk.js",
-    "static/js/2.dbac2450.chunk.js.map": "/passvault/static/js/2.dbac2450.chunk.js.map",
+    "static/js/2.00dc8d40.chunk.js": "/passvault/static/js/2.00dc8d40.chunk.js",
+    "static/js/2.00dc8d40.chunk.js.map": "/passvault/static/js/2.00dc8d40.chunk.js.map",
     "fonts/AntDesign.ttf": "/passvault/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/passvault/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/passvault/./fonts/Feather.ttf",
@@ -24,7 +24,7 @@
     "index.html": "/passvault/index.html",
     "manifest.json": "/passvault/manifest.json",
     "serve.json": "/passvault/serve.json",
-    "static/js/2.dbac2450.chunk.js.LICENSE.txt": "/passvault/static/js/2.dbac2450.chunk.js.LICENSE.txt",
+    "static/js/2.00dc8d40.chunk.js.LICENSE.txt": "/passvault/static/js/2.00dc8d40.chunk.js.LICENSE.txt",
     "static/media/amazon.png": "/passvault/static/media/amazon.4c033704.png",
     "static/media/discord.png": "/passvault/static/media/discord.17c0e41c.png",
     "static/media/google.png": "/passvault/static/media/google.647ac848.png",
@@ -37,7 +37,7 @@
   },
   "entrypoints": [
     "static/js/runtime~app.b783ad55.js",
-    "static/js/2.dbac2450.chunk.js",
-    "static/js/app.5ae43e38.chunk.js"
+    "static/js/2.00dc8d40.chunk.js",
+    "static/js/app.83fda96f.chunk.js"
   ]
 }
