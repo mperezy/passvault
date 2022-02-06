@@ -30,6 +30,7 @@ const imagesTokens = {
   FIREBASE_FIRESTORAGE_EASY_SIGNUP_IMAGE_TOKEN: '65edc2f3-657d-43f9-89b1-a2e1be19e41f',
   FIREBASE_FIRESTORAGE_FREE2USE_IMAGE_TOKEN: '287fce56-7f18-4d06-a85b-24b6fbc42171',
   FIREBASE_FIRESTORAGE_PASSWORDS_LISTED_IMAGE_TOKEN: '79295f0a-cf45-4ed2-aa1d-0e7c29cafea3',
+  FIREBASE_FIRESTORAGE_INITIAL_PASSWORD_IMAGE_TOKEN: 'daa4acf7-8be3-4210-aae0-e9de589b846d',
   FIREBASE_FIRESTORAGE_PASSWORD_EDIT_IMAGE_TOKEN: '5f6da2b8-26cc-48ca-8352-30afd0cb3dd3',
   FIREBASE_FIRESTORAGE_ONBOARDING_COMPLETE_IMAGE_TOKEN: '5cf416cc-0f22-4ca6-be38-fc816742a76e',
 };
@@ -37,6 +38,7 @@ const imagesTokens = {
 const appColors = {
   textTint: '#FFF',
   maximumTintColorSlider: '#d3d3d3',
+  disabledColorSlider: '#D3D3D3',
   activeTint: '#9ac8fc',
   primary: '#3091e0',
   primaryDark: '#236daa',

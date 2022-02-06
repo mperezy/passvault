@@ -7,6 +7,7 @@ import {
   selectIsCreateMode,
   selectIsEditMode,
   selectPassword,
+  setPassword,
 } from 'reduxStore/slices/passwordSlice';
 import { selectUserId } from 'reduxStore/slices/userSlice';
 import {
@@ -29,7 +30,7 @@ import {
   ScrollView,
   Keyboard,
 } from 'react-native';
-import { Divider } from 'react-native-paper';
+import { Divider, Switch } from 'react-native-paper';
 
 import SliderContainer from 'components/SliderContainer/sliderContainer';
 import { PasswordConfigurator } from 'components/PasswordConfigurator/passwordConfigurator';
@@ -37,13 +38,9 @@ import { CreateEditPasswordConfigurator } from 'components/CreateEditPasswordCon
 
 import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 import { getPasswordGenerated } from 'utils/localStorageFuncs';
-import { infoMessages } from 'utils/constants';
+import { appColors, infoMessages } from 'utils/constants';
 import { showInfoMessage } from 'utils/infoMessages';
-import {
-  resetConfigurationState,
-  handleGeneratePassword,
-  showAuthenticatedMessage,
-} from 'utils/configuratorUtils';
+import { resetConfigurationState, showAuthenticatedMessage } from 'utils/configuratorUtils';
 import { cardView, shadow, screen, passwordStyle, configuration } from './styles';
 
 const log = logger.createLogger();
@@ -51,6 +48,8 @@ const log = logger.createLogger();
 export const PasswordGenerator = ({ navigation }: Props) => {
   const scrollViewRef = useRef();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [switchEnabled, setSwitchEnabled] = useState(false);
+  const [password, mSetPassword] = useState('');
 
   const snackbarMessage = useSelector(selectSnackbarMessage);
   const snackbarVisible = useSelector(selectSnackbarVisible);
@@ -67,10 +66,6 @@ export const PasswordGenerator = ({ navigation }: Props) => {
     : `Password Generator ${!userId ? '(Only)' : ''}`;
 
   const dispatch = useDispatch();
-
-  const mHandleGeneratePassword = () => {
-    handleGeneratePassword(passwordFromState, dispatch);
-  };
 
   const handleCopyButton = () => {
     getPasswordGenerated()
@@ -111,6 +106,26 @@ export const PasswordGenerator = ({ navigation }: Props) => {
 
   const handleOnDismissSnackbar = () => {
     dispatch(resetSnackbar());
+  };
+
+  const handleOnChangePassword = (text: string) => {
+    if (switchEnabled) {
+      mSetPassword(text);
+    }
+  };
+
+  const handleOnBlurPassword = () => {
+    if (switchEnabled) {
+      dispatch(setPassword({ password }));
+    }
+  };
+
+  const handleSwitch = () => {
+    setSwitchEnabled(!switchEnabled);
+    if (switchEnabled) {
+      mSetPassword('');
+      dispatch(generatePassword());
+    }
   };
 
   useEffect(() => {
@@ -161,7 +176,9 @@ export const PasswordGenerator = ({ navigation }: Props) => {
                 showSoftInputOnFocus={false}
                 caretHidden
                 style={passwordStyle.input}
-                value={passwordFromState}
+                value={switchEnabled ? password : passwordFromState}
+                onChangeText={handleOnChangePassword}
+                onBlur={handleOnBlurPassword}
               />
               <View style={passwordStyle.icons}>
                 <TouchableOpacity onPress={handleCopyButton}>
@@ -186,6 +203,22 @@ export const PasswordGenerator = ({ navigation }: Props) => {
 
             <Divider style={{ backgroundColor: 'grey' }} />
 
+            {isCreateMode && (
+              <>
+                <View style={configuration.switchToggle}>
+                  <Text style={{ fontSize: 17 }}>Place your own password:</Text>
+                  <Switch
+                    style={{ marginLeft: 10 }}
+                    value={switchEnabled}
+                    onValueChange={handleSwitch}
+                    color={appColors.primary}
+                  />
+                </View>
+
+                <Divider style={{ backgroundColor: 'grey' }} />
+              </>
+            )}
+
             <View style={configuration.passwordLengthContainer}>
               <Text style={{ fontSize: 17 }}>Password length</Text>
               <View style={configuration.lengthSliderContainer}>
@@ -196,13 +229,16 @@ export const PasswordGenerator = ({ navigation }: Props) => {
                   keyboardType='numeric'
                   value={passwordFromState.length.toString()}
                 />
-                <SliderContainer defaultValue={isEditMode ? passwordFromState.length : 10} />
+                <SliderContainer
+                  switchEnabled={switchEnabled}
+                  defaultValue={isEditMode ? passwordFromState.length : 10}
+                />
               </View>
             </View>
 
             <Divider style={{ backgroundColor: 'grey' }} />
 
-            <PasswordConfigurator />
+            <PasswordConfigurator switchEnabled={switchEnabled} />
           </View>
 
           {(isCreateMode || isEditMode) && (

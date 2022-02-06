@@ -7,6 +7,7 @@ const {
   FIREBASE_FIRESTORAGE_EASY_SIGNUP_IMAGE_TOKEN,
   FIREBASE_FIRESTORAGE_FREE2USE_IMAGE_TOKEN,
   FIREBASE_FIRESTORAGE_PASSWORDS_LISTED_IMAGE_TOKEN,
+  FIREBASE_FIRESTORAGE_INITIAL_PASSWORD_IMAGE_TOKEN,
   FIREBASE_FIRESTORAGE_PASSWORD_EDIT_IMAGE_TOKEN,
   FIREBASE_FIRESTORAGE_ONBOARDING_COMPLETE_IMAGE_TOKEN,
 } = imagesTokens;
@@ -54,13 +55,20 @@ export const slides = [
   },
   {
     id: 7,
+    title: 'Place your initial password',
+    description:
+      "If you prefer, you can place an initial password when you're creating a new entry, otherwise generate a password",
+    image: `${FIREBASE_STORAGE_FINAL_URL}/initial-password.gif?alt=media&token=${FIREBASE_FIRESTORAGE_INITIAL_PASSWORD_IMAGE_TOKEN}`,
+  },
+  {
+    id: 8,
     title: 'Update your existing passwords',
     description:
       'In order to avoid to create more entries, you can update an existing password and save the changes',
     image: `${FIREBASE_STORAGE_FINAL_URL}/password-edit.gif?alt=media&token=${FIREBASE_FIRESTORAGE_PASSWORD_EDIT_IMAGE_TOKEN}`,
   },
   {
-    id: 8,
+    id: 9,
     title: "Let's go with it!",
     description: "Now we're ready to start to use Passvault!",
     image: `${FIREBASE_STORAGE_FINAL_URL}/onboarding-completed.png?alt=media&token=${FIREBASE_FIRESTORAGE_ONBOARDING_COMPLETE_IMAGE_TOKEN}`,

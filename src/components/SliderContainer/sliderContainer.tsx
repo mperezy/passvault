@@ -11,13 +11,13 @@ import { styles } from './styles';
 
 // Reference: https://youtu.be/MwSudWtT7ps?t=271
 
-const SliderContainer = ({ defaultValue }: Props) => {
+const SliderContainer = ({ switchEnabled, defaultValue }: Props) => {
   const [value, setValue] = useState(defaultValue);
   const passwordPicked = useSelector(selectPasswordPicked);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!Number.isNaN(value) && !passwordPicked) {
+    if (!Number.isNaN(value) && !passwordPicked && !switchEnabled) {
       // TODO: This flow needs to be updated in future
       /* If there was a password picked for the edit flow
        * a new password won't be generated.
@@ -30,13 +30,16 @@ const SliderContainer = ({ defaultValue }: Props) => {
   return (
     <View style={styles.sliderContainer}>
       <Slider
+        disabled={switchEnabled}
         step={1}
-        value={defaultValue}
-        minimumValue={6}
-        maximumValue={50}
-        minimumTrackTintColor={appColors.primary}
-        maximumTrackTintColor={appColors.maximumTintColorSlider}
-        thumbTintColor={appColors.primary}
+        value={switchEnabled ? 0 : defaultValue}
+        minimumValue={switchEnabled ? 0 : 6}
+        maximumValue={switchEnabled ? 1 : 50}
+        minimumTrackTintColor={switchEnabled ? appColors.disabledColorSlider : appColors.primary}
+        maximumTrackTintColor={
+          switchEnabled ? appColors.disabledColorSlider : appColors.maximumTintColorSlider
+        }
+        thumbTintColor={switchEnabled ? appColors.disabledColorSlider : appColors.primary}
         onValueChange={setValue}
       />
     </View>
@@ -46,5 +49,6 @@ const SliderContainer = ({ defaultValue }: Props) => {
 export default SliderContainer;
 
 interface Props {
+  switchEnabled: boolean;
   defaultValue: number;
 }

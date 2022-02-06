@@ -101,6 +101,7 @@ export const configuration = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
+  switchToggle: { flexDirection: 'row', padding: 10, alignItems: 'center' },
 });
 
 export const checkBox = StyleSheet.create({

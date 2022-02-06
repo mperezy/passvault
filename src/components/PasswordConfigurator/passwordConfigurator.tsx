@@ -36,7 +36,7 @@ import { appColors } from 'utils/constants';
 ]
  */
 
-export const PasswordConfigurator = () => {
+export const PasswordConfigurator = ({ switchEnabled }: Props) => {
   const dispatch = useDispatch();
 
   const isEasy2Read = useSelector(selectIsEasy2Read);
@@ -67,6 +67,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label='Easy to read'
             isChecked={isEasy2Read}
+            disabled={switchEnabled}
             color={appColors.primary}
             onPress={() => {
               handleLeftCheckboxes(
@@ -85,6 +86,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label='All characters'
             isChecked={isAllChar}
+            disabled={switchEnabled}
             color={appColors.primary}
             onPress={() => {
               handleLeftCheckboxes(
@@ -107,6 +109,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label='Uppercase'
             isChecked={isUpperCase}
+            disabled={switchEnabled}
             color={appColors.primary}
             onPress={() => {
               handleRightCheckboxes(
@@ -127,6 +130,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label='Lowercase'
             isChecked={isLowerCase}
+            disabled={switchEnabled}
             color={appColors.primary}
             onPress={() => {
               handleRightCheckboxes(
@@ -147,7 +151,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label='Numbers'
             isChecked={isNumbers}
-            disabled={!isAllChar}
+            disabled={!isAllChar || switchEnabled}
             color={appColors.primary}
             onPress={() => {
               handleRightCheckboxes(
@@ -170,7 +174,7 @@ export const PasswordConfigurator = () => {
           <CustomCheckBox
             label='Symbols'
             isChecked={isSymbols}
-            disabled={!isAllChar}
+            disabled={!isAllChar || switchEnabled}
             color={appColors.primary}
             onPress={() => {
               handleRightCheckboxes(
@@ -193,3 +197,7 @@ export const PasswordConfigurator = () => {
     </View>
   );
 };
+
+interface Props {
+  switchEnabled: boolean;
+}
