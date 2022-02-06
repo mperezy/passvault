@@ -4,6 +4,8 @@ import { LogBox, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { logger } from 'react-native-logs';
+
 import { Provider } from 'react-redux';
 import { OnBoarding } from 'screens/OnBoarding/onBoarding';
 import { Login } from 'screens/Login/login';
@@ -30,6 +32,7 @@ declare global {
 
 window.store = store;
 const Stack = createNativeStackNavigator();
+const log = logger.createLogger();
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -45,8 +48,7 @@ const App = () => {
         }
       })
       .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.log('Error checking is first launch: ', { err });
+        log.error('Error checking is first launch: ', { err });
       })
       .finally(() => {
         setLoading(false);

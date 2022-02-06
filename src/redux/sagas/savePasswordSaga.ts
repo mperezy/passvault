@@ -1,7 +1,11 @@
 import { select, call, takeLeading } from 'redux-saga/effects';
+import { logger } from 'react-native-logs';
+
 import { savePassword2Firebase } from 'reduxStore/slices/passwordSlice';
 import { selectUserId } from 'reduxStore/slices/userSlice';
 import { sendPassword2Firebase } from 'services/database';
+
+const log = logger.createLogger();
 
 function* savePasswordFlow({ payload }: Params): Generator {
   try {
@@ -11,8 +15,7 @@ function* savePasswordFlow({ payload }: Params): Generator {
     // @ts-ignore
     yield call(sendPassword2Firebase, userId, password, description, socialMedia);
   } catch (exception) {
-    // eslint-disable-next-line no-console
-    console.log({ source: 'Exception from savePasswordSaga', exception });
+    log.error('SavePasswordSaga: ', { exception });
   }
 }
 

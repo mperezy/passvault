@@ -1,4 +1,6 @@
 import { select, call, takeLeading, put } from 'redux-saga/effects';
+import { logger } from 'react-native-logs';
+
 import {
   editPasswordFromFirebase,
   selectPassword,
@@ -8,6 +10,8 @@ import {
 import { updatePasswordByIdFromFirebase } from 'services/database';
 import { selectSocialMediaPicked } from 'reduxStore/slices/socialMediaSlice';
 import { setIsRequest, unsetIsRequest } from 'reduxStore/slices/applicationStatusSlice';
+
+const log = logger.createLogger();
 
 function* updatePasswordFlow(): Generator {
   try {
@@ -27,8 +31,7 @@ function* updatePasswordFlow(): Generator {
     );
     yield put(unsetIsRequest());
   } catch (exception) {
-    // eslint-disable-next-line no-console
-    console.log({ source: 'Exception from savePasswordSaga', exception });
+    log.error('UpdatePasswordSaga: ', { exception });
   }
 }
 

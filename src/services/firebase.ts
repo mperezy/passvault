@@ -5,6 +5,10 @@ import { clearUserDataFromLS, setUserData2LS } from 'utils/localStorageFuncs';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+import { logger } from 'react-native-logs';
+
+const log = logger.createLogger();
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -35,9 +39,7 @@ export const signIn = (username: string) => {
     })
     .catch((error) => {
       alert(error.message);
-
-      // eslint-disable-next-line no-console
-      console.log({ exception: error.message });
+      log.error({ exception: error.message });
     });
 };
 
@@ -48,8 +50,7 @@ export const signOut = () =>
       clearUserDataFromLS();
     })
     .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log({ exception: error.message });
+      log.error({ exception: error.message });
     });
 
 export const signUp = (username: string) => {
@@ -57,14 +58,10 @@ export const signUp = (username: string) => {
     .createUserWithEmailAndPassword(`${username}@example.com`, username.toLowerCase())
     .then((userCredentials) => {
       const { user } = userCredentials;
-
-      // eslint-disable-next-line no-console
-      console.log({ user });
+      log.info('User signed up: ', user?.uid);
     })
     .catch((error) => {
       alert(error.message);
-
-      // eslint-disable-next-line no-console
-      console.log({ exception: error.message });
+      log.error({ exception: error.message });
     });
 };

@@ -1,8 +1,12 @@
 import { put, select, call, takeLeading } from 'redux-saga/effects';
+import { logger } from 'react-native-logs';
+
 import { getPasswordsFromFirebase, setPasswords } from 'reduxStore/slices/passwordSlice';
 import { selectUserId } from 'reduxStore/slices/userSlice';
 import { getPasswordsByUserId } from 'services/database';
 import { setIsRequest, unsetIsRequest } from 'reduxStore/slices/applicationStatusSlice';
+
+const log = logger.createLogger();
 
 function* getPasswordsFlow(): Generator {
   try {
@@ -13,8 +17,7 @@ function* getPasswordsFlow(): Generator {
     yield put(setPasswords({ passwords }));
     yield put(unsetIsRequest());
   } catch (exception) {
-    // eslint-disable-next-line no-console
-    console.log({ source: 'Exception from getPasswordsSaga', exception });
+    log.error('GetPasswordSaga: ', { exception });
   }
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { logger } from 'react-native-logs';
 
 import {
   generatePassword,
@@ -45,6 +46,8 @@ import {
 } from 'utils/configuratorUtils';
 import { cardView, shadow, screen, passwordStyle, configuration } from './styles';
 
+const log = logger.createLogger();
+
 export const PasswordGenerator = ({ navigation }: Props) => {
   const scrollViewRef = useRef();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -84,8 +87,7 @@ export const PasswordGenerator = ({ navigation }: Props) => {
         Clipboard.setString(password2Clipboard);
       })
       .catch((err: any) => {
-        // eslint-disable-next-line no-console
-        console.log({ err });
+        log.error('From handleCopyButton: ', { err });
         Clipboard.setString('');
       });
   };
@@ -194,10 +196,7 @@ export const PasswordGenerator = ({ navigation }: Props) => {
                   keyboardType='numeric'
                   value={passwordFromState.length.toString()}
                 />
-                <SliderContainer
-                  defaultValue={isEditMode ? passwordFromState.length : 10}
-                  handleGeneratePassword={mHandleGeneratePassword}
-                />
+                <SliderContainer defaultValue={isEditMode ? passwordFromState.length : 10} />
               </View>
             </View>
 

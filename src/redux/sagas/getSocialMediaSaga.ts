@@ -1,4 +1,6 @@
 import { call, put, takeLeading, select } from 'redux-saga/effects';
+import { logger } from 'react-native-logs';
+
 import {
   getSocialMediaListFromFirebase,
   setSocialMediaList,
@@ -12,6 +14,8 @@ import {
   setPasswordPicked,
 } from 'reduxStore/slices/passwordSlice';
 import { getSocialMedia } from 'services/database';
+
+const log = logger.createLogger();
 
 function* getSocialMediaFlow(): Generator {
   try {
@@ -37,8 +41,7 @@ function* getSocialMediaFlow(): Generator {
       yield put(setPasswordPicked({ passwordPicked: '' }));
     }
   } catch (exception) {
-    // eslint-disable-next-line no-console
-    console.log({ source: 'Exception from getSocialMediaSaga', exception });
+    log.error('GetSocialMediaSaga: ', { exception });
   }
 }
 

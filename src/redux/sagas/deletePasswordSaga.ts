@@ -1,10 +1,14 @@
 import { put, select, call, takeLeading } from 'redux-saga/effects';
+import { logger } from 'react-native-logs';
+
 import {
   deletePasswordFromFirebase,
   selectPasswordIdPicked,
 } from 'reduxStore/slices/passwordSlice';
 import { deletePasswordById } from 'services/database';
 import { setIsRequest, unsetIsRequest } from 'reduxStore/slices/applicationStatusSlice';
+
+const log = logger.createLogger();
 
 function* deletePasswordFlow(): Generator {
   try {
@@ -17,8 +21,7 @@ function* deletePasswordFlow(): Generator {
 
     yield put(unsetIsRequest());
   } catch (exception) {
-    // eslint-disable-next-line no-console
-    console.log({ source: 'Exception from savePasswordSaga', exception });
+    log.errpr('DeletePasswordSaga: ', { exception });
   }
 }
 

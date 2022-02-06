@@ -1,15 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { logger } from 'react-native-logs';
 
 const appName = 'passvault';
 const isObject = (value: string) => typeof value === 'object';
+const log = logger.createLogger();
 
 const storeData = async (key: string, value: any) => {
   try {
     const finalValue = isObject(value) ? JSON.stringify(value) : value.toString();
     await AsyncStorage.setItem(key, finalValue);
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log({ asyncStorageException: e });
+    log.error('From storeData: ', { asyncStorageException: e });
   }
 };
 
@@ -21,8 +22,7 @@ const getData = async (key: string) => {
       return isObject(value) ? JSON.parse(value) : value;
     }
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log({ asyncStorageException: e });
+    log.error('From getData: ', { asyncStorageException: e });
   }
 };
 
@@ -30,8 +30,7 @@ const removeItem = async (key: string) => {
   try {
     await AsyncStorage.removeItem(key);
   } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log({ asyncStorageException: e });
+    log.error('From removeItem: ', { asyncStorageException: e });
   }
 };
 
@@ -50,8 +49,7 @@ const getPasswordGenerated = () => {
   return getData(`${appName}.password`)
     .then((password: string) => ({ password }))
     .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log({ err });
+      log.error('From getPasswordGenerated: ', { err });
       return empty;
     });
 };
@@ -67,14 +65,12 @@ const getUserDataFromLS = () => {
           email,
         }))
         .catch((err: any) => {
-          // eslint-disable-next-line no-console
-          console.log(err);
+          log.error('From getData -> email: ', { err });
           return empty;
         });
     })
     .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log(err);
+      log.error('From getData -> userId: ', { err });
       return empty;
     });
 };
@@ -92,8 +88,7 @@ const getOnBoardingViewed = () =>
   getData(`${appName}.alreadyLaunched`)
     .then((firstLaunchFlag) => firstLaunchFlag)
     .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log({ err });
+      log.error('From getOnBoardingViewed: ', { err });
       return null;
     });
 

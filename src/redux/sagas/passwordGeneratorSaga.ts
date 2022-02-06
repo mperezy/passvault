@@ -1,4 +1,6 @@
 import { select, put, takeLeading } from 'redux-saga/effects';
+import { logger } from 'react-native-logs';
+
 import {
   generatePassword,
   selectIsEditMode,
@@ -15,6 +17,8 @@ import {
   selectIsSymbols,
   selectIsUpperCase,
 } from 'reduxStore/slices/configuratorSlice';
+
+const log = logger.createLogger();
 
 function* getPasswordGeneratorFlow(): Generator {
   try {
@@ -55,8 +59,7 @@ function* getPasswordGeneratorFlow(): Generator {
     }
     yield put(setPassword({ password }));
   } catch (exception) {
-    // eslint-disable-next-line no-console
-    console.log({ exception });
+    log.error('PasswordGeneratorSaga: ', { exception });
   }
 }
 

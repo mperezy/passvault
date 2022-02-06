@@ -1,5 +1,9 @@
+import { logger } from 'react-native-logs';
+
 import { passwordsCollection, socialMediaCollection } from 'services/firebase';
 import { defaultEmptyPasswordDescription } from 'utils/constants';
+
+const log = logger.createLogger();
 
 const sortBy = (obj1: any, obj2: any, field: string, kind: string = 'asc') => {
   const x = kind === 'asc' ? 1 : -1;
@@ -30,8 +34,7 @@ export const getPasswordsByUserId = async (userId: any) => {
       )
     )
     .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log('Error getting documents: ', error);
+      log.error('Error getting documents: ', error);
     });
 
   return passwordList.sort((x, y) =>
@@ -54,12 +57,10 @@ export const sendPassword2Firebase = async (
       uid: userId,
     })
     .then(() => {
-      // eslint-disable-next-line no-console
-      console.log('A new password was added in database.');
+      log.info('A new password was added in database.');
     })
     .catch(() => {
-      // eslint-disable-next-line no-console
-      console.log('Something went wrong trying to add a new password in database.');
+      log.error('Something went wrong trying to add a new password in database.');
     });
 };
 
@@ -68,12 +69,10 @@ export const deletePasswordById = async (passwordId: string) => {
     .doc(passwordId)
     .delete()
     .then(() => {
-      // eslint-disable-next-line no-console
-      console.log('A password was deleted from database.');
+      log.info('A password was deleted from database.');
     })
     .catch(() => {
-      // eslint-disable-next-line no-console
-      console.log('Something went wrong trying to delete a password from database.');
+      log.error('Something went wrong trying to delete a password from database.');
     });
 };
 
@@ -91,12 +90,10 @@ export const updatePasswordByIdFromFirebase = async (
       social_media: socialMedia,
     })
     .then(() => {
-      // eslint-disable-next-line no-console
-      console.log('A password was updated from database.');
+      log.info('A password was updated from database.');
     })
     .catch(() => {
-      // eslint-disable-next-line no-console
-      console.log('Something went wrong trying to update a password from database.');
+      log.error('Something went wrong trying to update a password from database.');
     });
 };
 
