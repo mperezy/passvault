@@ -59,7 +59,7 @@ function* getPasswordGeneratorFlow(): Generator {
     }
     yield put(setPassword({ password }));
   } catch (exception) {
-    log.error('PasswordGeneratorSaga: ', { exception });
+    log.error('PasswordGeneratorSaga: ', { exception: exception.message });
   }
 }
 

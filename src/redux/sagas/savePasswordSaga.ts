@@ -15,7 +15,7 @@ function* savePasswordFlow({ payload }: Params): Generator {
     // @ts-ignore
     yield call(sendPassword2Firebase, userId, password, description, socialMedia);
   } catch (exception) {
-    log.error('SavePasswordSaga: ', { exception });
+    log.error('SavePasswordSaga: ', { exception: exception.message });
   }
 }
 

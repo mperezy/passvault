@@ -41,7 +41,7 @@ function* getSocialMediaFlow(): Generator {
       yield put(setPasswordPicked({ passwordPicked: '' }));
     }
   } catch (exception) {
-    log.error('GetSocialMediaSaga: ', { exception });
+    log.error('GetSocialMediaSaga: ', { exception: exception.message });
   }
 }
 

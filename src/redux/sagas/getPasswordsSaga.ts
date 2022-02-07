@@ -17,7 +17,7 @@ function* getPasswordsFlow(): Generator {
     yield put(setPasswords({ passwords }));
     yield put(unsetIsRequest());
   } catch (exception) {
-    log.error('GetPasswordSaga: ', { exception });
+    log.error('GetPasswordSaga: ', { exception: exception.message });
   }
 }
 

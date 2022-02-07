@@ -31,7 +31,7 @@ function* updatePasswordFlow(): Generator {
     );
     yield put(unsetIsRequest());
   } catch (exception) {
-    log.error('UpdatePasswordSaga: ', { exception });
+    log.error('UpdatePasswordSaga: ', { exception: exception.message });
   }
 }
 

@@ -21,7 +21,7 @@ function* deletePasswordFlow(): Generator {
 
     yield put(unsetIsRequest());
   } catch (exception) {
-    log.errpr('DeletePasswordSaga: ', { exception });
+    log.errpr('DeletePasswordSaga: ', { exception: exception.message });
   }
 }
 
