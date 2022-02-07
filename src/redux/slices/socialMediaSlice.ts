@@ -21,6 +21,10 @@ export const socialMediaSlice = createSlice({
       ...state,
       socialMediaPicked: payload.socialMediaPicked,
     }),
+    unsetSocialMediaPicked: (state) => ({
+      ...state,
+      socialMediaPicked: '',
+    }),
     setSocialMediaList: (state, { payload }) => ({
       ...state,
       socialMediaList: payload.socialMediaList,
@@ -29,8 +33,12 @@ export const socialMediaSlice = createSlice({
   },
 });
 
-export const { setSocialMediaPicked, setSocialMediaList, getSocialMediaListFromFirebase } =
-  socialMediaSlice.actions;
+export const {
+  setSocialMediaPicked,
+  unsetSocialMediaPicked,
+  setSocialMediaList,
+  getSocialMediaListFromFirebase,
+} = socialMediaSlice.actions;
 
 export const selectSocialMediaPicked = (state: { socialMedia: { socialMediaPicked: string } }) =>
   state.socialMedia.socialMediaPicked;

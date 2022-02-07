@@ -8,6 +8,7 @@ import {
   selectIsEditMode,
   selectPassword,
   setPassword,
+  resetPasswordPicked,
 } from 'reduxStore/slices/passwordSlice';
 import { selectUserId } from 'reduxStore/slices/userSlice';
 import {
@@ -49,7 +50,7 @@ export const PasswordGenerator = ({ navigation }: Props) => {
   const scrollViewRef = useRef();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [switchEnabled, setSwitchEnabled] = useState(false);
-  const [password, mSetPassword] = useState('');
+  const [mPassword, mSetPassword] = useState('');
 
   const snackbarMessage = useSelector(selectSnackbarMessage);
   const snackbarVisible = useSelector(selectSnackbarVisible);
@@ -116,7 +117,7 @@ export const PasswordGenerator = ({ navigation }: Props) => {
 
   const handleOnBlurPassword = () => {
     if (switchEnabled) {
-      dispatch(setPassword({ password }));
+      dispatch(setPassword({ password: mPassword }));
     }
   };
 
@@ -144,6 +145,8 @@ export const PasswordGenerator = ({ navigation }: Props) => {
     const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardVisible(false);
     });
+
+    (() => isEditMode && dispatch(resetPasswordPicked()))();
 
     return () => {
       resetConfigurationState(dispatch);
@@ -176,7 +179,7 @@ export const PasswordGenerator = ({ navigation }: Props) => {
                 showSoftInputOnFocus={false}
                 caretHidden
                 style={passwordStyle.input}
-                value={switchEnabled ? password : passwordFromState}
+                value={switchEnabled ? mPassword : passwordFromState}
                 onChangeText={handleOnChangePassword}
                 onBlur={handleOnBlurPassword}
               />

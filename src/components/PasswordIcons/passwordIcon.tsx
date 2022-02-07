@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import {
   setIsDeleteMode,
   setIsEditMode,
+  setPassword,
   setPasswordDescriptionPicked,
   setPasswordIdPicked,
   setPasswordPicked,
@@ -57,6 +58,7 @@ export const PasswordIcons = ({
     dispatch(setIsEditMode({ isEditMode: true }));
     dispatch(setPasswordIdPicked({ passwordIdPicked: passwordId }));
     dispatch(setPasswordPicked({ passwordPicked: passwordGenerated }));
+    dispatch(setPassword({ password: passwordGenerated }));
     dispatch(setPasswordDescriptionPicked({ passwordDescriptionPicked: description }));
     dispatch(setSocialMediaPicked({ socialMediaPicked: socialMedia }));
     navigation.navigate('PasswordGenerator');

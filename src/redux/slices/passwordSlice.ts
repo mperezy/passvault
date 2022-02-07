@@ -58,6 +58,10 @@ export const passwordSlice = createSlice({
       ...state,
       passwordIdPicked: payload.passwordIdPicked,
     }),
+    resetPasswordPicked: (state) => ({
+      ...state,
+      passwordPicked: '',
+    }),
     setPasswordDescriptionPicked: (state, { payload }) => ({
       ...state,
       passwordDescriptionPicked: payload.passwordDescriptionPicked,
@@ -96,6 +100,7 @@ export const {
   setPassword,
   setPasswordPicked,
   setPasswordIdPicked,
+  resetPasswordPicked,
   setPasswordDescriptionPicked,
   setLength,
   setIsCreateMode,

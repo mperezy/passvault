@@ -1,10 +1,12 @@
 import { generatePassword, resetPasswordGeneratorState } from 'reduxStore/slices/passwordSlice';
 import { showInfoMessage } from 'utils/infoMessages';
 import { infoMessages } from 'utils/constants';
+import { unsetSocialMediaPicked } from 'reduxStore/slices/socialMediaSlice';
 
 /* Password Generator utils */
 export const resetConfigurationState = (dispatch: any) => {
   dispatch(resetPasswordGeneratorState());
+  dispatch(unsetSocialMediaPicked());
 };
 
 export const handleGeneratePassword = (passwordFromState: string, dispatch: any) => {

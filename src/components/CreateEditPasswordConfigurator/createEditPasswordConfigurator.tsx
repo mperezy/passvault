@@ -41,6 +41,9 @@ export const CreateEditPasswordConfigurator = ({ navigation }: Props) => {
 
   useEffect(() => {
     if (isCreateMode || isEditMode) {
+      if (isCreateMode) {
+        dispatch(setSocialMediaPicked({ socialMediaPicked: socialMediaList[0].name }));
+      }
       if (isEditMode) {
         setDescription(
           passwordDescriptionPicked !== defaultEmptyPasswordDescription
@@ -52,26 +55,24 @@ export const CreateEditPasswordConfigurator = ({ navigation }: Props) => {
   }, []);
 
   const handleCreateEditButton = () => {
-    if (socialMediaPicked !== '') {
-      const data = {
-        password,
-        description,
-        socialMedia: socialMediaPicked,
-      };
-      if (isEditMode) {
-        dispatch(setPasswordDescriptionPicked({ passwordDescriptionPicked: description }));
-        dispatch(setPasswordIdPicked({ passwordIdPicked }));
-        dispatch(setModalTitle({ modalTitle: 'Edit password warning !' }));
-        dispatch(
-          setModalMessage({
-            modalMessage: "If you update this password, you won't be able to recover it.",
-          })
-        );
-        dispatch(setModalVisible({ modalVisible: true }));
-      } else {
-        dispatch(savePassword2Firebase(data));
-        navigation.navigate('PasswordList');
-      }
+    const data = {
+      password,
+      description,
+      socialMedia: socialMediaPicked,
+    };
+    if (isEditMode) {
+      dispatch(setPasswordDescriptionPicked({ passwordDescriptionPicked: description }));
+      dispatch(setPasswordIdPicked({ passwordIdPicked }));
+      dispatch(setModalTitle({ modalTitle: 'Edit password warning !' }));
+      dispatch(
+        setModalMessage({
+          modalMessage: "If you update this password, you won't be able to recover it.",
+        })
+      );
+      dispatch(setModalVisible({ modalVisible: true }));
+    } else if (isCreateMode) {
+      dispatch(savePassword2Firebase(data));
+      navigation.navigate('PasswordList');
     }
   };
 
