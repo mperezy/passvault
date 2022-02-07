@@ -1,5 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+interface PasswordI {
+  id: string;
+  passwordGenerated: string;
+  socialMedia: string;
+  description: string;
+  createdAt: number;
+}
+
 export const initialState: {
   password: string;
   passwordIdPicked: string;
@@ -9,7 +17,7 @@ export const initialState: {
   isCreateMode: boolean;
   isEditMode: boolean;
   isDeleteMode: boolean;
-  passwords: any;
+  passwords: Array<PasswordI>;
 } = {
   password: '',
   passwordIdPicked: '',
@@ -120,5 +128,5 @@ export const selectIsDeleteMode = (state: { password: { isDeleteMode: boolean } 
   state.password.isDeleteMode;
 export const selectPasswordLength = (state: { password: { length: number } }) =>
   state.password.length;
-export const selectPasswords = (state: { password: { passwords: any } }) =>
+export const selectPasswords = (state: { password: { passwords: Array<PasswordI> } }) =>
   state.password.passwords;

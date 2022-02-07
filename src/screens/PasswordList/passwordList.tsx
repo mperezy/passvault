@@ -29,9 +29,10 @@ import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
 import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
 import { CustomModal as Modal } from 'components/CustomModal/customModal';
 
-import { passwordsCollection } from 'services/firebase';
+import { passwordsCollection, socialMediaCollection } from 'services/firebase';
 
 import { appColors, PasswordI } from 'utils/constants';
+import { getSocialMediaListFromFirebase } from 'reduxStore/slices/socialMediaSlice';
 import styles from './styles';
 
 export const PasswordList = ({ navigation }: Props) => {
@@ -58,9 +59,23 @@ export const PasswordList = ({ navigation }: Props) => {
       return true;
     });
 
-    passwordsCollection.onSnapshot(() => {
+    const unsubscribeSocialMediaCollection = socialMediaCollection.onSnapshot(() => {
+      dispatch(getSocialMediaListFromFirebase());
+    });
+
+    const unsubscribePasswordsCollection = passwordsCollection.onSnapshot(() => {
       dispatch(getPasswordsFromFirebase());
     });
+
+    // remove those next once the component got unmounted
+    return () => {
+      unsubscribeSocialMediaCollection();
+      unsubscribePasswordsCollection();
+      BackHandler.removeEventListener('hardwareBackPress', () => {
+        BackHandler.exitApp();
+        return true;
+      });
+    };
   }, []);
 
   const handleScrollIsClose2Bottom = (event: any) => {

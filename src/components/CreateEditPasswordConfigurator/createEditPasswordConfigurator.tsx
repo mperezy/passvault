@@ -11,7 +11,6 @@ import {
   setPasswordDescriptionPicked,
 } from 'reduxStore/slices/passwordSlice';
 import {
-  getSocialMediaListFromFirebase,
   selectSocialMediaList,
   selectSocialMediaPicked,
   setSocialMediaPicked,
@@ -22,7 +21,6 @@ import { Entypo } from '@expo/vector-icons';
 
 import { cardView, shadow } from 'screens/PasswordGenerator/styles';
 import { appColors, defaultEmptyPasswordDescription } from 'utils/constants';
-import { socialMediaCollection } from 'services/firebase';
 import { setModalMessage, setModalTitle, setModalVisible } from 'reduxStore/slices/uiElementsSlice';
 import { createEditPassword } from './styles';
 
@@ -50,10 +48,6 @@ export const CreateEditPasswordConfigurator = ({ navigation }: Props) => {
             : ''
         );
       }
-
-      socialMediaCollection.onSnapshot(() => {
-        dispatch(getSocialMediaListFromFirebase());
-      });
     }
   }, []);
 

@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+interface socialMediaI {
+  id: string;
+  name: string;
+}
+
 export const initialState: {
   socialMediaPicked: string;
-  socialMediaList: any;
+  socialMediaList: Array<socialMediaI>;
 } = {
   socialMediaPicked: '',
   socialMediaList: [],
@@ -29,5 +34,6 @@ export const { setSocialMediaPicked, setSocialMediaList, getSocialMediaListFromF
 
 export const selectSocialMediaPicked = (state: { socialMedia: { socialMediaPicked: string } }) =>
   state.socialMedia.socialMediaPicked;
-export const selectSocialMediaList = (state: { socialMedia: { socialMediaList: string } }) =>
-  state.socialMedia.socialMediaList;
+export const selectSocialMediaList = (state: {
+  socialMedia: { socialMediaList: Array<socialMediaI> };
+}) => state.socialMedia.socialMediaList;

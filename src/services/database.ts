@@ -10,37 +10,24 @@ const sortBy = (obj1: any, obj2: any, field: string, kind: string = 'asc') => {
   return obj1[field] < obj2[field] ? -1 * x : obj1[field] > obj2[field] ? 1 * x : 0;
 };
 
-export const getPasswordsByUserId = async (userId: any) => {
-  const passwordList: {
-    id: string;
-    passwordGenerated: string;
-    socialMedia: string;
-    description: string;
-    createdAt: number;
-  }[] = [];
-
-  await passwordsCollection
+export const getPasswordsByUserId = (userId: any) =>
+  passwordsCollection
     .where('uid', '==', userId)
     .get()
     .then((querySnapshot) =>
-      querySnapshot.forEach((doc) =>
-        passwordList.push({
+      querySnapshot.docs
+        .map((doc) => ({
           id: doc.id,
           passwordGenerated: doc.data().password_generated,
           socialMedia: doc.data().social_media,
           description: doc.data().description || defaultEmptyPasswordDescription,
           createdAt: doc.data().createdAt,
-        })
-      )
+        }))
+        .sort((x, y) => sortBy(x, y, 'createdAt', process.env.PASSWORD_LIST_ORDER_TYPE))
     )
     .catch((error) => {
       log.error('Error getting documents: ', error);
     });
-
-  return passwordList.sort((x, y) =>
-    sortBy(x, y, 'createdAt', process.env.PASSWORD_LIST_ORDER_TYPE)
-  );
-};
 
 export const sendPassword2Firebase = async (
   userId: string,
@@ -97,17 +84,15 @@ export const updatePasswordByIdFromFirebase = async (
     });
 };
 
-export const getSocialMedia = async () => {
-  const socialMediaList: { id: string; name: string }[] = [];
-
-  await socialMediaCollection.get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) =>
-      socialMediaList.push({
+export const getSocialMedia = () =>
+  socialMediaCollection
+    .get()
+    .then((querySnapshot) =>
+      querySnapshot.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
-      })
-    );
-  });
-
-  return socialMediaList;
-};
+      }))
+    )
+    .catch((error) => {
+      log.error('Something went wrong trying to get social media list: ', error);
+    });
