@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logger } from 'react-native-logs';
 
 import {
   generatePassword,
@@ -29,7 +28,6 @@ import {
   BackHandler,
   Platform,
   ScrollView,
-  Keyboard,
 } from 'react-native';
 import { Divider, Switch } from 'react-native-paper';
 
@@ -38,17 +36,13 @@ import { PasswordConfigurator } from 'components/PasswordConfigurator/passwordCo
 import { CreateEditPasswordConfigurator } from 'components/CreateEditPasswordConfigurator/createEditPasswordConfigurator';
 
 import { CustomSnackbar } from 'components/CustomSnackbar/customSnackbar';
-import { getPasswordGenerated } from 'utils/localStorageFuncs';
 import { appColors, infoMessages } from 'utils/constants';
 import { showInfoMessage } from 'utils/infoMessages';
 import { resetConfigurationState, showAuthenticatedMessage } from 'utils/configuratorUtils';
 import { cardView, shadow, screen, passwordStyle, configuration } from './styles';
 
-const log = logger.createLogger();
-
 export const PasswordGenerator = ({ navigation }: Props) => {
-  const scrollViewRef = useRef();
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const scrollViewRef = useRef<ScrollView>(null);
   const [switchEnabled, setSwitchEnabled] = useState(false);
   const [mPassword, mSetPassword] = useState('');
 
@@ -69,23 +63,7 @@ export const PasswordGenerator = ({ navigation }: Props) => {
   const dispatch = useDispatch();
 
   const handleCopyButton = () => {
-    getPasswordGenerated()
-      .then((password: any | string) => {
-        const password2Clipboard = isEditMode ? passwordFromState : password.password;
-
-        if (Platform.OS === 'android') {
-          showInfoMessage(infoMessages.copied2Clipboard);
-        } else {
-          dispatch(setSnackbarMessage({ snackbarMessage: infoMessages.copied2Clipboard }));
-          dispatch(setSnackbarVisible({ snackbarVisible: true }));
-        }
-
-        Clipboard.setString(password2Clipboard);
-      })
-      .catch((err: any) => {
-        log.error('From handleCopyButton: ', { err });
-        Clipboard.setString('');
-      });
+    Clipboard.setString(passwordFromState);
   };
 
   const handleRefreshButton = () => {
@@ -139,28 +117,12 @@ export const PasswordGenerator = ({ navigation }: Props) => {
       dispatch(setSnackbarVisible({ snackbarVisible: true }));
     }
 
-    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true);
-    });
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false);
-    });
-
     (() => isEditMode && dispatch(resetPasswordPicked()))();
 
     return () => {
       resetConfigurationState(dispatch);
-      keyboardDidHideListener.remove();
-      keyboardDidShowListener.remove();
     };
   }, []);
-
-  useEffect(() => {
-    if (isKeyboardVisible) {
-      // @ts-ignore
-      scrollViewRef.current.scrollToEnd({ animating: true });
-    }
-  }, [isKeyboardVisible]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -170,14 +132,13 @@ export const PasswordGenerator = ({ navigation }: Props) => {
 
   return (
     <>
-      {/* @ts-ignore */}
       <ScrollView ref={scrollViewRef}>
         <View style={screen.container}>
           <View style={[cardView.container, passwordStyle.container, shadow.container]}>
             <View style={passwordStyle.inputContainer}>
               <TextInput
-                showSoftInputOnFocus={false}
-                caretHidden
+                showSoftInputOnFocus={switchEnabled}
+                caretHidden={!switchEnabled}
                 style={passwordStyle.input}
                 value={switchEnabled ? mPassword : passwordFromState}
                 onChangeText={handleOnChangePassword}
