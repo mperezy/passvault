@@ -46,8 +46,8 @@ export const sendPassword2Firebase = async (
     .then(() => {
       log.info('A new password was added in database.');
     })
-    .catch(() => {
-      log.error('Something went wrong trying to add a new password in database.');
+    .catch((error) => {
+      log.error('Something went wrong trying to add a new password in database: ', error);
     });
 };
 
@@ -58,8 +58,8 @@ export const deletePasswordById = async (passwordId: string) => {
     .then(() => {
       log.info('A password was deleted from database.');
     })
-    .catch(() => {
-      log.error('Something went wrong trying to delete a password from database.');
+    .catch((error) => {
+      log.error('Something went wrong trying to delete a password from database: ', error);
     });
 };
 
@@ -79,8 +79,8 @@ export const updatePasswordByIdFromFirebase = async (
     .then(() => {
       log.info('A password was updated from database.');
     })
-    .catch(() => {
-      log.error('Something went wrong trying to update a password from database.');
+    .catch((error) => {
+      log.error('Something went wrong trying to update a password from database: ', error);
     });
 };
 
