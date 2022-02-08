@@ -9,7 +9,7 @@ import {
 
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
-import { Image, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { Image, Text, TextInput, View, TouchableOpacity, BackHandler } from 'react-native';
 import { usePopover } from 'react-native-modal-popover';
 
 import { LoadingIndicator } from 'components/LoadingIndicator/loadingIndicator';
@@ -35,20 +35,28 @@ export const Login = ({ navigation }: Props) => {
     dispatch(setIsRequest());
   }, []);
 
-  useEffect(
-    () =>
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          dispatch(setUserData({ id: user.uid, email: user.email }));
-          dispatch(unsetIsRequest());
-          navigation.replace('Drawer');
-        } else {
-          dispatch(unsetUserData());
-          dispatch(unsetIsRequest());
-        }
-      }),
-    [navigation]
-  );
+  const handleBackAction = () => {
+    BackHandler.exitApp();
+    return false;
+  };
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackAction);
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(setUserData({ id: user.uid, email: user.email }));
+        dispatch(unsetIsRequest());
+        navigation.replace('Drawer');
+      } else {
+        dispatch(unsetUserData());
+        dispatch(unsetIsRequest());
+      }
+    });
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackAction);
+    };
+  }, [navigation]);
 
   const handleLogin = () => {
     signIn(username);

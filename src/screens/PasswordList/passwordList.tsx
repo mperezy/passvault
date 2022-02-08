@@ -53,11 +53,13 @@ export const PasswordList = ({ navigation }: Props) => {
   const passwords = useSelector(selectPasswords);
   const isRequesting = useSelector(selectRequest);
 
+  const handleBackAction = () => {
+    BackHandler.exitApp();
+    return false;
+  };
+
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      BackHandler.exitApp();
-      return true;
-    });
+    BackHandler.addEventListener('hardwareBackPress', handleBackAction);
 
     const unsubscribeSocialMediaCollection = socialMediaCollection.onSnapshot(() => {
       dispatch(getSocialMediaListFromFirebase());
@@ -71,10 +73,7 @@ export const PasswordList = ({ navigation }: Props) => {
     return () => {
       unsubscribeSocialMediaCollection();
       unsubscribePasswordsCollection();
-      BackHandler.removeEventListener('hardwareBackPress', () => {
-        BackHandler.exitApp();
-        return true;
-      });
+      BackHandler.removeEventListener('hardwareBackPress', handleBackAction);
     };
   }, []);
 

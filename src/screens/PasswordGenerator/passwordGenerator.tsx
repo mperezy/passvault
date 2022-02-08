@@ -120,7 +120,9 @@ export const PasswordGenerator = ({ navigation }: Props) => {
     (() => isEditMode && dispatch(resetPasswordPicked()))();
 
     return () => {
+      navigation.navigate(userId ? 'PasswordList' : 'Login');
       resetConfigurationState(dispatch);
+      BackHandler.removeEventListener('hardwareBackPress', handleBackAction);
     };
   }, []);
 
