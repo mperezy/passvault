@@ -5,6 +5,8 @@ import { OnBoardingItem } from 'components/OnBoarding/OnBoardingItem/onBoardingI
 import { Paginator } from 'components/OnBoarding/Paginator/paginator';
 import { NextButton } from 'components/OnBoarding/NextButton/nextButton';
 import { setOnBoardingViewed } from 'utils/localStorageFuncs';
+import { useDispatch } from 'react-redux';
+import { setIsRequest } from 'reduxStore/slices/applicationStatusSlice';
 import { slides } from './slides';
 
 const styles = StyleSheet.create({
@@ -16,6 +18,7 @@ const styles = StyleSheet.create({
 });
 
 export const OnBoarding = ({ navigation }: Props) => {
+  const dispatch = useDispatch();
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef<FlatList>(null);
@@ -32,6 +35,7 @@ export const OnBoarding = ({ navigation }: Props) => {
       slidesRef.current?.scrollToIndex({ index: currentIndex + 1 });
     } else {
       setOnBoardingViewed('true');
+      dispatch(setIsRequest());
       navigation.replace('Login');
     }
   };
