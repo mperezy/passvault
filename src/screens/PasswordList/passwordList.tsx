@@ -20,6 +20,7 @@ import {
   selectSnackbarMessage,
   selectSnackbarVisible,
 } from 'reduxStore/slices/uiElementsSlice';
+import { getSocialMediaListFromFirebase } from 'reduxStore/slices/socialMediaSlice';
 
 import { View, ScrollView, BackHandler, Platform } from 'react-native';
 import { FAB } from 'react-native-paper';
@@ -32,7 +33,6 @@ import { CustomModal as Modal } from 'components/CustomModal/customModal';
 import { passwordsCollection, socialMediaCollection } from 'services/firebase';
 
 import { appColors, PasswordI } from 'utils/constants';
-import { getSocialMediaListFromFirebase } from 'reduxStore/slices/socialMediaSlice';
 import styles from './styles';
 
 export const PasswordList = ({ navigation }: Props) => {
@@ -61,12 +61,12 @@ export const PasswordList = ({ navigation }: Props) => {
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackAction);
 
-    const unsubscribeSocialMediaCollection = socialMediaCollection.onSnapshot(() => {
-      dispatch(getSocialMediaListFromFirebase());
-    });
-
     const unsubscribePasswordsCollection = passwordsCollection.onSnapshot(() => {
       dispatch(getPasswordsFromFirebase());
+    });
+
+    const unsubscribeSocialMediaCollection = socialMediaCollection.onSnapshot(() => {
+      dispatch(getSocialMediaListFromFirebase());
     });
 
     // remove those next once the component got unmounted

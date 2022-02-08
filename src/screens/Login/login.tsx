@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  selectRequest,
-  setIsRequest,
-  unsetIsRequest,
-} from 'reduxStore/slices/applicationStatusSlice';
-
+import { selectRequest, setIsRequest } from 'reduxStore/slices/applicationStatusSlice';
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
 import { Image, Text, TextInput, View, TouchableOpacity, BackHandler } from 'react-native';
@@ -19,8 +14,6 @@ import { shadow } from 'screens/PasswordGenerator/styles';
 import { auth, signIn } from 'services/firebase';
 
 import styles from './styles';
-
-// Reference for popover: https://github.com/eveningkid/react-native-popable
 
 export const Login = ({ navigation }: Props) => {
   const [username, setUsername] = useState('');
@@ -45,11 +38,9 @@ export const Login = ({ navigation }: Props) => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         dispatch(setUserData({ id: user.uid, email: user.email }));
-        dispatch(unsetIsRequest());
         navigation.replace('Drawer');
       } else {
         dispatch(unsetUserData());
-        dispatch(unsetIsRequest());
       }
     });
 

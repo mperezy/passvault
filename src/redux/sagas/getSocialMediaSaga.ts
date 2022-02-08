@@ -6,18 +6,14 @@ import {
   setSocialMediaList,
 } from 'reduxStore/slices/socialMediaSlice';
 import { getSocialMedia } from 'services/database';
-import { setIsRequest, unsetIsRequest } from 'reduxStore/slices/applicationStatusSlice';
 
 const log = logger.createLogger();
 
 function* getSocialMediaFlow(): Generator {
   try {
-    yield put(setIsRequest());
-
     const socialMediaList = yield call(getSocialMedia);
-    yield put(setSocialMediaList({ socialMediaList }));
 
-    yield put(unsetIsRequest());
+    yield put(setSocialMediaList({ socialMediaList }));
   } catch (exception) {
     log.error('GetSocialMediaSaga: ', { exception: exception.message });
   }

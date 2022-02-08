@@ -42,7 +42,7 @@ export const CreateEditPasswordConfigurator = ({ navigation }: Props) => {
   useEffect(() => {
     if (isCreateMode || isEditMode) {
       if (isCreateMode) {
-        dispatch(setSocialMediaPicked({ socialMediaPicked: socialMediaList[0].name }));
+        dispatch(setSocialMediaPicked({ socialMediaPicked: socialMediaList[0].name || '' }));
       }
       if (isEditMode) {
         setDescription(

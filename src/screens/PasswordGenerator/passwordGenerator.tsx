@@ -122,7 +122,7 @@ export const PasswordGenerator = ({ navigation }: Props) => {
     return () => {
       navigation.navigate(userId ? 'PasswordList' : 'Login');
       resetConfigurationState(dispatch);
-      BackHandler.removeEventListener('hardwareBackPress', handleBackAction);
+      BackHandler.removeEventListener('hardwareBackPress', () => false);
     };
   }, []);
 
