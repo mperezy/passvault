@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, StyleSheet, FlatList, Animated } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { OnBoardingItem } from 'components/OnBoarding/OnBoardingItem/onBoardingItem';
 import { Paginator } from 'components/OnBoarding/Paginator/paginator';
 import { NextButton } from 'components/OnBoarding/NextButton/nextButton';
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
 export const OnBoarding = ({ navigation }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
-  const slidesRef = useRef(null);
+  const slidesRef = useRef<FlatList>(null);
 
   const viewableItemsChanged = useRef((item: { viewableItems: any }) => {
     const { viewableItems } = item;
@@ -28,8 +29,7 @@ export const OnBoarding = ({ navigation }: Props) => {
 
   const scrollTo = () => {
     if (currentIndex < slides.length - 1) {
-      // @ts-ignore
-      slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
+      slidesRef.current?.scrollToIndex({ index: currentIndex + 1 });
     } else {
       setOnBoardingViewed('true');
       navigation.replace('Login');
@@ -62,5 +62,5 @@ export const OnBoarding = ({ navigation }: Props) => {
 };
 
 interface Props {
-  navigation: any;
+  navigation: NativeStackNavigationProp<any>;
 }

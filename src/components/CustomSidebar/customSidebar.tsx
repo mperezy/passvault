@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { DrawerItemList, DrawerItem, DrawerNavigationProp } from '@react-navigation/drawer';
 import { Text, ScrollView, ImageBackground } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Drawer } from 'react-native-paper';
@@ -12,8 +12,10 @@ import { unsetPasswords, setIsCreateMode } from 'reduxStore/slices/passwordSlice
 
 import { signOut } from 'services/firebase';
 
-// eslint-disable-next-line import/no-unresolved
-import { DrawerDescriptorMap } from '@react-navigation/drawer/lib/typescript/src/types';
+import {
+  DrawerDescriptorMap,
+  // eslint-disable-next-line import/no-unresolved
+} from '@react-navigation/drawer/lib/typescript/src/types';
 import { DrawerNavigationState, ParamListBase } from '@react-navigation/routers';
 import { imageBackground } from './styles';
 

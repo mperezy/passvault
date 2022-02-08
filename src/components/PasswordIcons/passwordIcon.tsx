@@ -11,6 +11,7 @@ import {
 } from 'reduxStore/slices/passwordSlice';
 
 import { Clipboard, Platform, TouchableOpacity, View } from 'react-native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Entypo, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { icons } from 'components/PasswordItem/styles';
@@ -111,5 +112,5 @@ interface Props {
   passwordGenerated: string;
   passwordVisible: boolean;
   setPasswordVisible: any;
-  navigation: any;
+  navigation: DrawerNavigationProp<any>;
 }

@@ -17,6 +17,8 @@ import {
 } from 'reduxStore/slices/socialMediaSlice';
 
 import { Picker, Text, TextInput, View } from 'react-native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Entypo } from '@expo/vector-icons';
 
 import { cardView, shadow } from 'screens/PasswordGenerator/styles';
@@ -124,5 +126,5 @@ export const CreateEditPasswordConfigurator = ({ navigation }: Props) => {
 };
 
 interface Props {
-  navigation: any;
+  navigation: DrawerNavigationProp<any> | NativeStackNavigationProp<any>;
 }

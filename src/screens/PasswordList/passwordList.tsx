@@ -22,7 +22,8 @@ import {
 } from 'reduxStore/slices/uiElementsSlice';
 import { getSocialMediaListFromFirebase } from 'reduxStore/slices/socialMediaSlice';
 
-import { View, ScrollView, BackHandler, Platform } from 'react-native';
+import { View, ScrollView, Platform } from 'react-native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { FAB } from 'react-native-paper';
 
 import { PasswordItem } from 'components/PasswordItem/passwordItem';
@@ -53,14 +54,7 @@ export const PasswordList = ({ navigation }: Props) => {
   const passwords = useSelector(selectPasswords);
   const isRequesting = useSelector(selectRequest);
 
-  const handleBackAction = () => {
-    BackHandler.exitApp();
-    return false;
-  };
-
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackAction);
-
     const unsubscribePasswordsCollection = passwordsCollection.onSnapshot(() => {
       dispatch(getPasswordsFromFirebase());
     });
@@ -73,7 +67,6 @@ export const PasswordList = ({ navigation }: Props) => {
     return () => {
       unsubscribeSocialMediaCollection();
       unsubscribePasswordsCollection();
-      BackHandler.removeEventListener('hardwareBackPress', handleBackAction);
     };
   }, []);
 
@@ -108,57 +101,54 @@ export const PasswordList = ({ navigation }: Props) => {
     dispatch(resetModal());
   };
 
-  return (
-    <>
-      {isRequesting && <LoadingIndicator />}
-      {!isRequesting && (
-        <View style={styles.container}>
-          <ScrollView
-            scrollEventThrottle={16}
-            onScroll={handleScrollIsClose2Bottom}
-            contentContainerStyle={{ flexGrow: 1 }}
-            keyboardShouldPersistTaps='handled'
-          >
-            <View style={styles.items}>
-              {passwords.map(({ id, description, passwordGenerated, socialMedia }: PasswordI) => (
-                <PasswordItem
-                  key={id}
-                  passwordId={id}
-                  passwordGenerated={passwordGenerated}
-                  socialMedia={socialMedia}
-                  description={description}
-                  navigation={navigation}
-                />
-              ))}
-            </View>
-          </ScrollView>
-          <FAB
-            style={[styles.fab, { bottom: snackbarVisible ? 40 : 0 }]}
-            color={appColors.textTint}
-            visible={!scrollIsClose2Bottom}
-            icon='plus'
-            onPress={handleOnPressFAB}
-          />
-          <CustomSnackbar
-            message={snackbarMessage}
-            isSnackbarVisible={snackbarVisible}
-            onDismiss={handleOnDismissSnackbar}
-          />
-          <Modal
-            visible={modalVisible}
-            toggle={handleModalToggle}
-            onSubmit={handleModalOnSubmit}
-            title={modalTitle}
-            message={modalMessage}
-            okButtonMessage='Yes'
-            cancelButtonMessage='No'
-          />
+  return isRequesting ? (
+    <LoadingIndicator />
+  ) : (
+    <View style={styles.container}>
+      <ScrollView
+        scrollEventThrottle={16}
+        onScroll={handleScrollIsClose2Bottom}
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps='handled'
+      >
+        <View style={styles.items}>
+          {passwords.map(({ id, description, passwordGenerated, socialMedia }: PasswordI) => (
+            <PasswordItem
+              key={id}
+              passwordId={id}
+              passwordGenerated={passwordGenerated}
+              socialMedia={socialMedia}
+              description={description}
+              navigation={navigation}
+            />
+          ))}
         </View>
-      )}
-    </>
+      </ScrollView>
+      <FAB
+        style={[styles.fab, { bottom: snackbarVisible ? 40 : 0 }]}
+        color={appColors.textTint}
+        visible={!scrollIsClose2Bottom}
+        icon='plus'
+        onPress={handleOnPressFAB}
+      />
+      <CustomSnackbar
+        message={snackbarMessage}
+        isSnackbarVisible={snackbarVisible}
+        onDismiss={handleOnDismissSnackbar}
+      />
+      <Modal
+        visible={modalVisible}
+        toggle={handleModalToggle}
+        onSubmit={handleModalOnSubmit}
+        title={modalTitle}
+        message={modalMessage}
+        okButtonMessage='Yes'
+        cancelButtonMessage='No'
+      />
+    </View>
   );
 };
 
 interface Props {
-  navigation: any;
+  navigation: DrawerNavigationProp<any>;
 }

@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
 
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TextInput, TouchableOpacity, BackHandler } from 'react-native';
+import { NavigationProp } from '@react-navigation/native';
 
 import { auth, signUp } from 'services/firebase';
 
@@ -19,7 +20,7 @@ export const SignUp = ({ navigation }: Props) => {
       auth.onAuthStateChanged((user) => {
         if (user) {
           dispatch(setUserData({ id: user.uid, email: user.email }));
-          navigation.replace('Drawer');
+          navigation.navigate('Drawer');
         } else {
           dispatch(unsetUserData());
         }
@@ -66,5 +67,5 @@ export const SignUp = ({ navigation }: Props) => {
 };
 
 interface Props {
-  navigation: any;
+  navigation: NavigationProp<any>;
 }

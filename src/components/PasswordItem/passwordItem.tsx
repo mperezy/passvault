@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 import { SocialMediaIcon } from 'components/SocialMediaIcon/socialMediaIcon';
 import { PasswordIcons } from 'components/PasswordIcons/passwordIcon';
@@ -48,5 +49,5 @@ interface Props {
   passwordGenerated: string;
   socialMedia: string;
   description: string;
-  navigation: any;
+  navigation: DrawerNavigationProp<any>;
 }

@@ -25,10 +25,11 @@ import {
   TextInput,
   TouchableOpacity,
   Clipboard,
-  BackHandler,
   Platform,
   ScrollView,
 } from 'react-native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Divider, Switch } from 'react-native-paper';
 
 import SliderContainer from 'components/SliderContainer/sliderContainer';
@@ -77,12 +78,6 @@ export const PasswordGenerator = ({ navigation }: Props) => {
     dispatch(generatePassword());
   };
 
-  const handleBackAction = () => {
-    resetConfigurationState(dispatch);
-    navigation.navigate(userId ? 'PasswordList' : 'Login');
-    return true;
-  };
-
   const handleOnDismissSnackbar = () => {
     dispatch(resetSnackbar());
   };
@@ -108,8 +103,6 @@ export const PasswordGenerator = ({ navigation }: Props) => {
   };
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handleBackAction);
-
     if (Platform.OS === 'android') {
       showAuthenticatedMessage(userId, isCreateMode);
     } else {
@@ -120,9 +113,7 @@ export const PasswordGenerator = ({ navigation }: Props) => {
     (() => isEditMode && dispatch(resetPasswordPicked()))();
 
     return () => {
-      navigation.navigate(userId ? 'PasswordList' : 'Login');
       resetConfigurationState(dispatch);
-      BackHandler.removeEventListener('hardwareBackPress', () => false);
     };
   }, []);
 
@@ -223,5 +214,5 @@ export const PasswordGenerator = ({ navigation }: Props) => {
 };
 
 interface Props {
-  navigation: any;
+  navigation: DrawerNavigationProp<any> | NativeStackNavigationProp<any>;
 }

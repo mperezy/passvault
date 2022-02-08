@@ -1,10 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getPasswordsFromFirebase, setPasswords } from 'reduxStore/slices/passwordSlice';
 import { setUserData, unsetUserData } from 'reduxStore/slices/userSlice';
-import {
-  getSocialMediaListFromFirebase,
-  setSocialMediaList,
-} from 'reduxStore/slices/socialMediaSlice';
+import { getSocialMediaListFromFirebase } from 'reduxStore/slices/socialMediaSlice';
 
 export const initialState = {
   isRequest: false,
@@ -33,6 +30,10 @@ export const applicationStatusSlice = createSlice({
         isRequest: false,
       }))
       .addCase(getSocialMediaListFromFirebase, (state) => ({
+        ...state,
+        isRequest: true,
+      }))
+      .addCase(setUserData, (state) => ({
         ...state,
         isRequest: true,
       }))
