@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, StyleSheet, FlatList, Animated } from 'react-native';
+import { View, StyleSheet, FlatList, Animated, Platform } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { OnBoardingItem } from 'components/OnBoarding/OnBoardingItem/onBoardingItem';
 import { Paginator } from 'components/OnBoarding/Paginator/paginator';
@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: Platform.OS === 'ios' ? 30 : 15,
   },
 });
 
